@@ -4,6 +4,8 @@ import * as Yup from 'yup';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Button from "components/Button";
 import Input from "components/Input";
@@ -25,7 +27,15 @@ const Login = () => {
 			saveValue('token', data.access_token);
 		},
 		onError: () => {
-			alert("there was an error");
+			toast.error(`${"Credenciales Invalidas"}`, {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	});
 
@@ -96,6 +106,7 @@ const Login = () => {
 					)}
 				</Formik>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 };
