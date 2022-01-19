@@ -1,0 +1,49 @@
+/*=============== Properties ===============*/
+.properties {
+  background-color: var(--secondary-bg-color);
+  padding: 2rem;
+  border-radius: 5px;
+}
+
+.properties-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.properties-title {
+  margin-bottom: 1rem;
+  font-size: var(--title-font-size);
+  color: var(--secondary-text-color);
+  font-weight: 500;
+}
+
+.properties-total {
+  font-size: var(--text-font-size);
+  color: var(--primary-text-color);
+  font-weight: 400;
+}
+
+.properties-filter {
+  display: grid;
+  grid-template-columns: 70px 200px 300px 40px 40px;
+  margin-bottom: 5rem;
+  grid-gap: 1rem;
+  align-items: center;
+}
+
+.properties-toggle {
+  color: var(--primary-text-color);
+  cursor: pointer;
+  font-size: var(--icons-font-size);
+  display: flex;
+  justify-content: center;
+}
+
+.properties-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
+}
+

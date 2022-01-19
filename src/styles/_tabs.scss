@@ -1,0 +1,38 @@
+/*=============== Tabs ===============*/
+.tabs {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.tabs .react-tabs__tab-list {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2.5rem;
+}
+
+.tabs .react-tabs__tab {
+  padding: 0.8rem 0;
+  margin-right: 2rem;
+  color: var(--secondary-text-color);
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  position: relative;
+}
+
+.tabs .react-tabs__tab.react-tabs__tab--selected {
+  color: var(--primary-color);
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    background-color: var(--primary-color);
+    height: 2px;
+    bottom: -1px;
+    left: 0;
+  }
+}

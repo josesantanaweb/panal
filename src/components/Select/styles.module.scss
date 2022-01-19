@@ -1,0 +1,61 @@
+/*=============== Select ===============*/
+.select {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.select-label {
+  font-size: var(--normal-font-size);
+  color: var(--primary-text-color);
+  margin-bottom: .5rem;
+  span {
+    color: var(--rejected-color);
+    margin-left: 0.2rem;
+  }
+}
+
+.select-container {
+  width: 100%;
+  position: relative;
+  border-radius: 2px;
+  height: 36px;
+  background-color: white;
+  display: flex;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.select-option {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem 0 1rem;
+  color: var(--primary-text-color);
+  font-size: var(--icons-font-size);
+  span {
+    font-size: var(--normal-font-size);
+    text-transform: capitalize;
+  }
+}
+
+.select-items {
+  position: absolute;
+  top: 102%;
+  background-color: var(--secondary-bg-color);
+  left: 0;
+  width: 100%;
+  z-index: 20;
+}
+
+.select-items li {
+  font-size: var(--normal-font-size);
+  color: var(--primary-text-color);
+  padding: 1rem;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--primary-bg-color);
+  }
+}

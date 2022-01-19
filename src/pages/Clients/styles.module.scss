@@ -1,0 +1,115 @@
+/*=============== clients ===============*/
+.clients {
+  background-color: var(--secondary-bg-color);
+  padding: 2rem;
+  border-radius: 5px;
+}
+
+.clients-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.clients-title {
+  font-size: var(--title-font-size);
+  color: var(--secondary-text-color);
+  font-weight: 500;
+}
+
+.clients-filter {
+  display: grid;
+  grid-template-columns: 70px 300px;
+  margin-bottom: 5rem;
+  grid-gap: 1rem;
+  align-items: center;
+}
+
+.table {
+  width: 100%;
+}
+
+.table-head {
+  color: var(--primary-text-color);
+  background-color: var(--primay-bg-color);;
+  th {
+    font-size: var(--normal-font-size);
+    padding: 1rem 0;
+    text-align: center;
+  }
+}
+
+.table-body tr {
+  color: var(--secondary-text-color);
+  border-bottom: 1px solid var(--border-color);
+  height: 60px;
+  td {
+    font-size: var(--normal-font-size);
+    text-align: center;
+    vertical-align: middle;
+  }
+  th {
+    vertical-align: middle;
+  }
+}
+
+.table-detail {
+  font-size: var(--normal-font-size);
+  color: var(--primary-text-color);
+  cursor: pointer;
+}
+
+.table-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    margin-right: 1rem;
+  }
+}
+
+.table-status {
+  font-size: var(--small-font-size);
+  color: var(--secondary-bg-color);;
+  padding: 2px 8px;
+  border-radius: 4px;
+  &.admin {
+    background-color: var(--tertiary-color);
+  }
+}
+
+.table-action {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 30px 30px;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icons-font-size);
+  span {
+    cursor: pointer;
+  }
+}
+
+.table-bitacora {
+  font-size: var(--icons-font-size);
+  cursor: pointer;
+  color: var(--primary-text-color);
+}
+
+.table-edit {
+  color: var(--primary-color);
+}
+
+.table-delete {
+  color: var(--danger-color);
+}
+
+.table-error {
+  display: flex;
+  justify-content: center;
+  color: var(--danger-color);
+}

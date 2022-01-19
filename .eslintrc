@@ -1,0 +1,28 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"node": true
+	},
+	"parser": "@typescript-eslint/parser",
+	"extends": [
+		"plugin:react/recommended",
+		"prettier"
+	],
+	"parserOptions": {
+	  "ecmaVersion": 2018,
+	  "sourceType": "module"
+	},
+	"plugins": ["react"],
+	"rules": {
+		"eol-last": [2, "always"],
+		"semi": [2, "always"],
+		"indent": [2, "tab"],
+		"no-tabs": 0
+	},
+	"settings": {
+		"react": {
+		  "version": "detect" // para detectar la versión de reactjs
+		}
+	}
+}

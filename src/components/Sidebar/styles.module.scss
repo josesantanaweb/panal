@@ -1,0 +1,90 @@
+/*=============== Sidebar ===============*/
+.sidebar {
+  width: var(--sidebar-collapse-width);
+  height: 100%;
+  background-color: var(--secondary-color);
+  transition: all 0.2s;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  padding-right: 5px;
+}
+
+.sidebar-menu {
+  margin-top: 2rem;
+}
+
+.sidebar-item {
+  padding: 0 1rem;
+  text-overflow: clip;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  line-height: 50px;
+}
+
+.sidebar-item.active {
+  background-color: #031c4c;
+}
+
+.sidebar-link {
+  color: var(--tertiary-color);
+  font-size: var(--icons-font-size);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+  &:hover {
+    color: var(--primary-color);
+  }
+}
+
+.sidebar-link.active {
+  color: var(--primary-color);
+  &:after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 50px;
+    right: -29px;
+    background-color: var(--primary-color);
+  }
+}
+
+.sidebar-link span {
+  display: none;
+}
+
+.is-open {
+  width: 230px;
+}
+
+.is-open .sidebar-item {
+  justify-content: flex-end;
+  padding: 0 2rem;
+}
+
+.is-open .sidebar-link {
+  width: 100%;
+}
+
+.is-open .sidebar-link.active {
+  &:after {
+    right: -32px;
+  }
+}
+
+.is-open .sidebar-link span {
+  display: block;
+  font-size: 1rem;
+  margin-left: 1rem;
+}

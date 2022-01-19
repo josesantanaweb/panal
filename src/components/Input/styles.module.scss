@@ -1,0 +1,49 @@
+/*=============== Input ===============*/
+.input {
+  position: relative;
+}
+
+.input input {
+  border: 1px solid var(--border-color);
+  height: 36px;
+  padding: 0 0.8rem;
+  font-size: var(--normal-font-size);
+  color: var(--primary-text-color);
+  border-radius: 2px;
+  outline: none;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  &::placeholder {
+    color: var(--placeholder-color);
+  }
+}
+
+.input label {
+  font-size: var(--small-font-size);
+  color: var(--primary-text-color);
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 500;
+}
+
+.input-disabled input {
+  background-color: var(--disabled-color);
+}
+
+.input label span {
+  color: var(--danger-color);
+}
+
+.icon-search {
+  position: absolute;
+  top: 8px;
+  font-size: var(--icons-font-size);
+  right: 7px;
+  background: var(--secondary-bg-color);
+}
+
+.input-error {
+  color: var(--danger-color);
+  font-size: var(--small-font-size);
+}
