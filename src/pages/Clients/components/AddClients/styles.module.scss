@@ -1,0 +1,30 @@
+/*=============== Add Clients ===============*/
+.form {
+  position: relative;
+}
+
+.form-label {
+  color: var(--secondary-text-color);
+  font-size: var(--text-font-size);
+  margin-bottom: 2rem;
+}
+
+.form-rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.form-single {
+  margin-bottom: 2rem;
+}
+
+.form-footer {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}

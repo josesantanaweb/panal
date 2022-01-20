@@ -16,5 +16,5 @@
 .layout-content {
   background-color: var(--primay-bg-color);
   padding: 94px 30px 60px;
-  height: 100vh;
+  min-height: calc(100vh - 160px);
 }

@@ -4,6 +4,7 @@ export interface InputProps {
   disabled?: boolean;
   search?: boolean;
   required?: boolean;
+  textarea?: boolean;
   id?: string;
   label?: string;
   name?: string;

@@ -1,0 +1,35 @@
+/*=============== Checkbox ===============*/
+.checkbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-toggle {
+  width: 15px;
+  height: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  position: relative;
+  transition: all .2s;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 11px;
+    height: 11px;
+    background-color: transparent;
+  }
+}
+
+.checkbox-toggle.is-active:after {
+  background-color: var(--tertiary-color);
+}
+
+.checkbox p {
+  font-size: var(--normal-font-size);
+  color: var(--primary-text-color);
+  margin-left: 1rem;
+}

@@ -1,14 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {BiEdit, BiListUl, BiTrashAlt} from "react-icons/bi";
 import { useQuery } from 'react-query';
 
 import Button from "components/Button";
 import Select from "components/Select";
 import Input from "components/Input";
+import AddClients from "./components/AddClients";
 
 import { ISelect } from "interfaces";
 import styles from "./styles.module.scss";
-import UsersServices from 'services/usersServices';
+import ClientsServices from 'services/clientsServices';
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -32,15 +33,18 @@ const skeleton = [0,1,2,3];
 
 const Clients = () => {
 	const [page, setPage] = useState<ISelect>(pageOptions[0]);
-	const { data, isLoading, isError } = useQuery('users', UsersServices.getUsers);
+	const { data, isLoading, isError} = useQuery('clients', ClientsServices.getClients);
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
+	const [openModal, setOpenModal] = useState<boolean>(false);
+
 	const handleOpenPage = () => setOpenSelectPage(true);
+	const handleAddClients = () => setOpenModal(true);
 
 	return (
 		<div className={styles.clients}>
 			<div className={styles["clients-top"]}>
 				<h2 className={styles["clients-title"]}>Listado de Clientes</h2>
-				<Button>Agregar Cliente</Button>
+				<Button onClick={handleAddClients}>Agregar Cliente</Button>
 			</div>
 			<div className={styles["clients-filter"]}>
 				<div>
@@ -117,14 +121,14 @@ const Clients = () => {
 									</tbody>
 									:
 									<tbody className={styles["table-body"]}>
-										{data.data?.map((user: any, index: number) => (
+										{data?.data?.map((client: any, index: number) => (
 											<tr key={index}>
 												<td>{index + 1}</td>
 												<td style={{width: '300px'}}>
-													{user.name} {user.lastName}
+													{client.name} {client.lastName}
 												</td>
 												<td style={{width: '300px'}}>
-													{user.name} {user.lastName}
+													{client.name} {client.lastName}
 												</td>
 												<td>
 													<span className={`${styles["table-status"]} ${styles.admin}`}>Activo</span>
@@ -146,6 +150,7 @@ const Clients = () => {
 						</table>
 				}
 			</div>
+			<AddClients openModal={openModal} setOpenModal={setOpenModal} />
 		</div>
 	);
 };

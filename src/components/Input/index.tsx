@@ -19,6 +19,7 @@ const Input:React.FC<InputProps> = (
 		field,
 		form,
 		error,
+		textarea,
 		...props
 	}) => {
 
@@ -29,20 +30,36 @@ const Input:React.FC<InputProps> = (
 	return (
 		<div className={inputClasses}>
 			{label && <label htmlFor={id}>{label} {required && <span>*</span>}</label>}
-			<input
-				id={id}
-				type={type}
-				name={name}
-				value={value}
-				disabled={disabled}
-				placeholder={placeholder}
-				onChange={onChange}
-				{...field}
-				{...props}
-			/>
 			{
 				search &&
 			  <span className={styles["icon-search"]}><BiSearch/></span>
+			}
+			{
+				textarea ?
+					<textarea
+						id={id}
+						name={name}
+						value={value}
+						disabled={disabled}
+						placeholder={placeholder}
+						onChange={onChange}
+						cols={30}
+						rows={10}
+						{...field}
+						{...props}
+					/>
+					:
+					<input
+						id={id}
+						type={type}
+						name={name}
+						value={value}
+						disabled={disabled}
+						placeholder={placeholder}
+						onChange={onChange}
+						{...field}
+						{...props}
+					/>
 			}
 			{
 				error &&

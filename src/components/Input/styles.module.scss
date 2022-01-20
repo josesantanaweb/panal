@@ -19,6 +19,22 @@
   }
 }
 
+.input textarea {
+  border: 1px solid var(--border-color);
+  height: 100px;
+  padding: 0.8rem;
+  font-size: var(--normal-font-size);
+  color: var(--primary-text-color);
+  border-radius: 2px;
+  outline: none;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  &::placeholder {
+    color: var(--placeholder-color);
+  }
+}
+
 .input label {
   font-size: var(--small-font-size);
   color: var(--primary-text-color);
