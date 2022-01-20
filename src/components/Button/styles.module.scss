@@ -9,6 +9,11 @@
   font-size: var(--normal-font-size);
 }
 
+.button-disabled {
+  background-color: var(--disabled-color) !important;
+  cursor: no-drop;
+}
+
 .button-primary {
   color: white;
   background-color: var(--primary-color);

@@ -1,4 +1,4 @@
-export interface AddClientsProps {
+export interface AddCustomersProps {
   setOpenModal: any;
   openModal: boolean;
 }

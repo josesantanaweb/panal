@@ -1,19 +1,19 @@
 import api from '../config/api';
 import { getValue } from '../utils/localStorage';
 
-const ClientsServices = {
-	getClients: async () => {
-		const response = await api.get('realtors', {
+const CustomersServices = {
+	getCustomers: async ({ queryKey }: any) => {
+		const response = await api.get(`customers/?limit=${queryKey[1]}`, {
 			headers: {Authorization:  `Bearer ${getValue('token')}`}
 		});
 		return response.data;
 	},
-	addClient: async (data: any) => {
-		const response = await api.post('/realtors', data, {
+	addCustomer: async (data: any) => {
+		const response = await api.post('/customers', data, {
 			headers: {Authorization:  `Bearer ${getValue('token')}`}
 		});
 		return response.data;
 	},
 };
 
-export default ClientsServices;
+export default CustomersServices;

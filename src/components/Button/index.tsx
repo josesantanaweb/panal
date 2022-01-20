@@ -17,6 +17,7 @@ const Button:React.FC<ButtonProps> = (
 		variant === "primary" ? styles["button-primary"] : "",
 		variant === "secondary" ? styles["button-secondary"] : "",
 		variant === "tertiary" ? styles["button-tertiary"] : "",
+		disabled ? styles["button-disabled"] : "",
 		full ? styles["button-full"] : "",
 	].join(' ');
 

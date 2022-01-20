@@ -1,24 +1,24 @@
-/*=============== clients ===============*/
-.clients {
+/*=============== Customers ===============*/
+.customers {
   background-color: var(--secondary-bg-color);
   padding: 2rem;
   border-radius: 5px;
 }
 
-.clients-top {
+.customers-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 4rem;
 }
 
-.clients-title {
+.customers-title {
   font-size: var(--title-font-size);
   color: var(--secondary-text-color);
   font-weight: 500;
 }
 
-.clients-filter {
+.customers-filter {
   display: grid;
   grid-template-columns: 70px 300px;
   margin-bottom: 5rem;

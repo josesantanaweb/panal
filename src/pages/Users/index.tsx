@@ -37,12 +37,6 @@ const Users = () => {
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
 	const handleOpenPage = () => setOpenSelectPage(true);
 
-	// useEffect(() => {
-	// 	setTimeout(() => {
-	// 		return <Loading/>;
-	// 	}, 2000);
-	// }, []);
-
 	return (
 		<div className={styles.users}>
 			<div className={styles["users-top"]}>

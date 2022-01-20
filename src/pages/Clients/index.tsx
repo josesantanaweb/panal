@@ -5,16 +5,16 @@ import { useQuery } from 'react-query';
 import Button from "components/Button";
 import Select from "components/Select";
 import Input from "components/Input";
-import AddClients from "./components/AddClients";
+import AddCustomers from "./components/AddCustomers";
 
 import { ISelect } from "interfaces";
 import styles from "./styles.module.scss";
-import ClientsServices from 'services/clientsServices';
+import CustomersServices from 'services/customersServices';
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-const pageOptions = [
+const limitOptions = [
 	{
 		label: 10,
 		value: 10,
@@ -31,30 +31,33 @@ const pageOptions = [
 
 const skeleton = [0,1,2,3];
 
-const Clients = () => {
-	const [page, setPage] = useState<ISelect>(pageOptions[0]);
-	const { data, isLoading, isError} = useQuery('clients', ClientsServices.getClients);
-	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
+const Customers = () => {
+	const [limit, setLimit] = useState(limitOptions[0]);
+	const { data, isLoading, isError } = useQuery(["customers", limit.value], CustomersServices.getCustomers);
+	const [openSelectLimit, setOpenSelectLimit] = useState<boolean>(false);
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
-	const handleOpenPage = () => setOpenSelectPage(true);
-	const handleAddClients = () => setOpenModal(true);
+	// Handle Open limit select
+	const handleOpenLimit = () => setOpenSelectLimit(true);
+
+	// Handle Add Customers
+	const handleAddCustomers = () => setOpenModal(true);
 
 	return (
-		<div className={styles.clients}>
-			<div className={styles["clients-top"]}>
-				<h2 className={styles["clients-title"]}>Listado de Clientes</h2>
-				<Button onClick={handleAddClients}>Agregar Cliente</Button>
+		<div className={styles.customers}>
+			<div className={styles["customers-top"]}>
+				<h2 className={styles["customers-title"]}>Listado de Clientes</h2>
+				<Button onClick={handleAddCustomers}>Agregar Cliente</Button>
 			</div>
-			<div className={styles["clients-filter"]}>
+			<div className={styles["customers-filter"]}>
 				<div>
 					<Select
-						options={pageOptions}
-						selectedOption={page}
-						setSelectedOption={setPage}
-						open={openSelectPage}
-						setOpen={setOpenSelectPage}
-						handleOpenSelect={handleOpenPage}
+						options={limitOptions}
+						selectedOption={limit}
+						setSelectedOption={setLimit}
+						open={openSelectLimit}
+						setOpen={setOpenSelectLimit}
+						handleOpenSelect={handleOpenLimit}
 					/>
 				</div>
 				<div>
@@ -128,10 +131,10 @@ const Clients = () => {
 													{client.name} {client.lastName}
 												</td>
 												<td style={{width: '300px'}}>
-													{client.name} {client.lastName}
+													{client.createdByRealtor.name} {client.createdByRealtor.lastName}
 												</td>
 												<td>
-													<span className={`${styles["table-status"]} ${styles.admin}`}>Activo</span>
+													<span className={`${styles["table-status"]} ${styles.admin}`}>{client.status.name}</span>
 												</td>
 												<td style={{width: '300px'}}>Casa</td>
 												<td style={{width: '200px'}}>
@@ -150,9 +153,9 @@ const Clients = () => {
 						</table>
 				}
 			</div>
-			<AddClients openModal={openModal} setOpenModal={setOpenModal} />
+			<AddCustomers openModal={openModal} setOpenModal={setOpenModal} />
 		</div>
 	);
 };
 
-export default Clients;
+export default Customers;

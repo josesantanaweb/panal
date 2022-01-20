@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Button from "components/Button";
 import Modal from "components/Modal";
@@ -9,17 +11,38 @@ import Input from "components/Input";
 import Checkbox from "components/Checkbox";
 
 import styles from "./styles.module.scss";
-import {AddClientsProps, IValues} from "./types";
-import ClientsServices from 'services/clientsServices';
+import {AddCustomersProps, IValues} from "./types";
+import CustomersServices from 'services/customersServices';
 
-const AddClients:React.FC<AddClientsProps> = ({setOpenModal, openModal}) => {
+const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => {
 	const [mortgage, setmortgage] = useState<boolean>(false);
-	const { mutate, isLoading } = useMutation(ClientsServices.addClient, {
+	const queryClient = useQueryClient();
+	const { mutate, isLoading } = useMutation(CustomersServices.addCustomer, {
 		onSuccess: (data) => {
-			console.log(data);
+			toast.success("Cliente registrado exitosamente", {
+				position: "top-right",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+			queryClient.invalidateQueries(['customers']);
+			setTimeout(() => {
+				return setOpenModal(false);
+			}, 3000);
 		},
-		onError: (error) => {
-			console.log(error);
+		onError: (error: any) => {
+			toast.error(error.response.data.message === "This user already exists" && "Cliente ya existe", {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	});
 
@@ -27,9 +50,12 @@ const AddClients:React.FC<AddClientsProps> = ({setOpenModal, openModal}) => {
 
 	// Validataions
 	const validationSchema = {
-		addClient : Yup.object({
-			email: Yup.string().email("Email Invalid").required("Requirido"),
-			password: Yup.string().required("Requirido").min(5).max(25),
+		addCustomer : Yup.object({
+			name: Yup.string().required("Requirido"),
+			lastName: Yup.string().required("Requirido"),
+			email: Yup.string().email("Correo Invalido").required("Requirido"),
+			documentType: Yup.string().required("Requirido"),
+			documentNumber: Yup.string().required("Requirido"),
 		})
 	};
 
@@ -40,25 +66,24 @@ const AddClients:React.FC<AddClientsProps> = ({setOpenModal, openModal}) => {
 		email: '',
 		documentType: '',
 		documentNumber: '',
+		localPhone: '',
 		phone: '',
 	};
 
-	const onSubmit = (values: IValues) => {
-		// mutate(values);
-		console.log(values);
-		setOpenModal(false);
-		alert("wdaw");
+	const onSubmit = (values: IValues, {resetForm}: any) => {
+		mutate(values);
+		resetForm({ values: ''});
 	};
 
 
 	return (
-		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Crea Clientes">
+		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Crear Cliente">
 			<div className={styles["form-label"]}>
 				<p>Información del cliente</p>
 			</div>
 			<Formik
 				initialValues={INITIAL_VALUES}
-				// validationSchema={validationSchema.addClient}
+				validationSchema={validationSchema.addCustomer}
 				onSubmit={onSubmit}
 			>
 				{({ errors, touched, isValid, dirty}) => (
@@ -106,11 +131,11 @@ const AddClients:React.FC<AddClientsProps> = ({setOpenModal, openModal}) => {
 						<div className={styles["form-rows"]}>
 							<Field
 								type="text"
-								name="phone"
+								name="localPhone"
 								placeholder="Ingrese su Teléfono"
 								label="Teléfono"
 								component={Input}
-								error={errors.phone && touched.phone ? errors.phone : null}
+								error={errors.localPhone && touched.localPhone ? errors.localPhone : null}
 							/>
 							<Field
 								type="text"
@@ -125,6 +150,7 @@ const AddClients:React.FC<AddClientsProps> = ({setOpenModal, openModal}) => {
 							<Field
 								type="email"
 								name="email"
+								required
 								placeholder="Ingrese su Correo Electronico"
 								label="Correo Electronico"
 								component={Input}
@@ -132,21 +158,19 @@ const AddClients:React.FC<AddClientsProps> = ({setOpenModal, openModal}) => {
 							/>
 							<Field
 								type="text"
-								name="phone"
+								name="address"
 								placeholder="Ingrese su Domicilio"
 								label="Domicilio"
 								component={Input}
-								// error={errors.phone && touched.phone ? errors.phone : null}
 							/>
 						</div>
 						<div className={styles["form-single"]}>
 							<Field
-								name="phone"
+								name="comments"
 								placeholder="Ingrese Comentario"
 								label="Comentario"
 								textarea
 								component={Input}
-								// error={errors.phone && touched.phone ? errors.phone : null}
 							/>
 						</div>
 						<div className={styles["form-rows"]}>
@@ -162,14 +186,15 @@ const AddClients:React.FC<AddClientsProps> = ({setOpenModal, openModal}) => {
 							/>
 						</div>
 						<div className={styles["form-footer"]}>
-							<Button type='submit'>Guardar Cliente</Button>
+							<Button type='submit' disabled={!isValid || !dirty}>Guardar Cliente</Button>
 						</div>
 					</Form>
 				)}
 			</Formik>
+			<ToastContainer />
 		</Modal>
 	);
 
 };
 
-export default AddClients;
+export default AddCustomers;
