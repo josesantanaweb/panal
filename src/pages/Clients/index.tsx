@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {BiEdit, BiListUl, BiTrashAlt} from "react-icons/bi";
-import { useQuery } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Button from "components/Button";
 import Select from "components/Select";
@@ -34,6 +36,32 @@ const skeleton = [0,1,2,3];
 const Customers = () => {
 	const [limit, setLimit] = useState(limitOptions[0]);
 	const { data, isLoading, isError } = useQuery(["customers", limit.value], CustomersServices.getCustomers);
+	const queryClient = useQueryClient();
+	const { mutate } = useMutation(CustomersServices.deleteCustomer, {
+		onSuccess: (data) => {
+			toast.success("Cliente eliminado exitosamente", {
+				position: "top-right",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+			queryClient.invalidateQueries(['customers']);
+		},
+		onError: (error: any) => {
+			toast.error("Ocurrio un error al eliminar al cliente", {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	});
 	const [openSelectLimit, setOpenSelectLimit] = useState<boolean>(false);
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -42,6 +70,10 @@ const Customers = () => {
 
 	// Handle Add Customers
 	const handleAddCustomers = () => setOpenModal(true);
+
+	const handleDelete = (id: number) => {
+		mutate(id);
+	};
 
 	return (
 		<div className={styles.customers}>
@@ -143,7 +175,7 @@ const Customers = () => {
 												<td>
 													<div className={styles["table-action"]}>
 														<span className={styles["table-edit"]}><BiEdit/></span>
-														<span className={styles["table-delete"]}><BiTrashAlt/></span>
+														<span className={styles["table-delete"]} onClick={() => handleDelete(client.id)}><BiTrashAlt/></span>
 													</div>
 												</td>
 											</tr>
@@ -154,6 +186,7 @@ const Customers = () => {
 				}
 			</div>
 			<AddCustomers openModal={openModal} setOpenModal={setOpenModal} />
+			<ToastContainer />
 		</div>
 	);
 };

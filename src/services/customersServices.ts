@@ -14,6 +14,12 @@ const CustomersServices = {
 		});
 		return response.data;
 	},
+	deleteCustomer: async (id: number) => {
+		const response = await api.delete(`/customers/${id}`, {
+			headers: {Authorization:  `Bearer ${getValue('token')}`}
+		});
+		return response.data;
+	},
 };
 
 export default CustomersServices;
