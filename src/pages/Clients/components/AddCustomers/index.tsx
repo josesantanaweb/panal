@@ -15,9 +15,10 @@ import {AddCustomersProps, IValues} from "./types";
 import CustomersServices from 'services/customersServices';
 
 const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => {
-	const [mortgage, setmortgage] = useState<boolean>(false);
+	const [mortgage, setMortgage] = useState<boolean>(false);
+	const [cashPayment, setCashPayment] = useState<boolean>(false);
 	const queryClient = useQueryClient();
-	const { mutate, isLoading } = useMutation(CustomersServices.addCustomer, {
+	const { mutate } = useMutation(CustomersServices.addCustomer, {
 		onSuccess: (data) => {
 			toast.success("Cliente registrado exitosamente", {
 				position: "top-right",
@@ -46,7 +47,9 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 		}
 	});
 
-	const handleMortgage = () => setmortgage(!mortgage);
+	const handleMortgage = () => setMortgage(!mortgage);
+
+	const handleCashPayment = () => setCashPayment(!cashPayment);
 
 	// Validataions
 	const validationSchema = {
@@ -68,11 +71,42 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 		documentNumber: '',
 		localPhone: '',
 		phone: '',
+		address: '',
+		cashPayment: false,
+		mortgage: false,
+		comments: ''
 	};
 
 	const onSubmit = (values: IValues, {resetForm}: any) => {
-		mutate(values);
+		const {
+			name,
+			lastName,
+			email,
+			documentType,
+			documentNumber,
+			localPhone,
+			phone,
+			address,
+			cashPayment,
+		  mortgage,
+			comments
+		} = values;
+		mutate({
+			name,
+			lastName,
+			email,
+			documentType,
+			documentNumber,
+			localPhone,
+			phone,
+			address,
+			cashPayment,
+		  mortgage,
+			comments
+		});
 		resetForm({ values: ''});
+		setCashPayment(false);
+		setMortgage(false);
 	};
 
 
@@ -181,8 +215,8 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 							/>
 							<Checkbox
 								label="Pago al contado"
-								value={mortgage}
-								handleToggle={handleMortgage}
+								value={cashPayment}
+								handleToggle={handleCashPayment}
 							/>
 						</div>
 						<div className={styles["form-footer"]}>

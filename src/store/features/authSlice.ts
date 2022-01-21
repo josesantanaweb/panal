@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getValue, removeItem } from '../../utils/localStorage';
+import { getValue } from '../../utils/localStorage';
 
 const initialState = {
 	isAuthenticated: !getValue('token') ? false : true,
