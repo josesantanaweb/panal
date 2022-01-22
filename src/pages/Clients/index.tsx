@@ -102,87 +102,89 @@ const Customers = () => {
 						?
 						<div className={styles["table-error"]}>Hubo un error!</div>
 						:
-						<table className={styles.table}>
-							<thead>
-								<tr className={styles["table-head"]}>
-									<th>#</th>
-									<th>Cliente</th>
-									<th>Ejecutivo</th>
-									<th>Estado</th>
-									<th>Tipo</th>
-									<th>Bitacora</th>
-									<th>Acciones</th>
-								</tr>
-							</thead>
-							{
-								isLoading
-									?
-									<tbody className={styles["table-body"]}>
-            	<SkeletonTheme
-            		baseColor="#E8F6FC"
-            		highlightColor="#DDF4FF"
-            		borderRadius={2}
-            	>
-            		{skeleton.map((item: any, index: number) => (
-            			<tr key={index}>
-            				<td>
-            					<Skeleton width="30px" height="20px" />
-            				</td>
-            				<td style={{width: '300px'}}>
-            					<span className={styles["table-user"]}>
-            						<Skeleton width="100px" height="20px" />
-            					</span>
-            				</td>
-            				<td style={{width: '300px'}}>
-            					<span className={styles["table-user"]}>
-            						<Skeleton width="100px" height="20px" />
-            					</span>
-            				</td>
-            				<td>
-            					<Skeleton width="100px" height="20px" />
-            				</td>
-            				<td style={{width: '200px'}}>
-            					<Skeleton width="200px" height="20px" />
-            				</td>
-            				<td>
-            					<Skeleton width="100px" height="20px" />
-            				</td>
-            				<td>
-            					<Skeleton width="100px" height="20px" />
-            				</td>
-            			</tr>
-            		))}
-            	</SkeletonTheme>
-									</tbody>
-									:
-									<tbody className={styles["table-body"]}>
-										{data?.data?.map((client: any, index: number) => (
-											<tr key={index}>
-												<td>{index + 1}</td>
-												<td style={{width: '300px'}}>
-													{client.name} {client.lastName}
-												</td>
-												<td style={{width: '300px'}}>
-													{client.createdByRealtor.name} {client.createdByRealtor.lastName}
-												</td>
-												<td>
-													<span className={`${styles["table-status"]} ${styles.admin}`}>{client.status.name}</span>
-												</td>
-												<td style={{width: '300px'}}>Casa</td>
-												<td style={{width: '200px'}}>
-													<span className={styles["table-bitacora"]}><BiListUl/></span>
-												</td>
-												<td>
-													<div className={styles["table-action"]}>
-														<span className={styles["table-edit"]}><BiEdit/></span>
-														<span className={styles["table-delete"]} onClick={() => handleDelete(client.id)}><BiTrashAlt/></span>
-													</div>
-												</td>
-											</tr>
-										))}
-									</tbody>
-							}
-						</table>
+						<div className={styles["table-container"]}>
+							<table className={styles.table}>
+								<thead>
+									<tr className={styles["table-head"]}>
+										<th>#</th>
+										<th>Cliente</th>
+										<th>Ejecutivo</th>
+										<th>Estado</th>
+										<th>Tipo</th>
+										<th>Bitacora</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								{
+									isLoading
+										?
+										<tbody className={styles["table-body"]}>
+											<SkeletonTheme
+												baseColor="#E8F6FC"
+												highlightColor="#DDF4FF"
+												borderRadius={2}
+											>
+												{skeleton.map((item: any, index: number) => (
+													<tr key={index}>
+														<td>
+															<Skeleton width="30px" height="20px" />
+														</td>
+														<td style={{width: '300px'}}>
+															<span className={styles["table-user"]}>
+																<Skeleton width="100px" height="20px" />
+															</span>
+														</td>
+														<td style={{width: '300px'}}>
+															<span className={styles["table-user"]}>
+																<Skeleton width="100px" height="20px" />
+															</span>
+														</td>
+														<td>
+															<Skeleton width="100px" height="20px" />
+														</td>
+														<td style={{width: '200px'}}>
+															<Skeleton width="200px" height="20px" />
+														</td>
+														<td>
+															<Skeleton width="100px" height="20px" />
+														</td>
+														<td>
+															<Skeleton width="100px" height="20px" />
+														</td>
+													</tr>
+												))}
+											</SkeletonTheme>
+										</tbody>
+										:
+										<tbody className={styles["table-body"]}>
+											{data?.data?.map((client: any, index: number) => (
+												<tr key={index}>
+													<td>{index + 1}</td>
+													<td>
+														{client.name} {client.lastName}
+													</td>
+													<td>
+														{client.createdByRealtor.name} {client.createdByRealtor.lastName}
+													</td>
+													<td>
+														<span className={`${styles["table-status"]} ${styles.admin}`}>{client.status.name}</span>
+													</td>
+													<td>Casa</td>
+													<td>
+														<span className={styles["table-bitacora"]}><BiListUl/></span>
+													</td>
+													<td>
+														<div className={styles["table-action"]}>
+															<span className={styles["table-edit"]}><BiEdit/></span>
+															<span className={styles["table-delete"]} onClick={() => handleDelete(client.id)}><BiTrashAlt/></span>
+														</div>
+													</td>
+												</tr>
+											))}
+										</tbody>
+								}
+							</table>
+						</div>
 				}
 			</div>
 			<AddCustomers openModal={openModal} setOpenModal={setOpenModal} />

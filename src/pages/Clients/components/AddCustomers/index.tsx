@@ -54,11 +54,11 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 	// Validataions
 	const validationSchema = {
 		addCustomer : Yup.object({
-			name: Yup.string().required("Requirido"),
-			lastName: Yup.string().required("Requirido"),
-			email: Yup.string().email("Correo Invalido").required("Requirido"),
-			documentType: Yup.string().required("Requirido"),
-			documentNumber: Yup.string().required("Requirido"),
+			name: Yup.string().required("Requerido"),
+			lastName: Yup.string().required("Requerido"),
+			email: Yup.string().email("Correo Invalido").required("Requerido"),
+			documentType: Yup.string().required("Requerido"),
+			documentNumber: Yup.string().required("Requerido"),
 		})
 	};
 

@@ -64,84 +64,86 @@ const Users = () => {
 						?
 						<div className={styles["table-error"]}>Hubo un error!</div>
 						:
-						<table className={styles.table}>
-							<thead>
-								<tr className={styles["table-head"]}>
-									<th>#</th>
-									<th>Usuario</th>
-									<th>Rol</th>
-									<th>Email</th>
-									<th>Acciones</th>
-								</tr>
-							</thead>
-							{
-								isLoading
-									?
-									<tbody className={styles["table-body"]}>
-            	<SkeletonTheme
-            		baseColor="#E8F6FC"
-            		highlightColor="#DDF4FF"
-            		borderRadius={2}
-            	>
-            		{skeleton.map((item: any, index: number) => (
-            			<tr key={index}>
-            				<td>
-            					<Skeleton width="30px" height="20px" />
-            				</td>
-            				<td style={{width: '300px'}}>
-            					<span className={styles["table-user"]}>
-            						<Skeleton
-            							circle
-            							width="40px"
-            							height="40px"
-            							style={{marginRight: "20px"}}
-            						/>
-            						<Skeleton width="100px" height="20px" />
-            					</span>
-            				</td>
-            				<td>
-            					<Skeleton width="100px" height="20px" />
-            				</td>
-            				<td style={{width: '400px'}}>
-            					<Skeleton width="400px" height="20px" />
-            				</td>
-            				<td>
-            					<Skeleton width="100px" height="20px" />
-            				</td>
-            			</tr>
-            		))}
-            	</SkeletonTheme>
-									</tbody>
-									:
-									<tbody className={styles["table-body"]}>
-										{data?.data?.map((user: any, index: number) => (
-											<tr key={index}>
-												<td>{index + 1}</td>
-												<td style={{width: '300px'}}>
-													<span className={styles["table-user"]}>
-														{
-															user.deleteAt === null
-																? <span className={styles["table-avatar"]}>{user.name.charAt(0)}</span>
-																: <img src={userAvatar} alt="" />
-														}
-														{user.name} {user.lastName}
-													</span>
-												</td>
-												<td>
-													<span className={`${styles["table-role"]} ${styles.admin}`}>Admin</span>
-												</td>
-												<td style={{width: '400px'}}>{user.email}</td>
-												<td>
-													<div className={styles["table-action"]}>
-														<span className={styles["table-edit"]}><BiEdit/></span>
-														<span className={styles["table-delete"]}><BiTrashAlt/></span>
-													</div>
-												</td>
-											</tr>
-										))}
-									</tbody>
-							}
-						</table>
+						<div className={styles["table-container"]}>
+							<table className={styles.table}>
+								<thead>
+									<tr className={styles["table-head"]}>
+										<th>#</th>
+										<th>Usuario</th>
+										<th>Rol</th>
+										<th>Email</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								{
+									isLoading
+										?
+										<tbody className={styles["table-body"]}>
+											<SkeletonTheme
+												baseColor="#E8F6FC"
+												highlightColor="#DDF4FF"
+												borderRadius={2}
+											>
+												{skeleton.map((item: any, index: number) => (
+													<tr key={index}>
+														<td>
+															<Skeleton width="30px" height="20px" />
+														</td>
+														<td style={{width: '300px'}}>
+															<span className={styles["table-user"]}>
+																<Skeleton
+																	circle
+																	width="40px"
+																	height="40px"
+																	style={{marginRight: "20px"}}
+																/>
+																<Skeleton width="100px" height="20px" />
+															</span>
+														</td>
+														<td>
+															<Skeleton width="100px" height="20px" />
+														</td>
+														<td style={{width: '400px'}}>
+															<Skeleton width="400px" height="20px" />
+														</td>
+														<td>
+															<Skeleton width="100px" height="20px" />
+														</td>
+													</tr>
+												))}
+											</SkeletonTheme>
+										</tbody>
+										:
+										<tbody className={styles["table-body"]}>
+											{data?.data?.map((user: any, index: number) => (
+												<tr key={index}>
+													<td>{index + 1}</td>
+													<td style={{width: '300px'}}>
+														<span className={styles["table-user"]}>
+															{
+																user.deleteAt === null
+																	? <span className={styles["table-avatar"]}>{user.name.charAt(0)}</span>
+																	: <img src={userAvatar} alt="" />
+															}
+															{user.name} {user.lastName}
+														</span>
+													</td>
+													<td>
+														<span className={`${styles["table-role"]} ${styles.admin}`}>Admin</span>
+													</td>
+													<td style={{width: '400px'}}>{user.email}</td>
+													<td>
+														<div className={styles["table-action"]}>
+															<span className={styles["table-edit"]}><BiEdit/></span>
+															<span className={styles["table-delete"]}><BiTrashAlt/></span>
+														</div>
+													</td>
+												</tr>
+											))}
+										</tbody>
+								}
+							</table>
+						</div>
 				}
 			</div>
 		</div>

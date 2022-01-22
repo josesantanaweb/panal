@@ -6,15 +6,33 @@
   transition: all 0.2s;
   position: fixed;
   top: 0;
-  left: 0;
+  left: -80px;
+  z-index: 10;
+  @media only screen and (min-width: 600px) {
+    top: 0;
+    left: 0;
+  }
 }
 
 .sidebar-logo {
-  display: flex;
   align-items: center;
   justify-content: center;
   height: 64px;
   padding-right: 5px;
+  display: none;
+  @media only screen and (min-width: 600px) {
+    display: flex;
+  }
+}
+
+.sidebar-logo-movil {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  @media only screen and (min-width: 600px) {
+    display: none;
+  }
 }
 
 .sidebar-menu {
@@ -65,26 +83,44 @@
 }
 
 .is-open {
-  width: 230px;
+  width: 80px;
+  left: 0;
+  @media only screen and (min-width: 600px) {
+    width: 230px;
+  }
 }
 
 .is-open .sidebar-item {
-  justify-content: flex-end;
-  padding: 0 2rem;
+  padding: 0 1rem;
+  @media only screen and (min-width: 600px) {
+    justify-content: flex-end;
+    padding: 0 2rem;
+  }
 }
 
 .is-open .sidebar-link {
-  width: 100%;
+  display: flex;
+  align-items: center;
+  @media only screen and (min-width: 600px) {
+    width: 100%;
+  }
 }
 
 .is-open .sidebar-link.active {
   &:after {
-    right: -32px;
+    right: -29px;
+  }
+  @media only screen and (min-width: 600px) {
+    &:after {
+      right: -32px;
+    }
   }
 }
 
 .is-open .sidebar-link span {
-  display: block;
-  font-size: 1rem;
-  margin-left: 1rem;
+  @media only screen and (min-width: 600px) {
+    display: block;
+    font-size: 1rem;
+    margin-left: 1rem;
+  }
 }

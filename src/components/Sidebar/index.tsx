@@ -34,6 +34,9 @@ const Sidebar = () => {
 				<div className={styles["sidebar-logo"]}>
 					<img src={openSidebar ? logoWhite : logo} alt="logo" />
 				</div>
+				<div className={styles["sidebar-logo-movil"]}>
+					<img src={logo} alt="logo" />
+				</div>
 				<ul className={styles["sidebar-menu"]}>
 					{/* <li className={styles["sidebar-item"]}>
 						<Link to="/" className={`${styles['sidebar-link']}`}>

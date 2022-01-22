@@ -6,11 +6,15 @@
 
 .layout-main {
   width: 100%;
-  margin-left: 80px;
+  @media only screen and (min-width: 600px) {
+    margin-left: 80px;
+  }
 }
 
 .is-open {
-  margin-left: 230px;
+  @media only screen and (min-width: 600px) {
+    margin-left: 230px;
+  }
 }
 
 .layout-content {
