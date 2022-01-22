@@ -18,6 +18,10 @@
   font-family: 'Baloo 2', cursive;
   color: white;
   font-size: var(--title-font-size);
+  display: none;
+  @media only screen and (min-width: 600px) {
+    display: block;
+  }
 }
 
 .login-welcome h3 {
@@ -28,10 +32,13 @@
 
 .login-container {
   background-color: white;
-  width: 50%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  @media only screen and (min-width: 600px) {
+    width: 50%;
+  }
 }
 
 .login-form {
