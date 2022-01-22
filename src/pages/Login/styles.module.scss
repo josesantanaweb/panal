@@ -20,7 +20,7 @@
   font-size: var(--title-font-size);
   display: none;
   @media only screen and (min-width: 600px) {
-    display: block;
+    display: flex;
   }
 }
 
