@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { BiMenu } from "react-icons/bi";
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import UserMenu from "./components/UserMenu";
 
 import { setOpenSidebar } from "store/features/sidebarSlice";
+import useOnClickOutside from 'hooks/useOnClickOutside';
 import { openSidebarSelector } from 'store/selectors';
 import styles from "./styles.module.scss";
 import AuthServices from 'services/authServices';
@@ -16,6 +17,11 @@ const Navbar = () => {
 	const dispatch = useDispatch();
 	const openSidebar = useSelector(openSidebarSelector);
 	const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
+
+	const ref = useRef(null);
+	const handleClickOutside = () => setOpenUserMenu(false);
+
+	useOnClickOutside(ref, handleClickOutside);
 	const { data, isLoading, isError} = useQuery('test', AuthServices.testSession, {
 		onError: (error: any) => {
 			if(error.response.data.statusCode === 401) {
@@ -43,7 +49,7 @@ const Navbar = () => {
 			<div className={styles['header-toggle']} onClick={handleOpenSidebar}>
 				<BiMenu />
 			</div>
-			<div className={styles['header-menu']}>
+			<div className={styles['header-menu']} ref={ref}>
 				<UserMenu handleOpenUserMenu={handleOpenUserMenu} openUserMenu={openUserMenu} />
 			</div>
 		</header>
