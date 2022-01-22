@@ -118,7 +118,7 @@ const Users = () => {
 											{data?.data?.map((user: any, index: number) => (
 												<tr key={index}>
 													<td>{index + 1}</td>
-													<td style={{width: '300px'}}>
+													<td>
 														<span className={styles["table-user"]}>
 															{
 																user.deleteAt === null

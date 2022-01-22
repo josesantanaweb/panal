@@ -121,7 +121,7 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 				onSubmit={onSubmit}
 			>
 				{({ errors, touched, isValid, dirty}) => (
-					<Form>
+					<Form className={styles["form-container"]}>
 						<div className={styles["form-rows"]}>
 							<Field
 								type="text"

@@ -23,12 +23,15 @@
 .modal-content {
   background-color: var(--secondary-bg-color);
   height: 100%;
-  width: 30%;
+  width: 100%;
   padding: 2rem;
   transform: translateX(50%);
   transition: all .2s;
   opacity: 0;
   visibility: hidden;
+  @media only screen and (min-width: 600px) {
+    width: 30%;
+  }
 }
 
 .modal-content.is-open {

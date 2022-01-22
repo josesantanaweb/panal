@@ -11,7 +11,7 @@ const Checkbox: React.FC<CheckboxProps> = ({handleToggle, label, value}) => {
 
 	return (
 		<div className={styles.checkbox} onClick={handleToggle}>
-			<div className={checkboxClasses}></div>
+			<span className={checkboxClasses}></span>
 			<p>{label}</p>
 		</div>
 	);
