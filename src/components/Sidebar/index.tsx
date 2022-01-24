@@ -38,7 +38,7 @@ const Sidebar = () => {
 					<img src={logo} alt="logo" />
 				</div>
 				<ul className={styles["sidebar-menu"]}>
-					{/* <li className={styles["sidebar-item"]}>
+					<li className={styles["sidebar-item"]}>
 						<Link to="/" className={`${styles['sidebar-link']}`}>
 							<BiCategory />
 							<span>Dashboard</span>
@@ -62,13 +62,13 @@ const Sidebar = () => {
 							<span>Ordenes</span>
 						</Link>
 					</li>
-          <li className={styles["sidebar-item"]}>
+					<li className={styles["sidebar-item"]}>
 						<Link to="/" className={styles["sidebar-link"]}>
 							<BiClipboard />
 							<span>Reportes</span>
 						</Link>
 					</li>
-          */}
+
 					<li className={`${styles['sidebar-item']} ${splitLocation[1] === "clients" ? styles.active : ""}`}>
 						<Link to="/clients" className={`${styles['sidebar-link']} ${splitLocation[1] === "clients" ? styles.active : ""}`}>
 							<BiGroup />
