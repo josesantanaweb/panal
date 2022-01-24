@@ -6,17 +6,19 @@
 }
 
 .select-label {
-  font-size: var(--normal-font-size);
+  font-size: var(--small-font-size);
   color: var(--primary-text-color);
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 500;
   span {
-    color: var(--rejected-color);
+    color: var(--danger-color);
     margin-left: 0.2rem;
   }
 }
 
 .select-container {
-  width: 100%;
+  // width: 100%;
   position: relative;
   border-radius: 2px;
   height: 36px;
@@ -48,6 +50,7 @@
   left: 0;
   width: 100%;
   z-index: 20;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 .select-items li {

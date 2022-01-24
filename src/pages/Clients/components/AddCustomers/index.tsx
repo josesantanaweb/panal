@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Button from "components/Button";
 import Modal from "components/Modal";
+import Select from "components/Select";
 import Input from "components/Input";
 import Checkbox from "components/Checkbox";
 
@@ -14,9 +15,22 @@ import styles from "./styles.module.scss";
 import {AddCustomersProps, IValues} from "./types";
 import CustomersServices from 'services/customersServices';
 
+const documentTypeOptions = [
+	{
+		label: 'RUT',
+		value: 'rut',
+	},
+	{
+		label: 'Pasaporte',
+		value: 'pasaporte',
+	},
+];
+
 const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => {
+	const [documentType, setDocumentType] = useState(documentTypeOptions[0]);
 	const [mortgage, setMortgage] = useState<boolean>(false);
 	const [cashPayment, setCashPayment] = useState<boolean>(false);
+	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation(CustomersServices.addCustomer, {
 		onSuccess: (data) => {
@@ -47,6 +61,9 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 		}
 	});
 
+  	// Handle Open limit select
+	const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
+
 	const handleMortgage = () => setMortgage(!mortgage);
 
 	const handleCashPayment = () => setCashPayment(!cashPayment);
@@ -57,7 +74,6 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 			name: Yup.string().required("Requerido"),
 			lastName: Yup.string().required("Requerido"),
 			email: Yup.string().email("Correo Invalido").required("Requerido"),
-			documentType: Yup.string().required("Requerido"),
 			documentNumber: Yup.string().required("Requerido"),
 		})
 	};
@@ -82,7 +98,6 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 			name,
 			lastName,
 			email,
-			documentType,
 			documentNumber,
 			localPhone,
 			phone,
@@ -95,7 +110,7 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 			name,
 			lastName,
 			email,
-			documentType,
+			documentType: documentType.value,
 			documentNumber,
 			localPhone,
 			phone,
@@ -143,20 +158,21 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 							/>
 						</div>
 						<div className={styles["form-rows"]}>
-							<Field
-								type="text"
-								name="documentType"
-								placeholder="Ingrese su Numero de Documento"
-								label="Numero de Documento"
+							<Select
+								options={documentTypeOptions}
+								label="Tipo de Documento"
 								required
-								component={Input}
-								error={errors.documentType && touched.documentType ? errors.documentType : null}
+								selectedOption={documentType}
+								setSelectedOption={setDocumentType}
+								open={openSelectDocumentType}
+								setOpen={setOpenSelectDocumentType}
+								handleOpenSelect={handleOpenDocumentType}
 							/>
 							<Field
 								type="text"
 								name="documentNumber"
-								placeholder="Ingrese su Tipo de Documento"
-								label="Tipo de Documento"
+								placeholder="Ingrese su Numero de Documento"
+								label="Numero de Documento"
 								required
 								component={Input}
 								error={errors.documentNumber && touched.documentNumber ? errors.documentNumber : null}

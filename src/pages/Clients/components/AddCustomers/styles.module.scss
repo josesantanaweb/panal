@@ -21,15 +21,17 @@
 .form-rows {
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
-  div {
+  > div {
     margin-bottom: 1rem;
   }
   @media only screen and (min-width: 600px) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 2rem;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
+    > div {
+      margin-bottom: 0rem;
+    }
   }
 }
 
