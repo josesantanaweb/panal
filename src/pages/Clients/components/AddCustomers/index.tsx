@@ -225,15 +225,17 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 							/>
 						</div>
 						<div className={styles["form-rows"]}>
-							<Checkbox
+							<Field
+								name="mortgage"
+								type="checkbox"
 								label="Hipotecario"
-								value={mortgage}
-								handleToggle={handleMortgage}
+								component={Checkbox}
 							/>
-							<Checkbox
+							<Field
+								name="cashPayment"
+								type="checkbox"
 								label="Pago al contado"
-								value={cashPayment}
-								handleToggle={handleCashPayment}
+								component={Checkbox}
 							/>
 						</div>
 						<div className={styles["form-footer"]}>

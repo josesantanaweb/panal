@@ -3,17 +3,25 @@ import React from 'react';
 import styles from "./styles.module.scss";
 import {CheckboxProps} from "./types";
 
-const Checkbox: React.FC<CheckboxProps> = ({handleToggle, label, value}) => {
+const Checkbox: React.FC<CheckboxProps> = ({label, name, value,	field, form, ...props}) => {
 	const checkboxClasses = [
 		styles["checkbox-toggle"],
-		value ? styles["is-active"] : ""
+		field?.value ? styles["is-active"] : ""
 	].join(' ');
 
 	return (
-		<div className={styles.checkbox} onClick={handleToggle}>
+		<label className={styles.checkbox}>
 			<span className={checkboxClasses}></span>
+			<input
+				type="checkbox"
+				checked={value}
+				value={value}
+				name={name}
+				{...field}
+				{...props}
+			/>
 			<p>{label}</p>
-		</div>
+		</label>
 	);
 };
 

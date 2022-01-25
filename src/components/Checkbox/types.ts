@@ -1,5 +1,7 @@
 export interface CheckboxProps {
-  handleToggle?: () => void;
   label: string;
+  name?: string;
   value: boolean;
+  field?: any;
+	form?: any;
 }

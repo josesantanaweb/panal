@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {BiEdit, BiTrashAlt} from "react-icons/bi";
 import { useQuery } from 'react-query';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
@@ -34,12 +34,14 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 	const [cashPayment, setCashPayment] = useState<boolean>(false);
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
 	const queryClient = useQueryClient();
-	const { data, isLoading } = useQuery(["customer", userId], CustomersServices.getCustomer);
+	const hasUserId = userId > 0;
+	const { data, isLoading } = useQuery(["customer", userId], CustomersServices.getCustomer, { enabled: hasUserId });
+
 	const { mutate } = useMutation(CustomersServices.editCustomer, {
 		onSuccess: (data) => {
 			toast.success("Cliente editado exitosamente", {
 				position: "top-right",
-				autoClose: 2000,
+				autoClose: 1000,
 				hideProgressBar: false,
 				closeOnClick: true,
 				pauseOnHover: false,
@@ -48,8 +50,8 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 			});
 			queryClient.invalidateQueries(['customers']);
 			setTimeout(() => {
-				setOpenModal(false);
-			}, 3000);
+				// window.location.reload();
+			}, 2000);
 		},
 		onError: (error: any) => {
 			toast.error(error.response.data.message === "This user already exists" && "Cliente ya existe", {
@@ -91,12 +93,12 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 		localPhone: '',
 		phone: '',
 		address: '',
-		cashPayment: false,
-		mortgage: false,
+		cashPayment: true,
+		mortgage: true,
 		comments: ''
 	};
 
-	const onSubmit = (values: IValues, {resetForm}: any) => {
+	const onSubmit = (values: IValues) => {
 		const {
 			name,
 			lastName,
@@ -122,9 +124,6 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 		  mortgage,
 			comments
 		});
-		resetForm({ values: ''});
-		setCashPayment(false);
-		setMortgage(false);
 	};
 
 	return (
@@ -257,15 +256,17 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 									/>
 								</div>
 								<div className={styles["form-rows"]}>
-									<Checkbox
+									<Field
+										name="mortgage"
+										type="checkbox"
 										label="Hipotecario"
-										value={mortgage}
-										handleToggle={handleMortgage}
+										component={Checkbox}
 									/>
-									<Checkbox
+									<Field
+										name="cashPayment"
+										type="checkbox"
 										label="Pago al contado"
-										value={cashPayment}
-										handleToggle={handleCashPayment}
+										component={Checkbox}
 									/>
 								</div>
 								<div className={styles["form-footer"]}>

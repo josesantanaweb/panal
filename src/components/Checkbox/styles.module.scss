@@ -6,6 +6,10 @@
   cursor: pointer;
 }
 
+.checkbox input {
+  display: none;
+}
+
 .checkbox-toggle {
   width: 15px;
   height: 15px;
