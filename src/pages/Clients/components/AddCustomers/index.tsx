@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import Button from "components/Button";
 import Modal from "components/Modal";
@@ -123,7 +125,6 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 		setCashPayment(false);
 		setMortgage(false);
 	};
-
 
 	return (
 		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Crear Cliente">

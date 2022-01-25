@@ -3,18 +3,18 @@ import {BiEdit, BiListUl, BiTrashAlt} from "react-icons/bi";
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import Button from "components/Button";
 import Select from "components/Select";
 import Input from "components/Input";
 import AddCustomers from "./components/AddCustomers";
+import EditCustomers from "./components/EditCustomers";
 
-import { ISelect } from "interfaces";
 import styles from "./styles.module.scss";
 import CustomersServices from 'services/customersServices';
 
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 const limitOptions = [
 	{
@@ -35,6 +35,10 @@ const skeleton = [0,1,2,3];
 
 const Customers = () => {
 	const [limit, setLimit] = useState(limitOptions[0]);
+	const [userId, setUserId] = useState<number>(0);
+	const [openSelectLimit, setOpenSelectLimit] = useState<boolean>(false);
+	const [openModalAddCustomer, setOpenModalAddCustomer] = useState<boolean>(false);
+	const [openModalEditCustomer, setOpenModalEditCustomer] = useState<boolean>(false);
 	const { data, isLoading, isError } = useQuery(["customers", limit.value], CustomersServices.getCustomers);
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation(CustomersServices.deleteCustomer, {
@@ -62,15 +66,20 @@ const Customers = () => {
 			});
 		}
 	});
-	const [openSelectLimit, setOpenSelectLimit] = useState<boolean>(false);
-	const [openModal, setOpenModal] = useState<boolean>(false);
 
 	// Handle Open limit select
 	const handleOpenLimit = () => setOpenSelectLimit(true);
 
 	// Handle Add Customers
-	const handleAddCustomers = () => setOpenModal(true);
+	const handleAddCustomers = () => setOpenModalAddCustomer(true);
 
+	// Handle Edit Customers
+	const handleEditCustomers = (id: number) => {
+		setUserId(id);
+		setOpenModalEditCustomer(true);
+	};
+
+	// Handle Delete Customers
 	const handleDelete = (id: number) => {
 		mutate(id);
 	};
@@ -175,7 +184,7 @@ const Customers = () => {
 													</td>
 													<td>
 														<div className={styles["table-action"]}>
-															<span className={styles["table-edit"]}><BiEdit/></span>
+															<span className={styles["table-edit"]} onClick={() => handleEditCustomers(client.id)}><BiEdit/></span>
 															<span className={styles["table-delete"]} onClick={() => handleDelete(client.id)}><BiTrashAlt/></span>
 														</div>
 													</td>
@@ -187,7 +196,15 @@ const Customers = () => {
 						</div>
 				}
 			</div>
-			<AddCustomers openModal={openModal} setOpenModal={setOpenModal} />
+			<AddCustomers
+				openModal={openModalAddCustomer}
+				setOpenModal={setOpenModalAddCustomer}
+			/>
+			<EditCustomers
+				userId={userId}
+				openModal={openModalEditCustomer}
+				setOpenModal={setOpenModalEditCustomer}
+			/>
 			<ToastContainer />
 		</div>
 	);
