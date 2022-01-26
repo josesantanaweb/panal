@@ -25,9 +25,6 @@
   color: var(--secondary-text-color);
   font-weight: 500;
   margin-bottom: 1rem;
-  @media only screen and (min-width: 600px) {
-    margin-bottom: 0;
-  }
 }
 
 .properties-total {
