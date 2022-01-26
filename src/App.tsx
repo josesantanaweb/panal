@@ -8,6 +8,7 @@ import Properties from 'pages/Properties';
 import Users from 'pages/Users';
 import Login from 'pages/Login';
 import Clients from 'pages/Clients';
+import Orders from 'pages/Orders';
 
 import { isAuthenticatedSelector } from 'store/selectors';
 import { ROUTES } from "constants/routes";
@@ -37,6 +38,7 @@ function App() {
 						<Route path={ROUTES.PROPERTIES} element={<Properties />} />
 						<Route path={ROUTES.USERS} element={<Users />} />
 						<Route path={ROUTES.CLIENTS} element={<Clients />} />
+						<Route path={ROUTES.ORDERS} element={<Orders />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

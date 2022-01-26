@@ -1,0 +1,150 @@
+/*=============== Orden ===============*/
+.orders {
+  background-color: var(--secondary-bg-color);
+  padding: 2rem;
+  border-radius: 5px;
+}
+
+.orders-top {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  @media only screen and (min-width: 600px) {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    align-items: center;
+  }
+}
+
+.orders-title {
+  font-size: var(--title-font-size);
+  color: var(--secondary-text-color);
+  font-weight: 500;
+  margin-bottom: 1rem;
+  @media only screen and (min-width: 600px) {
+    margin-bottom: 0;
+  }
+}
+
+.orders-filter {
+  margin-bottom: 2rem;
+  grid-gap: 1rem;
+  align-items: center;
+
+  div {
+    margin-bottom: 0.5rem;
+  }
+
+  @media only screen and (min-width: 600px) {
+    margin-bottom: 5rem;
+    display: grid;
+    grid-template-columns: 70px 300px;
+    div {
+      margin-bottom: 0rem;
+    }
+  }
+}
+
+.table-container {
+	width: 100%;
+	overflow-y: auto;
+	overflow: auto;
+}
+
+.table {
+  width: 1000px;
+  @media only screen and (min-width: 600px) {
+    width: 100%;
+  }
+}
+
+.table-head {
+  color: var(--primary-text-color);
+  background-color: var(--primay-bg-color);;
+  th {
+    font-size: var(--normal-font-size);
+    padding: 1rem 0;
+    text-align: center;
+    &:first-child {
+      width: 80px;
+    }
+  }
+}
+
+.table-body tr {
+  color: var(--secondary-text-color);
+  border-bottom: 1px solid var(--border-color);
+  height: 60px;
+  td {
+    font-size: var(--normal-font-size);
+    text-align: center;
+    vertical-align: middle;
+  }
+  th {
+    vertical-align: middle;
+  }
+}
+
+.table-detail {
+  font-size: var(--normal-font-size);
+  color: var(--primary-text-color);
+  cursor: pointer;
+}
+
+.table-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  margin-right: 1rem;
+  color: white;
+  background-color: var(--placeholder-color);
+  font-size: var(--normal-font-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+
+.table-status {
+  font-size: var(--small-font-size);
+  color: var(--secondary-bg-color);;
+  padding: 2px 8px;
+  border-radius: 4px;
+  &.pending {
+    background-color: var(--primary-color);
+  }
+}
+
+.table-action {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 30px 30px;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icons-font-size);
+  span {
+    cursor: pointer;
+  }
+}
+
+.table-edit {
+  color: var(--primary-color);
+}
+
+.table-delete {
+  color: var(--danger-color);
+}
+
+.table-error {
+  display: flex;
+  justify-content: center;
+  color: var(--danger-color);
+}
