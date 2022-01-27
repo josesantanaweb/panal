@@ -12,6 +12,7 @@ import Orders from 'pages/Orders';
 
 import { isAuthenticatedSelector } from 'store/selectors';
 import { ROUTES } from "constants/routes";
+import Business from 'pages/Business';
 
 const AppLayout = () => {
 	const isAuthenticated = useSelector(isAuthenticatedSelector);
@@ -39,6 +40,7 @@ function App() {
 						<Route path={ROUTES.USERS} element={<Users />} />
 						<Route path={ROUTES.CLIENTS} element={<Clients />} />
 						<Route path={ROUTES.ORDERS} element={<Orders />} />
+						<Route path={ROUTES.BUSINESS} element={<Business />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>
