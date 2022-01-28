@@ -14,6 +14,7 @@ import EditCustomers from "./components/EditCustomers";
 
 import styles from "./styles.module.scss";
 import CustomersServices from 'services/customersServices';
+import Binnacle from './components/Binnacle';
 
 
 const limitOptions = [
@@ -39,6 +40,7 @@ const Customers = () => {
 	const [openSelectLimit, setOpenSelectLimit] = useState<boolean>(false);
 	const [openModalAddCustomer, setOpenModalAddCustomer] = useState<boolean>(false);
 	const [openModalEditCustomer, setOpenModalEditCustomer] = useState<boolean>(false);
+	const [openModalBinnacle, setOpenModalBinnacle] = useState<boolean>(false);
 	const { data, isLoading, isError } = useQuery(["customers", limit.value], CustomersServices.getCustomers);
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation(CustomersServices.deleteCustomer, {
@@ -72,6 +74,9 @@ const Customers = () => {
 
 	// Handle Add Customers
 	const handleAddCustomers = () => setOpenModalAddCustomer(true);
+
+	// Handle Add Customers
+	const handleBinnacle = () => setOpenModalBinnacle(true);
 
 	// Handle Edit Customers
 	const handleEditCustomers = (id: number) => {
@@ -180,7 +185,7 @@ const Customers = () => {
 													</td>
 													<td>Casa</td>
 													<td>
-														<span className={styles["table-bitacora"]}><BiListUl/></span>
+														<span className={styles["table-bitacora"]} onClick={handleBinnacle}><BiListUl/></span>
 													</td>
 													<td>
 														<div className={styles["table-action"]}>
@@ -204,6 +209,10 @@ const Customers = () => {
 				userId={userId}
 				openModal={openModalEditCustomer}
 				setOpenModal={setOpenModalEditCustomer}
+			/>
+			<Binnacle
+				openModal={openModalBinnacle}
+				setOpenModal={setOpenModalBinnacle}
 			/>
 			<ToastContainer />
 		</div>
