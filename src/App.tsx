@@ -9,6 +9,7 @@ import Users from 'pages/Users';
 import Login from 'pages/Login';
 import Clients from 'pages/Clients';
 import Orders from 'pages/Orders';
+import Support from 'pages/Support';
 
 import { isAuthenticatedSelector } from 'store/selectors';
 import { ROUTES } from "constants/routes";
@@ -41,6 +42,7 @@ function App() {
 						<Route path={ROUTES.CLIENTS} element={<Clients />} />
 						<Route path={ROUTES.ORDERS} element={<Orders />} />
 						<Route path={ROUTES.BUSINESS} element={<Business />} />
+						<Route path={ROUTES.SUPPORT} element={<Support />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

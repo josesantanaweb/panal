@@ -8,6 +8,7 @@ import {
 	BiGroup,
 	BiUser,
 	BiClipboard,
+	BiCog,
 } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -63,9 +64,9 @@ const Sidebar = () => {
 						</Link>
 					</li>
 					<li className={styles["sidebar-item"]}>
-						<Link to="/" className={styles["sidebar-link"]}>
-							<BiClipboard />
-							<span>Reportes</span>
+						<Link to="/support" className={styles["sidebar-link"]}>
+							<BiCog />
+							<span>Soporte</span>
 						</Link>
 					</li>
 
