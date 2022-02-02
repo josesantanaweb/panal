@@ -4,8 +4,6 @@ import * as Yup from 'yup';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 import Button from "components/Button";
 import Modal from "components/Modal";
@@ -14,8 +12,20 @@ import Input from "components/Input";
 import Checkbox from "components/Checkbox";
 
 import styles from "./styles.module.scss";
-import {AddCustomersProps, IValues} from "./types";
+import {AddUsersProps, IValues} from "./types";
 import CustomersServices from 'services/customersServices';
+import portalInmobilario from "assets/img/portal-inmobilario.png";
+import goplaceit from "assets/img/goplaceit.png";
+import icasa from "assets/img/icasa.png";
+import chilePropiedades from "assets/img/chile-propiedades.png";
+import enlaceInmobilario from "assets/img/enlace-inmobilario.png";
+import doomos from "assets/img/doomos.png";
+import toctoc from "assets/img/toctoc.png";
+import emol from "assets/img/emol.png";
+import portalTerreno from "assets/img/portal-terreno.png";
+import zoom from "assets/img/zoom.png";
+import propiv from "assets/img/propiv.png";
+import yapo from "assets/img/yapo.png";
 
 const documentTypeOptions = [
 	{
@@ -28,10 +38,8 @@ const documentTypeOptions = [
 	},
 ];
 
-const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => {
+const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 	const [documentType, setDocumentType] = useState(documentTypeOptions[0]);
-	const [mortgage, setMortgage] = useState<boolean>(false);
-	const [cashPayment, setCashPayment] = useState<boolean>(false);
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation(CustomersServices.addCustomer, {
@@ -65,10 +73,6 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 
   	// Handle Open limit select
 	const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
-
-	const handleMortgage = () => setMortgage(!mortgage);
-
-	const handleCashPayment = () => setCashPayment(!cashPayment);
 
 	// Validataions
 	const validationSchema = {
@@ -122,22 +126,21 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 			comments
 		});
 		resetForm({ values: ''});
-		setCashPayment(false);
-		setMortgage(false);
 	};
 
 	return (
-		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Crear Cliente">
+		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Crear Usuario">
 			<div className={styles["form-label"]}>
-				<p>Información del cliente</p>
+				<p>Información del usuario</p>
 			</div>
 			<Formik
 				initialValues={INITIAL_VALUES}
 				validationSchema={validationSchema.addCustomer}
 				onSubmit={onSubmit}
+				clasName={styles["form-container"]}
 			>
 				{({ errors, touched, isValid, dirty}) => (
-					<Form className={styles["form-container"]}>
+					<Form className={styles["form-wrapper"]}>
 						<div className={styles["form-rows"]}>
 							<Field
 								type="text"
@@ -215,31 +218,186 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 								component={Input}
 							/>
 						</div>
+						<div className={styles["form-section"]}>
+							<div className={styles["form-label"]}>
+								<p>Cargo y descripción</p>
+							</div>
+						</div>
 						<div className={styles["form-single"]}>
+							<Select
+								options={documentTypeOptions}
+								label="Cargo"
+								required
+								selectedOption={documentType}
+								setSelectedOption={setDocumentType}
+								open={openSelectDocumentType}
+								setOpen={setOpenSelectDocumentType}
+								handleOpenSelect={handleOpenDocumentType}
+							/>
+						</div>
+						<div className={styles["form-section"]}>
+							<div className={styles["form-label"]}>
+								<p>Aplicación</p>
+							</div>
+						</div>
+						<div className={styles["form-rows"]}>
+							<Select
+								options={documentTypeOptions}
+								label="Cargo"
+								required
+								selectedOption={documentType}
+								setSelectedOption={setDocumentType}
+								open={openSelectDocumentType}
+								setOpen={setOpenSelectDocumentType}
+								handleOpenSelect={handleOpenDocumentType}
+							/>
 							<Field
-								name="comments"
-								placeholder="Ingrese Comentario"
-								label="Comentario"
-								textarea
+								type="text"
+								name="office"
+								placeholder="Ingrese su Oficina"
+								label="Oficina"
 								component={Input}
 							/>
+						</div>
+						<div className={styles["form-rows"]}>
+							<Field
+								type="text"
+								name="password"
+								placeholder="Ingrese su Contraseña"
+								label="Oficina"
+								component={Input}
+							/>
+							<Field
+								type="text"
+								name="confimr_password"
+								placeholder="Repita su Contraseña"
+								label="Confirme su Contraseña"
+								component={Input}
+							/>
+						</div>
+						<div className={styles["form-section"]}>
+							<div className={styles["form-label"]}>
+								<p>Perfil de evaluacion</p>
+							</div>
 						</div>
 						<div className={styles["form-checkbox"]}>
 							<Field
 								name="mortgage"
 								type="checkbox"
-								label="Hipotecario"
+								label="Es Vendedor"
 								component={Checkbox}
 							/>
 							<Field
 								name="cashPayment"
 								type="checkbox"
-								label="Pago al contado"
+								label="Es Captador"
+								component={Checkbox}
+							/>
+						</div>
+						<div className={styles["form-section"]}>
+							<div className={styles["form-label"]}>
+								<p>Sitio web</p>
+							</div>
+						</div>
+						<div className={styles["form-checkbox"]}>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								label="Visible en web"
+								component={Checkbox}
+							/>
+						</div>
+						<div className={styles["form-section"]}>
+							<div className={styles["form-label"]}>
+								<p>VendeID</p>
+							</div>
+						</div>
+						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={portalInmobilario}
+								component={Checkbox}
+							/>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={goplaceit}
+								component={Checkbox}
+							/>
+						</div>
+						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={icasa}
+								component={Checkbox}
+							/>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={chilePropiedades}
+								component={Checkbox}
+							/>
+						</div>
+						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={enlaceInmobilario}
+								component={Checkbox}
+							/>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={doomos}
+								component={Checkbox}
+							/>
+						</div>
+						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={toctoc}
+								component={Checkbox}
+							/>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={emol}
+								component={Checkbox}
+							/>
+						</div>
+						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={zoom}
+								component={Checkbox}
+							/>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={portalTerreno}
+								component={Checkbox}
+							/>
+						</div>
+						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={propiv}
+								component={Checkbox}
+							/>
+							<Field
+								name="mortgage"
+								type="checkbox"
+								imagen={yapo}
 								component={Checkbox}
 							/>
 						</div>
 						<div className={styles["form-footer"]}>
-							<Button type='submit' disabled={!isValid || !dirty}>Guardar Cliente</Button>
+							<Button type='submit' disabled={!isValid || !dirty}>Crear Usuario</Button>
 						</div>
 					</Form>
 				)}
@@ -250,4 +408,4 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 
 };
 
-export default AddCustomers;
+export default AddUsers;

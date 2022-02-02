@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import {BiEdit, BiTrashAlt} from "react-icons/bi";
 import { useQuery } from 'react-query';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Button from "components/Button";
 import Select from "components/Select";
 import Input from "components/Input";
+import AddUsers from "./components/AddUsers";
 
 import { ISelect } from "interfaces";
 import userAvatar from "../../assets/img/user.jpg";
@@ -33,15 +36,19 @@ const skeleton = [0,1,2,3];
 
 const Users = () => {
 	const [page, setPage] = useState<ISelect>(pageOptions[0]);
+	const [openModalAddUsers, setOpenModalAddUsers] = useState<boolean>(false);
 	const { data, isLoading, isError } = useQuery('users', UsersServices.getUsers);
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
 	const handleOpenPage = () => setOpenSelectPage(true);
+
+  	// Handle Add Users
+	const handleAddUsers = () => setOpenModalAddUsers(true);
 
 	return (
 		<div className={styles.users}>
 			<div className={styles["users-top"]}>
 				<h2 className={styles["users-title"]}>Listado de Usuarios</h2>
-				<Button>Agregar Usuario</Button>
+				<Button onClick={handleAddUsers}>Agregar Usuario</Button>
 			</div>
 			<div className={styles["users-filter"]}>
 				<div>
@@ -146,6 +153,11 @@ const Users = () => {
 						</div>
 				}
 			</div>
+			<AddUsers
+				openModal={openModalAddUsers}
+				setOpenModal={setOpenModalAddUsers}
+			/>
+			<ToastContainer />
 		</div>
 	);
 };

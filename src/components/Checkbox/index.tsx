@@ -3,7 +3,7 @@ import React from 'react';
 import styles from "./styles.module.scss";
 import {CheckboxProps} from "./types";
 
-const Checkbox: React.FC<CheckboxProps> = ({label, name, value,	field, form, ...props}) => {
+const Checkbox: React.FC<CheckboxProps> = ({label, name, value,	field, form, imagen, ...props}) => {
 	const checkboxClasses = [
 		styles["checkbox-toggle"],
 		field?.value ? styles["is-active"] : ""
@@ -20,7 +20,11 @@ const Checkbox: React.FC<CheckboxProps> = ({label, name, value,	field, form, ...
 				{...field}
 				{...props}
 			/>
-			<p>{label}</p>
+			{
+				!label
+					? <img src={imagen} alt="" />
+					: <p>{label}</p>
+			}
 		</label>
 	);
 };
