@@ -13,6 +13,7 @@ import UsersServices from 'services/usersServices';
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import GenerateOrder from './GenerateOrder';
 
 const pageOptions = [
 	{
@@ -34,14 +35,18 @@ const skeleton = [0,1,2,3];
 const Orders = () => {
 	const [page, setPage] = useState<ISelect>(pageOptions[0]);
 	const { data, isLoading, isError } = useQuery('users', UsersServices.getUsers);
+	const [openModalGenerateOrder, setOpenModalGenerateOrder] = useState<boolean>(false);
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
 	const handleOpenPage = () => setOpenSelectPage(true);
+
+  	// Handle Generate order
+	const handleGenerateOrder = () => setOpenModalGenerateOrder(true);
 
 	return (
 		<div className={styles.orders}>
 			<div className={styles["orders-top"]}>
 				<h2 className={styles["orders-title"]}>Listado de Ordenes</h2>
-				<Button>Agregar Orden</Button>
+				<Button onClick={handleGenerateOrder}>Generar Orden</Button>
 			</div>
 			<div className={styles["orders-filter"]}>
 				<div>
@@ -149,6 +154,10 @@ const Orders = () => {
 						</div>
 				}
 			</div>
+			<GenerateOrder
+				openModal={openModalGenerateOrder}
+				setOpenModal={setOpenModalGenerateOrder}
+			/>
 		</div>
 	);
 };
