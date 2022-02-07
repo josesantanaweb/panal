@@ -67,13 +67,14 @@
 }
 
 .form-footer {
-  margin-top: 4rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   display: grid;
   justify-content: space-between;
   grid-gap: 1rem;
   grid-template-columns: 1fr;
   @media only screen and (min-width: 600px) {
+    margin-top: 4rem;
     grid-gap: 0;
     grid-template-columns: 100px 300px;
   }
