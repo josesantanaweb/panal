@@ -36,7 +36,7 @@ const Select: React.FC<SelectProps> = (
 			}
 			<div className={styles["select-container"]} ref={ref}>
 				<div onClick={handleOpenSelect} className={styles["select-option"]}>
-					<span>{selectedOption.label}</span>
+					<span>{selectedOption?.label}</span>
 					{ open ? <BiChevronUp/> : <BiChevronDown/>}
 				</div>
 				{

@@ -1,8 +1,8 @@
 import api from '../config/api';
 import { getValue } from '../utils/localStorage';
 
-const UsersServices = {
-	getUsers: () => api.get('users', {
+const DocumentsServices = {
+	getDocuments: () => api.get('identity-documents', {
 		headers: {
 			Authorization:  `Bearer ${getValue('token')}`
 		}
@@ -11,4 +11,4 @@ const UsersServices = {
 		.catch(err => err.reponse.data.message),
 };
 
-export default UsersServices;
+export default DocumentsServices;

@@ -1,15 +1,15 @@
 export interface EditCustomersProps {
   setOpenModal: any;
   openModal: boolean;
-  userId: number;
+  clientId: number;
 }
 
 export interface IValues {
   name: string,
   lastName: string,
   email: string,
-  documentType: string,
-  documentNumber: string,
+  identityDocumentId: number,
+  identityDocumentNumber: string,
   localPhone: string,
   phone: string,
   cashPayment: boolean,

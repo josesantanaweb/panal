@@ -36,7 +36,7 @@ const skeleton = [0,1,2,3];
 
 const Customers = () => {
 	const [limit, setLimit] = useState(limitOptions[0]);
-	const [userId, setUserId] = useState<number>(0);
+	const [clientId, setClientId] = useState<number>(0);
 	const [openSelectLimit, setOpenSelectLimit] = useState<boolean>(false);
 	const [openModalAddCustomer, setOpenModalAddCustomer] = useState<boolean>(false);
 	const [openModalEditCustomer, setOpenModalEditCustomer] = useState<boolean>(false);
@@ -80,7 +80,7 @@ const Customers = () => {
 
 	// Handle Edit Customers
 	const handleEditCustomers = (id: number) => {
-		setUserId(id);
+		setClientId(id);
 		setOpenModalEditCustomer(true);
 	};
 
@@ -206,7 +206,7 @@ const Customers = () => {
 				setOpenModal={setOpenModalAddCustomer}
 			/>
 			<EditCustomers
-				userId={userId}
+				clientId={clientId}
 				openModal={openModalEditCustomer}
 				setOpenModal={setOpenModalEditCustomer}
 			/>

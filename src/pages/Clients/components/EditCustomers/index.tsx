@@ -15,7 +15,9 @@ import Checkbox from "components/Checkbox";
 
 import styles from "./styles.module.scss";
 import {EditCustomersProps, IValues} from "./types";
+import {ISelect} from "interfaces";
 import CustomersServices from 'services/customersServices';
+import DocumentsServices from 'services/documentsServices';
 
 const documentTypeOptions = [
 	{
@@ -28,14 +30,16 @@ const documentTypeOptions = [
 	},
 ];
 
-const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, userId}) => {
-	const [documentType, setDocumentType] = useState(documentTypeOptions[0]);
+const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, clientId}) => {
+	const [documentTypeOptions, setDocumentTypeOptions] = useState<ISelect[]>([]);
+	const [documentType, setDocumentType] = useState<any>();
 	const [mortgage, setMortgage] = useState<boolean>(false);
 	const [cashPayment, setCashPayment] = useState<boolean>(false);
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
 	const queryClient = useQueryClient();
-	const hasUserId = userId > 0;
-	const { data, isLoading } = useQuery(["customer", userId], CustomersServices.getCustomer, { enabled: hasUserId });
+	const { data: documents } = useQuery(["documents"], DocumentsServices.getDocuments);
+	const hasUserId = clientId > 0;
+	const { data, isLoading } = useQuery(["customer", clientId], CustomersServices.getCustomer, { enabled: hasUserId });
 
 	const { mutate } = useMutation(CustomersServices.editCustomer, {
 		onSuccess: (data) => {
@@ -50,8 +54,8 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 			});
 			queryClient.invalidateQueries(['customers']);
 			setTimeout(() => {
-				// window.location.reload();
-			}, 2000);
+				return setOpenModal(false);
+			}, 3000);
 		},
 		onError: (error: any) => {
 			toast.error(error.response.data.message === "This user already exists" && "Cliente ya existe", {
@@ -66,7 +70,22 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 		}
 	});
 
-  	// Handle Open limit select
+	useEffect(() => {
+		if (documents !== undefined) {
+			documentTypeOptionsData();
+		}
+	}, [documents]);
+
+	// Create array of options for documentType
+	const documentTypeOptionsData = () => {
+		const documentTypeOptionsData = documents?.data?.map((item: any) => ({label: item.name, value: item.id}));
+		setDocumentTypeOptions(documentTypeOptionsData);
+		if(documentTypeOptionsData !== undefined) {
+			setDocumentType(documentTypeOptionsData[0]);
+		}
+	};
+
+	// Handle Open limit select
 	const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
 
 	const handleMortgage = () => setMortgage(!mortgage);
@@ -78,8 +97,7 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 		addCustomer : Yup.object({
 			name: Yup.string().required("Requerido"),
 			lastName: Yup.string().required("Requerido"),
-			email: Yup.string().email("Correo Invalido").required("Requerido"),
-			documentNumber: Yup.string().required("Requerido"),
+			identityDocumentNumber: Yup.string().required("Requerido"),
 		})
 	};
 
@@ -88,8 +106,8 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 		name: '',
 		lastName: '',
 		email: '',
-		documentType: '',
-		documentNumber: '',
+		identityDocumentId: 1,
+		identityDocumentNumber: '',
 		localPhone: '',
 		phone: '',
 		address: '',
@@ -102,7 +120,7 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 		const {
 			name,
 			lastName,
-			documentNumber,
+			identityDocumentNumber,
 			localPhone,
 			phone,
 			address,
@@ -112,11 +130,11 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 		} = values;
 
 		mutate({
-			userId,
+			clientId,
 			name,
 			lastName,
-			documentType: documentType.value,
-			documentNumber,
+			identityDocumentId: documentType.value,
+			identityDocumentNumber,
 			localPhone,
 			phone,
 			address,
@@ -201,12 +219,12 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 									/>
 									<Field
 										type="text"
-										name="documentNumber"
+										name="identityDocumentNumber"
 										placeholder="Ingrese su Numero de Documento"
 										label="Numero de Documento"
 										required
 										component={Input}
-										error={errors.documentNumber && touched.documentNumber ? errors.documentNumber : null}
+										error={errors.identityDocumentNumber && touched.identityDocumentNumber ? errors.identityDocumentNumber : null}
 									/>
 								</div>
 								<div className={styles["form-rows"]}>
@@ -231,12 +249,10 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, us
 									<Field
 										type="email"
 										name="email"
-										required
 										disabled
 										placeholder="Ingrese su Correo Electronico"
 										label="Correo Electronico"
 										component={Input}
-										error={errors.email && touched.email ? errors.email : null}
 									/>
 									<Field
 										type="text"

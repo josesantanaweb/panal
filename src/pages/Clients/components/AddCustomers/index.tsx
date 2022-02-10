@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
@@ -15,25 +15,19 @@ import Checkbox from "components/Checkbox";
 
 import styles from "./styles.module.scss";
 import {AddCustomersProps, IValues} from "./types";
+import {ISelect} from "interfaces";
 import CustomersServices from 'services/customersServices';
-
-const documentTypeOptions = [
-	{
-		label: 'RUT',
-		value: 'rut',
-	},
-	{
-		label: 'Pasaporte',
-		value: 'pasaporte',
-	},
-];
+import DocumentsServices from 'services/documentsServices';
 
 const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => {
-	const [documentType, setDocumentType] = useState(documentTypeOptions[0]);
+	const [documentTypeOptions, setDocumentTypeOptions] = useState<ISelect[]>([]);
+	const [documentType, setDocumentType] = useState<any>();
 	const [mortgage, setMortgage] = useState<boolean>(false);
 	const [cashPayment, setCashPayment] = useState<boolean>(false);
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
+	const { data: documents, isLoading, isError } = useQuery(["documents"], DocumentsServices.getDocuments);
 	const queryClient = useQueryClient();
+
 	const { mutate } = useMutation(CustomersServices.addCustomer, {
 		onSuccess: (data) => {
 			toast.success("Cliente registrado exitosamente", {
@@ -63,6 +57,21 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 		}
 	});
 
+	useEffect(() => {
+		if (documents !== undefined) {
+			documentTypeOptionsData();
+		}
+	}, [documents]);
+
+	// Create array of options for documentType
+	const documentTypeOptionsData = () => {
+		const documentTypeOptionsData = documents?.data?.map((item: any) => ({label: item.name, value: item.id}));
+		setDocumentTypeOptions(documentTypeOptionsData);
+		if(documentTypeOptionsData !== undefined) {
+			setDocumentType(documentTypeOptionsData[0]);
+		}
+	};
+
   	// Handle Open limit select
 	const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
 
@@ -76,7 +85,7 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 			name: Yup.string().required("Requerido"),
 			lastName: Yup.string().required("Requerido"),
 			email: Yup.string().email("Correo Invalido").required("Requerido"),
-			documentNumber: Yup.string().required("Requerido"),
+			identityDocumentNumber: Yup.string().required("Requerido"),
 		})
 	};
 
@@ -85,8 +94,8 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 		name: '',
 		lastName: '',
 		email: '',
-		documentType: '',
-		documentNumber: '',
+		identityDocumentId: 1,
+		identityDocumentNumber: '',
 		localPhone: '',
 		phone: '',
 		address: '',
@@ -100,7 +109,7 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 			name,
 			lastName,
 			email,
-			documentNumber,
+			identityDocumentNumber,
 			localPhone,
 			phone,
 			address,
@@ -112,8 +121,8 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 			name,
 			lastName,
 			email,
-			documentType: documentType.value,
-			documentNumber,
+			identityDocumentId: documentType.value,
+			identityDocumentNumber,
 			localPhone,
 			phone,
 			address,
@@ -171,12 +180,12 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 							/>
 							<Field
 								type="text"
-								name="documentNumber"
+								name="identityDocumentNumber"
 								placeholder="Ingrese su Numero de Documento"
 								label="Numero de Documento"
 								required
 								component={Input}
-								error={errors.documentNumber && touched.documentNumber ? errors.documentNumber : null}
+								error={errors.identityDocumentNumber && touched.identityDocumentNumber ? errors.identityDocumentNumber : null}
 							/>
 						</div>
 						<div className={styles["form-rows"]}>
