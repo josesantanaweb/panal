@@ -3,7 +3,7 @@ export const ROUTES = {
 	PROFILE: '/profile',
 	PROPERTIES: '/properties',
 	USERS: '/users',
-	CLIENTS: '/clients',
+	CUSTOMERS: '/customers',
 	ORDERS: '/orders',
 	BUSINESS: '/business',
 	SUPPORT: '/support',

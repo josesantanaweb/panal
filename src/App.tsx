@@ -7,7 +7,7 @@ import Profile from "pages/Profile";
 import Properties from 'pages/Properties';
 import Users from 'pages/Users';
 import Login from 'pages/Login';
-import Clients from 'pages/Clients';
+import Customers from 'pages/Customers';
 import Orders from 'pages/Orders';
 import Support from 'pages/Support';
 
@@ -39,7 +39,7 @@ function App() {
 						<Route path={ROUTES.PROFILE} element={<Profile />} />
 						<Route path={ROUTES.PROPERTIES} element={<Properties />} />
 						<Route path={ROUTES.USERS} element={<Users />} />
-						<Route path={ROUTES.CLIENTS} element={<Clients />} />
+						<Route path={ROUTES.CUSTOMERS} element={<Customers />} />
 						<Route path={ROUTES.ORDERS} element={<Orders />} />
 						<Route path={ROUTES.BUSINESS} element={<Business />} />
 						<Route path={ROUTES.SUPPORT} element={<Support />} />
