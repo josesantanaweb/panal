@@ -104,7 +104,6 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 		identityDocumentId: 1,
 		identityDocumentNumber: '',
 		phone: '',
-		address: '',
 		password: '',
 		confirm_password: ''
 	};
@@ -116,7 +115,6 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			email,
 			identityDocumentNumber,
 			phone,
-			address,
 			password,
 		} = values;
 		mutate({
@@ -126,7 +124,6 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			identityDocumentId: documentType.value,
 			identityDocumentNumber,
 			// phone,
-			// address,
 			password,
 		});
 		// resetForm({ values: ''});
@@ -204,15 +201,6 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 								label="Correo Electronico"
 								component={Input}
 								error={errors.email && touched.email ? errors.email : null}
-							/>
-						</div>
-						<div className={styles["form-rows"]}>
-							<Field
-								type="text"
-								name="address"
-								placeholder="Ingrese su Direccion"
-								label="Direccion"
-								component={Input}
 							/>
 						</div>
 						<div className={styles["form-section"]}>
