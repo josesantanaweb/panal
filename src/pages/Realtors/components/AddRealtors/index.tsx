@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
@@ -12,8 +12,11 @@ import Input from "components/Input";
 import Checkbox from "components/Checkbox";
 
 import styles from "./styles.module.scss";
-import {AddUsersProps, IValues} from "./types";
-import CustomersServices from 'services/customersServices';
+import {AddRealtorsProps, IValues} from "./types";
+import {ISelect} from "interfaces";
+import RealtorsServices from 'services/realtorsServices';
+import DocumentsServices from 'services/documentsServices';
+
 import portalInmobilario from "assets/img/portal-inmobilario.png";
 import goplaceit from "assets/img/goplaceit.png";
 import icasa from "assets/img/icasa.png";
@@ -27,24 +30,15 @@ import zoom from "assets/img/zoom.png";
 import propiv from "assets/img/propiv.png";
 import yapo from "assets/img/yapo.png";
 
-const documentTypeOptions = [
-	{
-		label: 'RUT',
-		value: 'rut',
-	},
-	{
-		label: 'Pasaporte',
-		value: 'pasaporte',
-	},
-];
-
-const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
-	const [documentType, setDocumentType] = useState(documentTypeOptions[0]);
+const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
+	const [documentTypeOptions, setDocumentTypeOptions] = useState<ISelect[]>([]);
+	const [documentType, setDocumentType] = useState<any>();
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
 	const queryClient = useQueryClient();
-	const { mutate } = useMutation(CustomersServices.addCustomer, {
+	const { data: documents, isLoading, isError } = useQuery(["documents"], DocumentsServices.getDocuments);
+	const { mutate } = useMutation(RealtorsServices.addRealtors, {
 		onSuccess: (data) => {
-			toast.success("Cliente registrado exitosamente", {
+			toast.success("Agente registrado exitosamente", {
 				position: "top-right",
 				autoClose: 2000,
 				hideProgressBar: false,
@@ -53,13 +47,13 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 				draggable: true,
 				progress: undefined,
 			});
-			queryClient.invalidateQueries(['customers']);
+			queryClient.invalidateQueries(['realtors']);
 			setTimeout(() => {
 				return setOpenModal(false);
 			}, 3000);
 		},
 		onError: (error: any) => {
-			toast.error(error.response.data.message === "This user already exists" && "Cliente ya existe", {
+			toast.error(error.response.data.message === "This realtors already exists" && "Agente ya existe", {
 				position: "top-right",
 				autoClose: 3000,
 				hideProgressBar: false,
@@ -71,16 +65,34 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 		}
 	});
 
-  	// Handle Open limit select
+	useEffect(() => {
+		if (documents !== undefined) {
+			documentTypeOptionsData();
+		}
+	}, [documents]);
+
+	// Create array of options for documentType
+	const documentTypeOptionsData = () => {
+		const documentTypeOptionsData = documents?.data?.map((item: any) => ({label: item.name, value: item.id}));
+		setDocumentTypeOptions(documentTypeOptionsData);
+		if(documentTypeOptionsData !== undefined) {
+			setDocumentType(documentTypeOptionsData[0]);
+		}
+	};
+
+	// Handle Open limit select
 	const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
 
 	// Validataions
 	const validationSchema = {
-		addCustomer : Yup.object({
+		addRealtors : Yup.object({
 			name: Yup.string().required("Requerido"),
 			lastName: Yup.string().required("Requerido"),
 			email: Yup.string().email("Correo Invalido").required("Requerido"),
-			documentNumber: Yup.string().required("Requerido"),
+			phone: Yup.string().required("Requerido"),
+			identityDocumentNumber: Yup.string().required("Requerido"),
+			password: Yup.string().required("Requirido").min(5).max(25),
+			confirm_password: Yup.string().required("Requerido").oneOf([Yup.ref('password'), null], 'Contraseñas no coinciden'),
 		})
 	};
 
@@ -89,14 +101,12 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 		name: '',
 		lastName: '',
 		email: '',
-		documentType: '',
-		documentNumber: '',
-		localPhone: '',
+		identityDocumentId: 1,
+		identityDocumentNumber: '',
 		phone: '',
 		address: '',
-		cashPayment: false,
-		mortgage: false,
-		comments: ''
+		password: '',
+		confirm_password: ''
 	};
 
 	const onSubmit = (values: IValues, {resetForm}: any) => {
@@ -104,38 +114,32 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 			name,
 			lastName,
 			email,
-			documentNumber,
-			localPhone,
+			identityDocumentNumber,
 			phone,
 			address,
-			cashPayment,
-		  mortgage,
-			comments
+			password,
 		} = values;
 		mutate({
 			name,
 			lastName,
 			email,
-			documentType: documentType.value,
-			documentNumber,
-			localPhone,
-			phone,
-			address,
-			cashPayment,
-		  mortgage,
-			comments
+			identityDocumentId: documentType.value,
+			identityDocumentNumber,
+			// phone,
+			// address,
+			password,
 		});
-		resetForm({ values: ''});
+		// resetForm({ values: ''});
 	};
 
 	return (
-		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Crear Usuario">
+		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Crear Agente">
 			<div className={styles["form-label"]}>
-				<p>Información del usuario</p>
+				<p>Información del agente</p>
 			</div>
 			<Formik
 				initialValues={INITIAL_VALUES}
-				validationSchema={validationSchema.addCustomer}
+				validationSchema={validationSchema.addRealtors}
 				onSubmit={onSubmit}
 				clasName={styles["form-container"]}
 			>
@@ -174,33 +178,24 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 							/>
 							<Field
 								type="text"
-								name="documentNumber"
+								name="identityDocumentNumber"
 								placeholder="Ingrese su Numero de Documento"
 								label="Numero de Documento"
 								required
 								component={Input}
-								error={errors.documentNumber && touched.documentNumber ? errors.documentNumber : null}
+								error={errors.identityDocumentNumber && touched.identityDocumentNumber ? errors.identityDocumentNumber : null}
 							/>
 						</div>
 						<div className={styles["form-rows"]}>
 							<Field
 								type="text"
-								name="localPhone"
-								placeholder="Ingrese su Teléfono"
-								label="Teléfono"
-								component={Input}
-								error={errors.localPhone && touched.localPhone ? errors.localPhone : null}
-							/>
-							<Field
-								type="text"
 								name="phone"
+								required
 								placeholder="Ingrese su Teléfono celular"
 								label="Teléfono celular"
 								component={Input}
 								error={errors.phone && touched.phone ? errors.phone : null}
 							/>
-						</div>
-						<div className={styles["form-rows"]}>
 							<Field
 								type="email"
 								name="email"
@@ -210,29 +205,14 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 								component={Input}
 								error={errors.email && touched.email ? errors.email : null}
 							/>
+						</div>
+						<div className={styles["form-rows"]}>
 							<Field
 								type="text"
 								name="address"
-								placeholder="Ingrese su Domicilio"
-								label="Domicilio"
+								placeholder="Ingrese su Direccion"
+								label="Direccion"
 								component={Input}
-							/>
-						</div>
-						<div className={styles["form-section"]}>
-							<div className={styles["form-label"]}>
-								<p>Cargo y descripción</p>
-							</div>
-						</div>
-						<div className={styles["form-single"]}>
-							<Select
-								options={documentTypeOptions}
-								label="Cargo"
-								required
-								selectedOption={documentType}
-								setSelectedOption={setDocumentType}
-								open={openSelectDocumentType}
-								setOpen={setOpenSelectDocumentType}
-								handleOpenSelect={handleOpenDocumentType}
 							/>
 						</div>
 						<div className={styles["form-section"]}>
@@ -241,31 +221,13 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 							</div>
 						</div>
 						<div className={styles["form-rows"]}>
-							<Select
-								options={documentTypeOptions}
-								label="Cargo"
-								required
-								selectedOption={documentType}
-								setSelectedOption={setDocumentType}
-								open={openSelectDocumentType}
-								setOpen={setOpenSelectDocumentType}
-								handleOpenSelect={handleOpenDocumentType}
-							/>
-							<Field
-								type="text"
-								name="office"
-								placeholder="Ingrese su Oficina"
-								label="Oficina"
-								component={Input}
-							/>
-						</div>
-						<div className={styles["form-rows"]}>
 							<Field
 								type="text"
 								name="password"
 								placeholder="Ingrese su Contraseña"
-								label="Oficina"
+								label="Contraseña"
 								component={Input}
+								error={errors.password && touched.password ? errors.password : null}
 							/>
 							<Field
 								type="text"
@@ -273,6 +235,7 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 								placeholder="Repita su Contraseña"
 								label="Confirme su Contraseña"
 								component={Input}
+								error={errors.confirm_password && touched.confirm_password ? errors.confirm_password : null}
 							/>
 						</div>
 						<div className={styles["form-section"]}>
@@ -307,7 +270,7 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 								component={Checkbox}
 							/>
 						</div>
-						<div className={styles["form-section"]}>
+						{/* <div className={styles["form-section"]}>
 							<div className={styles["form-label"]}>
 								<p>VendeID</p>
 							</div>
@@ -395,9 +358,10 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 								imagen={yapo}
 								component={Checkbox}
 							/>
-						</div>
+						</div> */}
 						<div className={styles["form-footer"]}>
-							<Button type='submit' disabled={!isValid || !dirty}>Crear Usuario</Button>
+							{/* <Button type='submit'>Crear Agente</Button> */}
+							<Button type='submit' disabled={!isValid || !dirty}>Crear Agente</Button>
 						</div>
 					</Form>
 				)}
@@ -408,4 +372,4 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 
 };
 
-export default AddUsers;
+export default AddRealtors;

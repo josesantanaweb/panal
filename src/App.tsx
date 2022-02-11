@@ -10,6 +10,7 @@ import Login from 'pages/Login';
 import Customers from 'pages/Customers';
 import Orders from 'pages/Orders';
 import Support from 'pages/Support';
+import Realtors from 'pages/Realtors';
 
 import { isAuthenticatedSelector } from 'store/selectors';
 import { ROUTES } from "constants/routes";
@@ -43,6 +44,7 @@ function App() {
 						<Route path={ROUTES.ORDERS} element={<Orders />} />
 						<Route path={ROUTES.BUSINESS} element={<Business />} />
 						<Route path={ROUTES.SUPPORT} element={<Support />} />
+						<Route path={ROUTES.REALTORS} element={<Realtors />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

@@ -9,6 +9,7 @@ import {
 	BiUser,
 	BiClipboard,
 	BiCog,
+	BiStreetView,
 } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -74,6 +75,12 @@ const Sidebar = () => {
 						<Link to="/customers" className={`${styles['sidebar-link']} ${splitLocation[1] === "customers" ? styles.active : ""}`}>
 							<BiGroup />
 							<span>Clientes</span>
+						</Link>
+					</li>
+					<li className={`${styles['sidebar-item']} ${splitLocation[1] === "clients" ? styles.active : ""}`}>
+						<Link to="/realtors" className={`${styles['sidebar-link']} ${splitLocation[1] === "realtors" ? styles.active : ""}`}>
+							<BiStreetView />
+							<span>Agentes</span>
 						</Link>
 					</li>
 					<li className={`${styles['sidebar-item']} ${splitLocation[1] === "users" ? styles.active : ""}`}>
