@@ -1,0 +1,74 @@
+/*=============== Add Property ===============*/
+.add-property {
+  background-color: var(--secondary-bg-color);
+  padding: 1rem;
+  border-radius: 5px;
+  @media only screen and (min-width: 600px) {
+    padding: 2rem;
+  }
+}
+
+.add-property-top {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  @media only screen and (min-width: 600px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.add-property-title {
+  display: flex;
+  align-items: center;
+  color: var(--primary-text-color);
+  h3 {
+    font-size: var(--title-font-size);
+    font-weight: 500;
+    color: var(--secondary-text-color);
+    margin-left: 1rem;
+  }
+}
+
+.section-title {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  color: var(--primary-text-color);
+  h4 {
+    font-size: var(--text-font-size);
+    font-weight: 500;
+    color: var(--secondary-text-color);
+  }
+}
+
+.section-subtitle {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary-text-color);
+  h5 {
+    font-size: var(--normal-font-size);
+    font-weight: 500;
+    color: var(--primary-color);
+  }
+}
+
+.form-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-row-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-single {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 1rem;
+}

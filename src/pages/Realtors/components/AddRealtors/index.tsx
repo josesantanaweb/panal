@@ -123,7 +123,7 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			email,
 			identityDocumentId: documentType.value,
 			identityDocumentNumber,
-			// phone,
+			phone,
 			password,
 		});
 		// resetForm({ values: ''});

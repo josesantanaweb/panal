@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { BiMap, BiHotel, BiBath, BiCar, BiFilterAlt, BiListUl } from "react-icons/bi";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useNavigate } from 'react-router-dom';
 
 import Button from "components/Button";
 import Input from "components/Input";
@@ -41,6 +42,7 @@ const pageOptions = [
 ];
 
 const Properties = () => {
+	const navigate = useNavigate();
 	const [openSelectStatus, setOpenSelectStatus] = useState<boolean>(false);
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
 	const [filterStatus, setFilterStatus] = useState<ISelect>(statusOptions[0]);
@@ -64,7 +66,7 @@ const Properties = () => {
 								<h2 className={styles["properties-title"]}>Mis Propiedades</h2>
 								<p className={styles["properties-total"]}>10 Total</p>
 							</div>
-							<Button>Agregar Propiedad</Button>
+							<Button onClick={() => navigate(`/add-property`)}>Agregar Propiedad</Button>
 						</div>
 						<div className={styles["properties-filter"]}>
 							<div className={styles["properties-column"]}>

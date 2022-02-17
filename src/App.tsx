@@ -11,6 +11,7 @@ import Customers from 'pages/Customers';
 import Orders from 'pages/Orders';
 import Support from 'pages/Support';
 import Realtors from 'pages/Realtors';
+import AddProperty from 'pages/Properties/AddProperty';
 
 import { isAuthenticatedSelector } from 'store/selectors';
 import { ROUTES } from "constants/routes";
@@ -39,6 +40,7 @@ function App() {
 						<Route path="/" element={<Users />} />
 						<Route path={ROUTES.PROFILE} element={<Profile />} />
 						<Route path={ROUTES.PROPERTIES} element={<Properties />} />
+						<Route path={ROUTES.ADDPROPERTY} element={<AddProperty />} />
 						<Route path={ROUTES.USERS} element={<Users />} />
 						<Route path={ROUTES.CUSTOMERS} element={<Customers />} />
 						<Route path={ROUTES.ORDERS} element={<Orders />} />
