@@ -112,7 +112,6 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 			password,
 		});
 		resetForm({ values: ''});
-		console.log(values);
 	};
 
 	return (

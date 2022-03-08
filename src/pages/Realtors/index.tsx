@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {BiEdit, BiTrashAlt} from "react-icons/bi";
-import { useQuery } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,9 +8,9 @@ import Button from "components/Button";
 import Select from "components/Select";
 import Input from "components/Input";
 import AddRealtors from "./components/AddRealtors";
+import EditRealtors from "./components/EditRealtors";
 
 import { ISelect } from "interfaces";
-import userAvatar from "../../assets/img/user.jpg";
 import styles from "./styles.module.scss";
 import RealtorsServices from 'services/realtorsServices';
 
@@ -36,13 +36,53 @@ const skeleton = [0,1,2,3];
 
 const Realtors = () => {
 	const [page, setPage] = useState<ISelect>(pageOptions[0]);
+	const [realtorId, setRealtorId] = useState<number>(0);
 	const [openModalAddRealtors, setOpenModalAddRealtors] = useState<boolean>(false);
-	const { data, isLoading, isError } = useQuery('realtors', RealtorsServices.getRealtors);
+	const [openModalEditRealtor, setOpenModalEditRealtor] = useState<boolean>(false);
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
+	const { data, isLoading, isError } = useQuery('realtors', RealtorsServices.getRealtors);
+	const queryClient = useQueryClient();
+	const { mutate } = useMutation(RealtorsServices.deleteRealtor, {
+		onSuccess: (data) => {
+			toast.success("Agente eliminado exitosamente", {
+				position: "top-right",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+			queryClient.invalidateQueries(['realtors']);
+		},
+		onError: (error: any) => {
+			toast.error("Ocurrio un error al eliminar al usuario", {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	});
+
 	const handleOpenPage = () => setOpenSelectPage(true);
 
   	// Handle Add Realtors
 	const handleAddRealtors = () => setOpenModalAddRealtors(true);
+
+  	// Handle Edit Realtors
+	const handleEditRealtors = (id: number) => {
+		setRealtorId(id);
+		setOpenModalEditRealtor(true);
+	};
+
+	// Handle Delete Realtors
+	const handleDelete = (id: number) => {
+		mutate(id);
+	};
 
 	return (
 		<div className={styles.realtors}>
@@ -140,8 +180,8 @@ const Realtors = () => {
 													</td>
 													<td>
 														<div className={styles["table-action"]}>
-															<span className={styles["table-edit"]}><BiEdit/></span>
-															<span className={styles["table-delete"]}><BiTrashAlt/></span>
+															<span className={styles["table-edit"]} onClick={() => handleEditRealtors(realtor.id)}><BiEdit/></span>
+															<span className={styles["table-delete"]} onClick={() => handleDelete(realtor.id)}><BiTrashAlt/></span>
 														</div>
 													</td>
 												</tr>
@@ -155,6 +195,11 @@ const Realtors = () => {
 			<AddRealtors
 				openModal={openModalAddRealtors}
 				setOpenModal={setOpenModalAddRealtors}
+			/>
+			<EditRealtors
+				realtorId={realtorId}
+				openModal={openModalEditRealtor}
+				setOpenModal={setOpenModalEditRealtor}
 			/>
 			<ToastContainer />
 		</div>
