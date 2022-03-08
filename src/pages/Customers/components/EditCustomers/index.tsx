@@ -92,14 +92,6 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, cl
 
 	const handleCashPayment = () => setCashPayment(!cashPayment);
 
-	// Validataions
-	const validationSchema = {
-		addCustomer : Yup.object({
-			name: Yup.string().required("Requerido"),
-			lastName: Yup.string().required("Requerido"),
-			identityDocumentNumber: Yup.string().required("Requerido"),
-		})
-	};
 
 	// Initial values
 	const INITIAL_VALUES = {
@@ -108,7 +100,6 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, cl
 		email: '',
 		identityDocumentId: 1,
 		identityDocumentNumber: '',
-		localPhone: '',
 		phone: '',
 		address: '',
 		cashPayment: true,
@@ -181,7 +172,6 @@ const EditCustomers:React.FC<EditCustomersProps> = ({setOpenModal, openModal, cl
 					:
 					<Formik
 						initialValues={data || INITIAL_VALUES}
-						validationSchema={validationSchema.addCustomer}
 						onSubmit={onSubmit}
 					>
 						{({ errors, touched, isValid, dirty}) => (

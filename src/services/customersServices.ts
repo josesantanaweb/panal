@@ -20,8 +20,8 @@ const CustomersServices = {
 		});
 		return response.data;
 	},
-	editCustomer: async ({ userId, ...data }: any) => {
-		const response = await api.patch(`/customers/${userId}`, data, {
+	editCustomer: async ({ clientId, ...data }: any) => {
+		const response = await api.patch(`/customers/${clientId}`, data, {
 			headers: {Authorization:  `Bearer ${getValue('token')}`}
 		});
 		return response.data;

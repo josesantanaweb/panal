@@ -96,7 +96,6 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 		email: '',
 		identityDocumentId: 1,
 		identityDocumentNumber: '',
-		localPhone: '',
 		phone: '',
 		address: '',
 		cashPayment: false,
@@ -110,7 +109,6 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 			lastName,
 			email,
 			identityDocumentNumber,
-			localPhone,
 			phone,
 			address,
 			cashPayment,
@@ -123,7 +121,6 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 			email,
 			identityDocumentId: documentType.value,
 			identityDocumentNumber,
-			localPhone,
 			phone,
 			address,
 			cashPayment,
@@ -190,12 +187,13 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 						</div>
 						<div className={styles["form-rows"]}>
 							<Field
-								type="text"
-								name="localPhone"
-								placeholder="Ingrese su Teléfono"
-								label="Teléfono"
+								type="email"
+								name="email"
+								required
+								placeholder="Ingrese su Correo Electronico"
+								label="Correo Electronico"
 								component={Input}
-								error={errors.localPhone && touched.localPhone ? errors.localPhone : null}
+								error={errors.email && touched.email ? errors.email : null}
 							/>
 							<Field
 								type="text"
@@ -207,15 +205,6 @@ const AddCustomers:React.FC<AddCustomersProps> = ({setOpenModal, openModal}) => 
 							/>
 						</div>
 						<div className={styles["form-rows"]}>
-							<Field
-								type="email"
-								name="email"
-								required
-								placeholder="Ingrese su Correo Electronico"
-								label="Correo Electronico"
-								component={Input}
-								error={errors.email && touched.email ? errors.email : null}
-							/>
 							<Field
 								type="text"
 								name="address"

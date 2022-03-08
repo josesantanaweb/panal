@@ -9,7 +9,6 @@ export interface IValues {
   email: string,
   identityDocumentId: number,
   identityDocumentNumber: string,
-  localPhone: string,
   phone: string,
   cashPayment: boolean,
   mortgage: boolean,
