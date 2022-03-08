@@ -8,9 +8,9 @@ import Button from "components/Button";
 import Select from "components/Select";
 import Input from "components/Input";
 import AddUsers from "./components/AddUsers";
+import EditUsers from "./components/EditUsers";
 
 import { ISelect } from "interfaces";
-import userAvatar from "../../assets/img/user.jpg";
 import styles from "./styles.module.scss";
 import UsersServices from 'services/usersServices';
 
@@ -36,13 +36,21 @@ const skeleton = [0,1,2,3];
 
 const Users = () => {
 	const [page, setPage] = useState<ISelect>(pageOptions[0]);
+	const [userId, setUserId] = useState<number>(0);
 	const [openModalAddUsers, setOpenModalAddUsers] = useState<boolean>(false);
+	const [openModalEditUser, setOpenModalEditUser] = useState<boolean>(false);
 	const { data, isLoading, isError } = useQuery('users', UsersServices.getUsers);
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
 	const handleOpenPage = () => setOpenSelectPage(true);
 
   	// Handle Add Users
 	const handleAddUsers = () => setOpenModalAddUsers(true);
+
+  	// Handle Edit User
+	const handleEditUsers = (id: number) => {
+		setUserId(id);
+		setOpenModalEditUser(true);
+	};
 
 	return (
 		<div className={styles.users}>
@@ -79,6 +87,7 @@ const Users = () => {
 										<th>Usuario</th>
 										<th>Rol</th>
 										<th>Email</th>
+										<th>Telefono</th>
 										<th>Acciones</th>
 									</tr>
 								</thead>
@@ -132,9 +141,10 @@ const Users = () => {
 														<span className={`${styles["table-role"]} ${styles.admin}`}>Admin</span>
 													</td>
 													<td style={{width: '400px'}}>{user.email}</td>
+													<td>{user.phone}</td>
 													<td>
 														<div className={styles["table-action"]}>
-															<span className={styles["table-edit"]}><BiEdit/></span>
+															<span className={styles["table-edit"]} onClick={() => handleEditUsers(user.id)}><BiEdit/></span>
 															<span className={styles["table-delete"]}><BiTrashAlt/></span>
 														</div>
 													</td>
@@ -149,6 +159,11 @@ const Users = () => {
 			<AddUsers
 				openModal={openModalAddUsers}
 				setOpenModal={setOpenModalAddUsers}
+			/>
+			<EditUsers
+				userId={userId}
+				openModal={openModalEditUser}
+				setOpenModal={setOpenModalEditUser}
 			/>
 			<ToastContainer />
 		</div>

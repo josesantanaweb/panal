@@ -22,7 +22,7 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
 	const queryClient = useQueryClient();
 	const { data: documents, isLoading, isError } = useQuery(["documents"], DocumentsServices.getDocuments);
-	const { mutate } = useMutation(UsersServices.addUsers, {
+	const { mutate } = useMutation(UsersServices.addUser, {
 		onSuccess: (data) => {
 			toast.success("Usuario registrado exitosamente", {
 				position: "top-right",

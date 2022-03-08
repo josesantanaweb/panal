@@ -8,8 +8,20 @@ const UsersServices = {
 		});
 		return response.data;
 	},
-	addUsers: async (data: any) => {
+	getUser: async ({ queryKey }: any) => {
+		const response = await api.get(`users/${queryKey[1]}`, {
+			headers: {Authorization:  `Bearer ${getValue('token')}`}
+		});
+		return response.data;
+	},
+	addUser: async (data: any) => {
 		const response = await api.post('/users', data, {
+			headers: {Authorization:  `Bearer ${getValue('token')}`}
+		});
+		return response.data;
+	},
+	editUser: async ({ userId, ...data }: any) => {
+		const response = await api.patch(`/users/${userId}`, data, {
 			headers: {Authorization:  `Bearer ${getValue('token')}`}
 		});
 		return response.data;
