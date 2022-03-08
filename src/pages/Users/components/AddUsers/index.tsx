@@ -39,7 +39,7 @@ const AddUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal}) => {
 			}, 3000);
 		},
 		onError: (error: any) => {
-			toast.error(error.response.data.message === "This users already exists" && "Usuario ya existe", {
+			toast.error(error.response.data.message === "This user already exists" && "Usuario ya existe", {
 				position: "top-right",
 				autoClose: 3000,
 				hideProgressBar: false,

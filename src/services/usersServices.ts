@@ -26,6 +26,12 @@ const UsersServices = {
 		});
 		return response.data;
 	},
+	deleteUser: async (id: number) => {
+		const response = await api.delete(`/users/${id}`, {
+			headers: {Authorization:  `Bearer ${getValue('token')}`}
+		});
+		return response.data;
+	},
 };
 
 export default UsersServices;

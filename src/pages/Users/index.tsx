@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {BiEdit, BiTrashAlt} from "react-icons/bi";
-import { useQuery } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -39,17 +39,49 @@ const Users = () => {
 	const [userId, setUserId] = useState<number>(0);
 	const [openModalAddUsers, setOpenModalAddUsers] = useState<boolean>(false);
 	const [openModalEditUser, setOpenModalEditUser] = useState<boolean>(false);
-	const { data, isLoading, isError } = useQuery('users', UsersServices.getUsers);
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
+	const { data, isLoading, isError } = useQuery('users', UsersServices.getUsers);
+	const queryClient = useQueryClient();
+	const { mutate } = useMutation(UsersServices.deleteUser, {
+		onSuccess: (data) => {
+			toast.success("Usuario eliminado exitosamente", {
+				position: "top-right",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+			queryClient.invalidateQueries(['users']);
+		},
+		onError: (error: any) => {
+			toast.error("Ocurrio un error al eliminar al usuario", {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	});
+
 	const handleOpenPage = () => setOpenSelectPage(true);
 
-  	// Handle Add Users
+	// Handle Add Users
 	const handleAddUsers = () => setOpenModalAddUsers(true);
 
-  	// Handle Edit User
+	// Handle Edit User
 	const handleEditUsers = (id: number) => {
 		setUserId(id);
 		setOpenModalEditUser(true);
+	};
+
+	// Handle Delete User
+	const handleDelete = (id: number) => {
+		mutate(id);
 	};
 
 	return (
@@ -145,7 +177,7 @@ const Users = () => {
 													<td>
 														<div className={styles["table-action"]}>
 															<span className={styles["table-edit"]} onClick={() => handleEditUsers(user.id)}><BiEdit/></span>
-															<span className={styles["table-delete"]}><BiTrashAlt/></span>
+															<span className={styles["table-delete"]} onClick={() => handleDelete(user.id)}><BiTrashAlt/></span>
 														</div>
 													</td>
 												</tr>
