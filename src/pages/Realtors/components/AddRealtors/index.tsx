@@ -126,7 +126,7 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			phone,
 			password,
 		});
-		// resetForm({ values: ''});
+		resetForm({ values: ''});
 	};
 
 	return (
@@ -258,7 +258,7 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 								component={Checkbox}
 							/>
 						</div>
-						{/* <div className={styles["form-section"]}>
+						<div className={styles["form-section"]}>
 							<div className={styles["form-label"]}>
 								<p>VendeID</p>
 							</div>
@@ -346,9 +346,8 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 								imagen={yapo}
 								component={Checkbox}
 							/>
-						</div> */}
+						</div>
 						<div className={styles["form-footer"]}>
-							{/* <Button type='submit'>Crear Agente</Button> */}
 							<Button type='submit' disabled={!isValid || !dirty}>Crear Agente</Button>
 						</div>
 					</Form>

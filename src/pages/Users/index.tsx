@@ -126,14 +126,7 @@ const Users = () => {
 												<tr key={index}>
 													<td>{index + 1}</td>
 													<td>
-														<span className={styles["table-user"]}>
-															{
-																user.deleteAt === null
-																	? <span className={styles["table-avatar"]}>{user.name.charAt(0)}</span>
-																	: <img src={userAvatar} alt="" />
-															}
-															{user.name} {user.lastName}
-														</span>
+														{user.name} {user.lastName}
 													</td>
 													<td>
 														<span className={`${styles["table-role"]} ${styles.admin}`}>Admin</span>
