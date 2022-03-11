@@ -7,6 +7,9 @@
   border: 0;
   cursor: pointer;
   font-size: var(--normal-font-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button-disabled {

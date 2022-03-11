@@ -63,3 +63,15 @@
   color: var(--danger-color);
   font-size: var(--small-font-size);
 }
+
+/* Input Number */
+.input input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Input Number */
+.input input[type=number] {
+  -moz-appearance: textfield;
+}
