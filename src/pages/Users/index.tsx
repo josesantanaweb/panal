@@ -119,7 +119,6 @@ const Users = () => {
 										<th>Usuario</th>
 										<th>Rol</th>
 										<th>Email</th>
-										<th>Telefono</th>
 										<th>Acciones</th>
 									</tr>
 								</thead>
@@ -173,7 +172,6 @@ const Users = () => {
 														<span className={`${styles["table-role"]} ${styles.admin}`}>Admin</span>
 													</td>
 													<td style={{width: '400px'}}>{user.email}</td>
-													<td>{user.phone}</td>
 													<td>
 														<div className={styles["table-action"]}>
 															<span className={styles["table-edit"]} onClick={() => handleEditUsers(user.id)}><BiEdit/></span>

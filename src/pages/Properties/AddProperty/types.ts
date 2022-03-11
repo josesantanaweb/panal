@@ -36,6 +36,11 @@ export interface IDistribution {
   serviceBathrooms: boolean,
 }
 
+export interface IObservation {
+  publicTitle: string,
+  description: string,
+}
+
 export interface ICharacteristics {
   constructedSurface: string,
   terraceSurface: string,
@@ -55,6 +60,18 @@ export interface ICharacteristics {
   furnished: boolean,
   regularized: boolean,
   petsAllowed: boolean,
+  outdoorParkingNumber: number,
+  subwayParkingNumber: number,
+  gym: boolean,
+  multipurposeRooms: boolean,
+  childrensGames: boolean,
+  barbecue: boolean,
+  studyRoom: boolean,
+  pool: boolean,
+  laundryRoom: boolean,
+  parkingVisit: boolean,
+  haveAPoster: boolean,
+  keysInTheOffice: boolean,
 }
 export interface IValues {
   name: string,
@@ -69,4 +86,5 @@ export interface IValues {
   address: IAddress,
   distribution: IDistribution,
   characteristics: ICharacteristics,
+  observation: IObservation,
 }

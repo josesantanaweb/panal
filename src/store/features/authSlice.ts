@@ -3,6 +3,7 @@ import { getValue } from '../../utils/localStorage';
 
 const initialState = {
 	isAuthenticated: !getValue('token') ? false : true,
+	role: !getValue('role') ? '' : getValue('role'),
 };
 
 export const authSlice = createSlice({
@@ -12,9 +13,12 @@ export const authSlice = createSlice({
 		setAuthenticated: (state, action) => {
 			state.isAuthenticated = action.payload;
 		},
+		setRole: (state, action) => {
+			state.role = action.payload;
+		},
 	},
 });
 
-export const { setAuthenticated } = authSlice.actions;
+export const { setAuthenticated, setRole } = authSlice.actions;
 
 export default authSlice.reducer;

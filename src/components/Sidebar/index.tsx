@@ -14,13 +14,14 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import logo from "../../assets/img/logo-small.svg";
-import { openSidebarSelector } from 'store/selectors';
+import { openSidebarSelector, roleSelector } from 'store/selectors';
 import logoWhite from "../../assets/img/logo-white.svg";
 import styles from "./styles.module.scss";
 
 
 const Sidebar = () => {
 	// const open = false;
+	const role = useSelector(roleSelector);
 	const openSidebar = useSelector(openSidebarSelector);
 	const location = useLocation();
 	const { pathname } = location;
@@ -71,24 +72,29 @@ const Sidebar = () => {
 						</Link>
 					</li>
 
+
 					<li className={`${styles['sidebar-item']} ${splitLocation[1] === "clients" ? styles.active : ""}`}>
 						<Link to="/customers" className={`${styles['sidebar-link']} ${splitLocation[1] === "customers" ? styles.active : ""}`}>
 							<BiGroup />
 							<span>Clientes</span>
 						</Link>
 					</li>
+
 					<li className={`${styles['sidebar-item']} ${splitLocation[1] === "clients" ? styles.active : ""}`}>
 						<Link to="/realtors" className={`${styles['sidebar-link']} ${splitLocation[1] === "realtors" ? styles.active : ""}`}>
 							<BiStreetView />
 							<span>Agentes</span>
 						</Link>
 					</li>
-					<li className={`${styles['sidebar-item']} ${splitLocation[1] === "users" ? styles.active : ""}`}>
-						<Link to="/users" className={`${styles['sidebar-link']} ${splitLocation[1] === "users" ? styles.active : ""}`}>
-							<BiUser />
-							<span>Usuarios</span>
-						</Link>
-					</li>
+					{
+						role === "ADMIN" &&
+            <li className={`${styles['sidebar-item']} ${splitLocation[1] === "users" ? styles.active : ""}`}>
+            	<Link to="/users" className={`${styles['sidebar-link']} ${splitLocation[1] === "users" ? styles.active : ""}`}>
+            		<BiUser />
+            		<span>Usuarios</span>
+            	</Link>
+            </li>
+					}
 				</ul>
 			</div>
 		</aside>

@@ -206,6 +206,22 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			furnished: false,
 			regularized: false,
 			petsAllowed: false,
+			outdoorParkingNumber: 1,
+			subwayParkingNumber: 1,
+			gym: false,
+			multipurposeRooms: false,
+			childrensGames: false,
+			barbecue: false,
+			studyRoom: false,
+			pool: false,
+			laundryRoom: false,
+			parkingVisit: false,
+			haveAPoster: false,
+			keysInTheOffice: false,
+		},
+		observation: {
+			publicTitle: '',
+			description: ''
 		}
 	};
 
@@ -219,7 +235,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			ownerLessor,
 			address,
 			distribution,
-			characteristics
+			characteristics,
+			observation
 		} = values;
 
 		const data = {
@@ -283,6 +300,22 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 				furnished: characteristics.furnished,
 				regularized: characteristics.regularized,
 				petsAllowed: characteristics.petsAllowed,
+				outdoorParkingNumber: Number(characteristics.outdoorParkingNumber),
+				subwayParkingNumber: Number(characteristics.subwayParkingNumber),
+				gym: characteristics.gym,
+				multipurposeRooms: characteristics.multipurposeRooms,
+				childrensGames: characteristics.childrensGames,
+				barbecue: characteristics.barbecue,
+				studyRoom: characteristics.studyRoom,
+				pool: characteristics.pool,
+				laundryRoom: characteristics.laundryRoom,
+				parkingVisit: characteristics.parkingVisit,
+				haveAPoster: characteristics.haveAPoster,
+				keysInTheOffice: characteristics.keysInTheOffice,
+			},
+			observation: {
+				publicTitle: observation.publicTitle,
+				description: observation.description
 			}
 		};
 
@@ -800,22 +833,138 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 						</div>
 						<div className={styles["form-row-4"]}>
 							<Field
-								name="distribution.furnished"
+								name="characteristics.furnished"
 								type="checkbox"
 								label="Amoblado"
 								component={Checkbox}
 							/>
 							<Field
-								name="distribution.regularized"
+								name="characteristics.regularized"
 								type="checkbox"
 								label="Regularizada"
 								component={Checkbox}
 							/>
 							<Field
-								name="distribution.petsAllowed"
+								name="characteristics.petsAllowed"
 								type="checkbox"
 								label="Permiten Mascotas"
 								component={Checkbox}
+							/>
+						</div>
+						<div className={styles["section-title"]}>
+							<h4>Exteriores</h4>
+						</div>
+						<div className={styles["form-row-4"]}>
+							<Field
+								type="text"
+								name="characteristics.outdoorParkingNumber"
+								placeholder="N. de Estacionamientos Exterior"
+								required
+								label="N. de Estacionamientos Exterior"
+								component={Input}
+							/>
+							<Field
+								type="text"
+								name="characteristics.subwayParkingNumber"
+								placeholder="N. de Estacionamientos Subterraneo"
+								required
+								label="N. de Estacionamientos Subterraneo"
+								component={Input}
+							/>
+						</div>
+						<div className={styles["section-title"]}>
+							<h4>Areas comunes</h4>
+						</div>
+						<div className={styles["form-row-4"]}>
+							<Field
+								name="characteristics.gym"
+								type="checkbox"
+								label="Gimnasio"
+								component={Checkbox}
+							/>
+							<Field
+								name="characteristics.multipurposeRooms"
+								type="checkbox"
+								label="Salas multiples"
+								component={Checkbox}
+							/>
+							<Field
+								name="characteristics.childrensGames"
+								type="checkbox"
+								label="Juegos infantiles"
+								component={Checkbox}
+							/>
+							<Field
+								name="characteristics.barbecue"
+								type="checkbox"
+								label="Quincho"
+								component={Checkbox}
+							/>
+						</div>
+						<div className={styles["form-row-4"]}>
+							<Field
+								name="characteristics.studyRoom"
+								type="checkbox"
+								label="Sala de estudio"
+								component={Checkbox}
+							/>
+							<Field
+								name="characteristics.pool"
+								type="checkbox"
+								label="Sala de estudio"
+								component={Checkbox}
+							/>
+							<Field
+								name="characteristics.laundryRoom"
+								type="checkbox"
+								label="Sala de lavanderia"
+								component={Checkbox}
+							/>
+							<Field
+								name="characteristics.parkingVisit"
+								type="checkbox"
+								label="Estacionamiento de visita"
+								component={Checkbox}
+							/>
+						</div>
+						<div className={styles["section-title"]}>
+							<h4>Otros</h4>
+						</div>
+						<div className={styles["form-row-4"]}>
+							<Field
+								name="characteristics.haveAPoster"
+								type="checkbox"
+								label="Tiene letreros"
+								component={Checkbox}
+							/>
+							<Field
+								name="characteristics.keysInTheOffice"
+								type="checkbox"
+								label="Llaves en la oficina"
+								component={Checkbox}
+							/>
+						</div>
+						<div className={styles["section-title"]}>
+							<h4>Observaciones</h4>
+						</div>
+						<div className={styles["form-row-6"]}>
+							<Field
+								type="text"
+								name="observations.publicTitle"
+								placeholder="Titulo publico"
+								required
+								label="Titulo publico"
+								component={Input}
+							/>
+						</div>
+						<div className={styles["form-row-6"]}>
+							<Field
+								name="observations.description"
+								placeholder="Descripcion"
+								required
+								textarea
+								label="Descripcion"
+								component={Input}
 							/>
 						</div>
 						<div className={styles["form-footer"]}>

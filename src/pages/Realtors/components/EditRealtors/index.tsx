@@ -95,8 +95,8 @@ const EditRealtors:React.FC<EditRealtorsProps> = ({setOpenModal, openModal, real
 		identityDocumentId: 1,
 		identityDocumentNumber: '',
 		phone: '',
-		password: '',
-		confirm_password: ''
+		// password: '',
+		// confirm_password: ''
 	};
 
 	const onSubmit = (values: IValues, {resetForm}: any) => {
@@ -106,7 +106,7 @@ const EditRealtors:React.FC<EditRealtorsProps> = ({setOpenModal, openModal, real
 			email,
 			identityDocumentNumber,
 			phone,
-			password,
+			// password,
 		} = values;
 		mutate({
 			realtorId,
@@ -116,13 +116,13 @@ const EditRealtors:React.FC<EditRealtorsProps> = ({setOpenModal, openModal, real
 			identityDocumentId: documentType.value,
 			identityDocumentNumber,
 			phone,
-			password,
+			// password,
 		});
 		resetForm({ values: ''});
 	};
 
 	return (
-		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Crear Agente">
+		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Editar Agente">
 			<div className={styles["form-label"]}>
 				<p>Información del agente</p>
 			</div>
@@ -224,7 +224,7 @@ const EditRealtors:React.FC<EditRealtorsProps> = ({setOpenModal, openModal, real
 										error={errors.email && touched.email ? errors.email : null}
 									/>
 								</div>
-								<div className={styles["form-section"]}>
+								{/* <div className={styles["form-section"]}>
 									<div className={styles["form-label"]}>
 										<p>Aplicación</p>
 									</div>
@@ -246,7 +246,7 @@ const EditRealtors:React.FC<EditRealtorsProps> = ({setOpenModal, openModal, real
 										component={Input}
 										error={errors.confirm_password && touched.confirm_password ? errors.confirm_password : null}
 									/>
-								</div>
+								</div> */}
 								<div className={styles["form-section"]}>
 									<div className={styles["form-label"]}>
 										<p>Perfil de evaluacion</p>

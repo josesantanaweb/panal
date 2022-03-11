@@ -80,9 +80,9 @@ const EditUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal, userId}) =>
 		name: '',
 		lastName: '',
 		email: '',
-		password: '',
-		confirm_password: '',
-		phone: '',
+		// password: '',
+		// confirm_password: '',
+		// phone: '',
 		identityDocumentId: 1,
 		identityDocumentNumber: '',
 	};
@@ -93,8 +93,8 @@ const EditUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal, userId}) =>
 			lastName,
 			email,
 			identityDocumentNumber,
-			phone,
-			password,
+			// phone,
+			// password,
 		} = values;
 		mutate({
 			userId,
@@ -103,8 +103,8 @@ const EditUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal, userId}) =>
 			email,
 			identityDocumentId: documentType.value,
 			identityDocumentNumber,
-			phone,
-			password,
+			// phone,
+			// password,
 		});
 		resetForm({ values: ''});
 	};
@@ -202,32 +202,14 @@ const EditUsers:React.FC<AddUsersProps> = ({setOpenModal, openModal, userId}) =>
 										component={Input}
 										error={errors.email && touched.email ? errors.email : null}
 									/>
-									<Field
+									{/* <Field
 										type="text"
 										name="phone"
 										placeholder="Ingrese su Teléfono celular"
 										label="Teléfono celular"
 										component={Input}
 										error={errors.phone && touched.phone ? errors.phone : null}
-									/>
-								</div>
-								<div className={styles["form-rows"]}>
-									<Field
-										type="text"
-										name="password"
-										placeholder="Ingrese su Contraseña"
-										label="Contraseña"
-										component={Input}
-										error={errors.password && touched.password ? errors.password : null}
-									/>
-									<Field
-										type="text"
-										name="confirm_password"
-										placeholder="Repita su Contraseña"
-										label="Confirme su Contraseña"
-										component={Input}
-										error={errors.confirm_password && touched.confirm_password ? errors.confirm_password : null}
-									/>
+									/> */}
 								</div>
 								<div className={styles["form-footer"]}>
 									<Button type='submit' disabled={!isValid || !dirty}>Guardar Usuario</Button>

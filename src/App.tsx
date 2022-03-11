@@ -37,7 +37,7 @@ function App() {
 				<Routes>
 					<Route path={ROUTES.LOGIN} element={<Login />} />
 					<Route path="/" element={<AppLayout />} >
-						<Route path="/" element={<Users />} />
+						<Route path="/" element={<Properties />} />
 						<Route path={ROUTES.PROFILE} element={<Profile />} />
 						<Route path={ROUTES.PROPERTIES} element={<Properties />} />
 						<Route path={ROUTES.ADDPROPERTY} element={<AddProperty />} />
