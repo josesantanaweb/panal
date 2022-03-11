@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useSelector, useDispatch } from "react-redux";
 
 import Button from "components/Button";
 import Select from "components/Select";
@@ -15,6 +16,7 @@ import EditCustomers from "./components/EditCustomers";
 import styles from "./styles.module.scss";
 import CustomersServices from 'services/customersServices';
 import Binnacle from './components/Binnacle';
+import { roleSelector } from 'store/selectors';
 
 
 const limitOptions = [
@@ -35,6 +37,7 @@ const limitOptions = [
 const skeleton = [0,1,2,3];
 
 const Customers = () => {
+	const role = useSelector(roleSelector);
 	const [limit, setLimit] = useState(limitOptions[0]);
 	const [clientId, setClientId] = useState<number>(0);
 	const [openSelectLimit, setOpenSelectLimit] = useState<boolean>(false);
@@ -126,7 +129,10 @@ const Customers = () => {
 										<th>Estado</th>
 										<th>Tipo</th>
 										<th>Bitacora</th>
-										<th>Acciones</th>
+										{
+											role !== "ADMIN" &&
+										  <th>Acciones</th>
+										}
 									</tr>
 								</thead>
 								{
@@ -187,12 +193,15 @@ const Customers = () => {
 													<td>
 														<span className={styles["table-bitacora"]} onClick={handleBinnacle}><BiListUl/></span>
 													</td>
-													<td>
-														<div className={styles["table-action"]}>
-															<span className={styles["table-edit"]} onClick={() => handleEditCustomers(client.id)}><BiEdit/></span>
-															<span className={styles["table-delete"]} onClick={() => handleDelete(client.id)}><BiTrashAlt/></span>
-														</div>
-													</td>
+													{
+														role !== "ADMIN" &&
+                            <td>
+                            	<div className={styles["table-action"]}>
+                            		<span className={styles["table-edit"]} onClick={() => handleEditCustomers(client.id)}><BiEdit/></span>
+                            		<span className={styles["table-delete"]} onClick={() => handleDelete(client.id)}><BiTrashAlt/></span>
+                            	</div>
+                            </td>
+													}
 												</tr>
 											))}
 										</tbody>
