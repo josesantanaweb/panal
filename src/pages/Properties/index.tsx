@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { BiMap, BiHotel, BiBath, BiCar, BiFilterAlt, BiListUl } from "react-icons/bi";
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +10,8 @@ import Select from "components/Select";
 import Property from "components/Property";
 import { ISelect } from "interfaces";
 import styles from "./styles.module.scss";
+
+import PropertiesServices from 'services/propertiesServices';
 
 // Status Options
 const statusOptions = [
@@ -47,7 +50,8 @@ const Properties = () => {
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
 	const [filterStatus, setFilterStatus] = useState<ISelect>(statusOptions[0]);
 	const [page, setPage] = useState<ISelect>(pageOptions[0]);
-
+	const { data, isLoading, isError } = useQuery('properties', PropertiesServices.getProperties);
+	const queryClient = useQueryClient();
 	const handleOpenStatus = () => setOpenSelectStatus(true);
 	const handleOpenPage = () => setOpenSelectPage(true);
 
@@ -100,10 +104,9 @@ const Properties = () => {
 							</div>
 						</div>
 						<div className={styles["properties-items"]}>
-							<Property />
-							<Property />
-							<Property />
-							<Property />
+							{data?.data?.map((property: any, index: number) => (
+								<Property key={index} property={property}/>
+							))}
 						</div>
 					</div>
 				</TabPanel>
