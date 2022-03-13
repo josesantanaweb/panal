@@ -13,13 +13,16 @@ export interface IOwnerLessor {
 }
 
 export interface IAddress {
-  country: string,
-  region: string,
-  city: string,
-  commune: string,
-  number: number,
-  sector: string,
+  stateId: number,
+  countryId: number,
   address: string,
+  detailedAddress: {
+    region: string,
+    commune: string,
+    number: number,
+    sector: string,
+    cityId: number,
+  }
 }
 
 export interface IDistribution {
@@ -74,17 +77,16 @@ export interface ICharacteristics {
   keysInTheOffice: boolean,
 }
 export interface IValues {
-  name: string,
   operationId: number,
   currencyTypeId: number,
-  price: string,
+  price: number,
   realtorSalerId: number,
   realtorBuyerId: number,
   realtorCatcherId: number,
-  commission: string,
+  commission: number,
   ownerLessor: IOwnerLessor,
   address: IAddress,
   distribution: IDistribution,
   characteristics: ICharacteristics,
-  observation: IObservation,
+  observations: IObservation,
 }

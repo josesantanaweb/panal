@@ -61,11 +61,11 @@ const documentTypeOptions = [
 const countryOptions = [
 	{
 		label: 'Chile',
-		value: 'chile',
+		value: 1,
 	},
 	{
 		label: 'Venezuela',
-		value: 'venezuela',
+		value: 2,
 	},
 ];
 
@@ -83,6 +83,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [country, setCountry] = useState(countryOptions[0]);
 	const [region, setRegion] = useState(countryOptions[0]);
 	const [city, setCity] = useState(countryOptions[0]);
+	const [state, setState] = useState(countryOptions[0]);
 	const [commune, setCommune] = useState(countryOptions[0]);
 	const [typeOfFloor, setTypeOfFloor] = useState(countryOptions[0]);
 	const [typeOfApartment, setTypeOfApartment] = useState(countryOptions[0]);
@@ -105,6 +106,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [openSelectCurrencyType, setOpenSelectCurrencyType] = useState<boolean>(false);
 	const [openSelectPropertyType, setOpenSelectPropertyType] = useState<boolean>(false);
 	const [openSelectCountry, setOpenSelectCountry] = useState<boolean>(false);
+	const [openSelectState, setOpenSelectState] = useState<boolean>(false);
 	const [openSelectRegion, setOpenSelectRegion] = useState<boolean>(false);
 	const [openSelectCity, setOpenSelectCity] = useState<boolean>(false);
 	const [openSelectCommune, setOpenSelectCommune] = useState<boolean>(false);
@@ -146,33 +148,35 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 
 	// Initial values
 	const INITIAL_VALUES = {
-		name: '',
 		operationId: 1,
 		currencyTypeId: 1,
-		price: '10000',
+		price: 10000,
 		realtorSalerId: 1,
 		realtorBuyerId: 1,
 		realtorCatcherId: 1,
-		commission: '10',
+		commission: 10,
 		ownerLessor: {
-			name: '',
-			lastName: '',
-			rut: '',
-			email: '',
-			fono: '',
-			privateObservations: '',
+			name: 'Jose',
+			lastName: 'Santana',
+			rut: '342',
+			email: 'jose@gmail.com',
+			fono: '123123',
+			privateObservations: 'Ninguna',
 			propertyTypeId: 1,
 			customerId: 1,
 			rolNumber: 1,
 		},
 		address: {
-			country: '',
-			region: '',
-			city: '',
-			commune: '',
-			number: 3,
-			sector: '',
-			address: '',
+			countryId: 1,
+			stateId: 1,
+			address: 'Sanford Cam',
+			detailedAddress: {
+				region: "83316",
+				commune: "6229 Sanford Camp",
+				number: 3,
+				sector: "3316 Funk Manor",
+				cityId: 1,
+			},
 		},
 		distribution: {
 			numberOfSuites: 1,
@@ -188,8 +192,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			serviceBathrooms: false,
 		},
 		characteristics: {
-			constructedSurface: '',
-			terraceSurface: '',
+			constructedSurface: 'District',
+			terraceSurface: 'Chief',
 			typeOfFloor: 1,
 			typeOfApartment: 1,
 			finalReception: 1,
@@ -213,21 +217,20 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			childrensGames: false,
 			barbecue: false,
 			studyRoom: false,
-			pool: false,
+			pool: true,
 			laundryRoom: false,
 			parkingVisit: false,
 			haveAPoster: false,
 			keysInTheOffice: false,
 		},
-		observation: {
-			publicTitle: '',
-			description: ''
+		observations: {
+			publicTitle: 'Dunas Park',
+			description: 'Water Park'
 		}
 	};
 
 	const onSubmit = (values: IValues, {resetForm}: any) => {
 		const {
-			name,
 			operationId,
 			currencyTypeId,
 			price,
@@ -236,11 +239,10 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			address,
 			distribution,
 			characteristics,
-			observation
+			observations,
 		} = values;
 
 		const data = {
-			name,
 			operationId,
 			currencyTypeId,
 			price: Number(price),
@@ -256,17 +258,20 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 				fono: ownerLessor.fono,
 				rolNumber: Number(ownerLessor.rolNumber),
 				propertyTypeId: propertyType.value,
-				customerId: customer.value,
+				customerId: Number(customer.value),
 				privateObservations: ownerLessor.privateObservations,
 			},
 			address: {
-				country: country.value,
-				region: country.value,
-				city: city.value,
-				commune: commune.value,
-				number:  Number(address.number),
-				sector: address.sector,
+				countryId: city.value,
+				stateId: country.value,
 				address: address.address,
+				detailedAddress: {
+					region: address.detailedAddress.region,
+					commune: address.detailedAddress.commune,
+					number:  Number(address.detailedAddress.number),
+					cityId: Number(city.value),
+					sector: address.detailedAddress.sector,
+				}
 			},
 			distribution: {
 				numberOfSuites:  Number(distribution.numberOfSuites),
@@ -313,9 +318,9 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 				haveAPoster: characteristics.haveAPoster,
 				keysInTheOffice: characteristics.keysInTheOffice,
 			},
-			observation: {
-				publicTitle: observation.publicTitle,
-				description: observation.description
+			observations: {
+				publicTitle: observations.publicTitle,
+				description: observations.description
 			}
 		};
 
@@ -526,18 +531,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								setOpen={setOpenSelectCountry}
 								handleOpenSelect={() => setOpenSelectCountry(true)}
 							/>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<Select
-								options={countryOptions}
-								label="Region"
-								required
-								selectedOption={region}
-								setSelectedOption={setRegion}
-								open={openSelectRegion}
-								setOpen={setOpenSelectRegion}
-								handleOpenSelect={() => setOpenSelectRegion(true)}
-							/>
 							<Select
 								options={countryOptions}
 								label="Ciudad"
@@ -548,21 +541,39 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								setOpen={setOpenSelectCity}
 								handleOpenSelect={() => setOpenSelectCity(true)}
 							/>
+						</div>
+						<div className={styles["form-row-3"]}>
 							<Select
 								options={countryOptions}
+								label="Estado"
+								required
+								selectedOption={state}
+								setSelectedOption={setState}
+								open={openSelectState}
+								setOpen={setOpenSelectState}
+								handleOpenSelect={() => setOpenSelectState(true)}
+							/>
+							<Field
+								type="text"
+								name="address.detailedAddress.region"
+								placeholder="Comuna"
+								label="Region"
+								required
+								component={Input}
+							/>
+							<Field
+								type="text"
+								name="address.detailedAddress.commune"
+								placeholder="Comuna"
 								label="Comuna"
 								required
-								selectedOption={commune}
-								setSelectedOption={setCommune}
-								open={openSelectCommune}
-								setOpen={setOpenSelectCommune}
-								handleOpenSelect={() => setOpenSelectCommune(true)}
+								component={Input}
 							/>
 						</div>
 						<div className={styles["form-row-3"]}>
 							<Field
 								type="text"
-								name="address.number"
+								name="address.detailedAddress.number"
 								placeholder="N. dpto / N. casa / N. ofic"
 								label="N. dpto / N. casa / N. ofic"
 								required
@@ -570,7 +581,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							/>
 							<Field
 								type="text"
-								name="address.sector"
+								name="address.detailedAddress.sector"
 								placeholder="Sector"
 								label="Sector"
 								required
@@ -911,7 +922,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Field
 								name="characteristics.pool"
 								type="checkbox"
-								label="Sala de estudio"
+								label="Piscina"
 								component={Checkbox}
 							/>
 							<Field
