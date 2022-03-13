@@ -17,7 +17,6 @@ export interface IAddress {
   countryId: number,
   address: string,
   detailedAddress: {
-    region: string,
     commune: string,
     number: number,
     sector: string,

@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { BiArrowBack, BiPlus } from "react-icons/bi";
-import { Formik, Field, Form } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import * as Yup from 'yup';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Button from "components/Button";
 import Checkbox from "components/Checkbox";
@@ -13,6 +16,7 @@ import {AddPropertyProps, IValues, IOwnerLessor} from "./types";
 import {ISelect} from "interfaces";
 import styles from "./styles.module.scss";
 import CustomersServices from 'services/customersServices';
+import PropertiesServices from 'services/propertiesServices';
 
 const operationTypeOptions = [
 	{
@@ -70,6 +74,7 @@ const countryOptions = [
 ];
 
 const AddProperty:React.FC<AddPropertyProps> = () => {
+	const navigate = useNavigate();
 	const [customer, setCustomer] = useState<any>();
 	const [realtorSaler, setRealtorSaler] = useState<any>();
 	const [realtorBuyer, setRealtorBuyer] = useState<any>();
@@ -121,7 +126,37 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [openSelectTypeOfKitchen, setOpenSelectTypeOfKitchen] = useState<boolean>(false);
 	const [openSelectTypeOfConstruction, setOpenSelectTypeOfConstruction] = useState<boolean>(false);
 	const [openSelectTypesOfWindows, setOpenSelectTypesOfWindows] = useState<boolean>(false);
+	const queryClient = useQueryClient();
 	const { data: customersData, isLoading, isError } = useQuery(["customers", 100], CustomersServices.getCustomers);
+	const { mutate } = useMutation(PropertiesServices.addProperties, {
+		onSuccess: (data) => {
+			toast.success("Propiedad Agregada", {
+				position: "top-right",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+			queryClient.invalidateQueries(['properties']);
+			setTimeout(() => {
+				return navigate(`/properties`);
+			}, 3000);
+		},
+		onError: (error: any) => {
+			toast.error("Hubo un error", {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	});
+
 
 	useEffect(() => {
 		if (customersData !== undefined) {
@@ -143,18 +178,40 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 
   	// Validataions
 	const validationSchema = {
-		addProperty : Yup.object({})
+		addProperty : Yup.object({
+			price: Yup.number().min(100, "El Precio debe ser minimo 100").required("Requerido"),
+			commission: Yup.number().min(10, "La Comision debe ser minimo 10").required("Requerido"),
+			ownerLessor: Yup.object().shape({
+				name: Yup.string().required("Requerido"),
+				lastName: Yup.string().required("Requerido"),
+				rut: Yup.string().required("Requerido"),
+				email: Yup.string().email("Correo Invalido").required("Requerido"),
+			}),
+			address: Yup.object().shape({
+				address: Yup.string().required("Requerido"),
+				detailedAddress: Yup.object().shape({
+					commune: Yup.string().required("Requerido"),
+					number: Yup.number().required("Requerido"),
+					sector: Yup.string().required("Requerido"),
+				})
+			}),
+			observations: Yup.object().shape({
+				publicTitle: Yup.string().required("Requerido"),
+				description: Yup.string().required("Requerido"),
+			}),
+		})
 	};
+
 
 	// Initial values
 	const INITIAL_VALUES = {
 		operationId: 1,
 		currencyTypeId: 1,
-		price: 10000,
+		price: 0,
 		realtorSalerId: 1,
 		realtorBuyerId: 1,
 		realtorCatcherId: 1,
-		commission: 10,
+		commission: 0,
 		ownerLessor: {
 			name: 'Jose',
 			lastName: 'Santana',
@@ -171,7 +228,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			stateId: 1,
 			address: 'Sanford Cam',
 			detailedAddress: {
-				region: "83316",
 				commune: "6229 Sanford Camp",
 				number: 3,
 				sector: "3316 Funk Manor",
@@ -225,7 +281,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 		},
 		observations: {
 			publicTitle: 'Dunas Park',
-			description: 'Water Park'
+			description: 'Water Park',
 		}
 	};
 
@@ -266,7 +322,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 				stateId: country.value,
 				address: address.address,
 				detailedAddress: {
-					region: address.detailedAddress.region,
 					commune: address.detailedAddress.commune,
 					number:  Number(address.detailedAddress.number),
 					cityId: Number(city.value),
@@ -320,16 +375,21 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			},
 			observations: {
 				publicTitle: observations.publicTitle,
-				description: observations.description
+				description: observations.description,
 			}
 		};
 
 		console.log(data);
-		// resetForm({ values: ''});
+
+		mutate(data);
+
+		resetForm({ values: ''});
 	};
 
 	// Handle Open limit select
 	const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
+
+	const renderError = (message: any) => <span className={styles["input-error"]}>{message}</span>;
 
 	return (
 		<div className={styles["add-property"]}>
@@ -353,7 +413,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Operacion"
-								required
 								selectedOption={operationType}
 								setSelectedOption={setOperationType}
 								open={openSelectOperationType}
@@ -363,7 +422,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={currencyTypeOptions}
 								label="Tipo de moneda"
-								required
 								selectedOption={currencyType}
 								setSelectedOption={setCurrencyType}
 								open={openSelectCurrencyType}
@@ -371,12 +429,13 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								handleOpenSelect={() => setOpenSelectCurrencyType(true)}
 							/>
 							<Field
-								type="text"
+								type="number"
 								name="price"
 								placeholder="Precio"
 								required
 								label="Precio"
 								component={Input}
+								error={errors.price && touched.price ? errors.price : null}
 							/>
 						</div>
 						<div className={styles["add-requirements"]}>
@@ -392,7 +451,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={customersOptions}
 								label="Corredor Vendedor"
-								required
 								selectedOption={realtorSaler}
 								setSelectedOption={setRealtorSaler}
 								open={openSelectRealtorSaler}
@@ -402,7 +460,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={customersOptions}
 								label="Corredor Comprador"
-								required
 								selectedOption={realtorBuyer}
 								setSelectedOption={setRealtorBuyer}
 								open={openSelectRealtorBuyer}
@@ -410,19 +467,19 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								handleOpenSelect={() => setOpenSelectRealtorBuyer(true)}
 							/>
 							<Field
-								type="text"
+								type="number"
 								name="commission"
 								placeholder="Comision"
 								required
 								label="Comision"
 								component={Input}
+								error={errors.commission && touched.commission ? errors.commission : null}
 							/>
 						</div>
 						<div className={styles["form-row-3"]}>
 							<Select
 								options={customersOptions}
 								label="Corredor Captador"
-								required
 								selectedOption={realtorCatcher}
 								setSelectedOption={setRealtorCatcher}
 								open={openSelectRealtorCatcher}
@@ -434,62 +491,71 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<h4>Propiedad</h4>
 						</div>
 						<div className={styles["form-row-3"]}>
-							<Field
-								type="text"
-								name="ownerLessor.name"
-								placeholder="Nombre"
-								required
-								label="Nombre"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="ownerLessor.lastName"
-								placeholder="Apellido"
-								required
-								label="Apellido"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="ownerLessor.rut"
-								placeholder="RUT"
-								required
-								label="RUT"
-								component={Input}
-							/>
+							<div>
+								<Field
+									type="text"
+									name="ownerLessor.name"
+									placeholder="Nombre"
+									required
+									label="Nombre"
+									component={Input}
+								/>
+								<ErrorMessage name="ownerLessor.name" render={renderError} />
+							</div>
+							<div>
+								<Field
+									type="text"
+									name="ownerLessor.lastName"
+									placeholder="Apellido"
+									required
+									label="Apellido"
+									component={Input}
+								/>
+								<ErrorMessage name="ownerLessor.lastName" render={renderError} />
+							</div>
+							<div>
+								<Field
+									type="text"
+									name="ownerLessor.rut"
+									placeholder="RUT"
+									required
+									label="RUT"
+									component={Input}
+								/>
+								<ErrorMessage name="ownerLessor.rut" render={renderError} />
+							</div>
 						</div>
 						<div className={styles["form-row-3"]}>
-							<Field
-								type="email"
-								name="ownerLessor.email"
-								placeholder="Correo Electronico"
-								required
-								label="Correo Electronico"
-								component={Input}
-							/>
+							<div>
+								<Field
+									type="email"
+									name="ownerLessor.email"
+									placeholder="Correo Electronico"
+									required
+									label="Correo Electronico"
+									component={Input}
+								/>
+								<ErrorMessage name="ownerLessor.email" render={renderError} />
+							</div>
 							<Field
 								type="text"
 								name="ownerLessor.fono"
 								placeholder="Fono"
-								required
 								label="Fono"
 								component={Input}
 							/>
 						</div>
 						<div className={styles["form-row-3"]}>
 							<Field
-								type="text"
+								type="number"
 								name="ownerLessor.rolNumber"
 								placeholder="Numero de rol"
-								required
 								label="Numero de rol"
 								component={Input}
 							/>
 							<Select
 								options={propertyTypeOptions}
 								label="Tipo de Propiedad"
-								required
 								selectedOption={propertyType}
 								setSelectedOption={setPropertyType}
 								open={openSelectPropertyType}
@@ -499,7 +565,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={propertyTypeOptions}
 								label="Cliente"
-								required
 								selectedOption={customer}
 								setSelectedOption={setCustomer}
 								open={openSelectCustomer}
@@ -513,7 +578,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								placeholder="Observación privadas"
 								label="Observación privadas"
 								textarea
-								required
 								component={Input}
 							/>
 						</div>
@@ -524,77 +588,78 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={countryOptions}
 								label="Pais"
-								required
 								selectedOption={country}
 								setSelectedOption={setCountry}
 								open={openSelectCountry}
 								setOpen={setOpenSelectCountry}
 								handleOpenSelect={() => setOpenSelectCountry(true)}
 							/>
-							<Select
-								options={countryOptions}
-								label="Ciudad"
-								required
-								selectedOption={city}
-								setSelectedOption={setCity}
-								open={openSelectCity}
-								setOpen={setOpenSelectCity}
-								handleOpenSelect={() => setOpenSelectCity(true)}
-							/>
 						</div>
 						<div className={styles["form-row-3"]}>
 							<Select
 								options={countryOptions}
 								label="Estado"
-								required
 								selectedOption={state}
 								setSelectedOption={setState}
 								open={openSelectState}
 								setOpen={setOpenSelectState}
 								handleOpenSelect={() => setOpenSelectState(true)}
 							/>
-							<Field
-								type="text"
-								name="address.detailedAddress.region"
-								placeholder="Comuna"
-								label="Region"
-								required
-								component={Input}
+							<Select
+								options={countryOptions}
+								label="Ciudad"
+								selectedOption={city}
+								setSelectedOption={setCity}
+								open={openSelectCity}
+								setOpen={setOpenSelectCity}
+								handleOpenSelect={() => setOpenSelectCity(true)}
 							/>
-							<Field
-								type="text"
-								name="address.detailedAddress.commune"
-								placeholder="Comuna"
-								label="Comuna"
-								required
-								component={Input}
-							/>
+							<div>
+								<Field
+									type="text"
+									name="address.detailedAddress.commune"
+									placeholder="Comuna"
+									label="Comuna"
+									required
+									component={Input}
+								/>
+								<ErrorMessage name="address.detailedAddress.commune" render={renderError} />
+							</div>
 						</div>
 						<div className={styles["form-row-3"]}>
-							<Field
-								type="text"
-								name="address.detailedAddress.number"
-								placeholder="N. dpto / N. casa / N. ofic"
-								label="N. dpto / N. casa / N. ofic"
-								required
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="address.detailedAddress.sector"
-								placeholder="Sector"
-								label="Sector"
-								required
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="address.address"
-								placeholder="Direccion"
-								label="Direccion"
-								required
-								component={Input}
-							/>
+							<div>
+								<Field
+									type="number"
+									name="address.detailedAddress.number"
+									placeholder="N. dpto / N. casa / N. ofic"
+									label="N. dpto / N. casa / N. ofic"
+									required
+									component={Input}
+								/>
+								<ErrorMessage name="address.detailedAddress.number" render={renderError} />
+							</div>
+							<div>
+								<Field
+									type="text"
+									name="address.detailedAddress.sector"
+									placeholder="Sector"
+									label="Sector"
+									required
+									component={Input}
+								/>
+								<ErrorMessage name="address.detailedAddress.sector" render={renderError} />
+							</div>
+							<div>
+								<Field
+									type="text"
+									name="address.address"
+									placeholder="Direccion"
+									label="Direccion"
+									required
+									component={Input}
+								/>
+								<ErrorMessage name="address.address" render={renderError} />
+							</div>
 						</div>
 						<div className={styles["section-title"]}>
 							<h4>Características</h4>
@@ -607,7 +672,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="distribution.numberOfSuites"
 								placeholder="Superficie Contruida"
-								required
 								label="Superficie Contruida"
 								component={Input}
 							/>
@@ -615,7 +679,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="distribution.rooms"
 								placeholder="Habitaciones"
-								required
 								label="Habitaciones"
 								component={Input}
 							/>
@@ -623,7 +686,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="distribution.serviceRooms"
 								placeholder="Habitaciones de Servicio"
-								required
 								label="Habitaciones de Servicio"
 								component={Input}
 							/>
@@ -641,7 +703,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="distribution.bathrooms"
 								placeholder="Baños"
-								required
 								label="Baños"
 								component={Input}
 							/>
@@ -649,7 +710,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="distribution.totalBathrooms"
 								placeholder="Total de Baños"
-								required
 								disabled
 								label="Total de Baños"
 								component={Input}
@@ -658,7 +718,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="distribution.livingRoom"
 								placeholder="Salas de estar"
-								required
 								label="Salas de estar"
 								component={Input}
 							/>
@@ -697,7 +756,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="characteristics.constructedSurface"
 								placeholder="Superficie Contruida"
-								required
 								label="Superficie Contruida"
 								component={Input}
 							/>
@@ -705,14 +763,12 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="characteristics.terraceSurface"
 								placeholder="Superficie Terraza"
-								required
 								label="Superficie Contruida"
 								component={Input}
 							/>
 							<Select
 								options={operationTypeOptions}
 								label="Tipo de piso"
-								required
 								selectedOption={typeOfFloor}
 								setSelectedOption={setTypeOfFloor}
 								open={openSelectTypeOfFloor}
@@ -722,7 +778,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Tipo de piso"
-								required
 								selectedOption={typeOfApartment}
 								setSelectedOption={setTypeOfApartment}
 								open={openSelectTypeOfApartment}
@@ -734,7 +789,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Tipo de piso"
-								required
 								selectedOption={finalReception}
 								setSelectedOption={setFinalReception}
 								open={openSelectFinalReception}
@@ -744,7 +798,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Orientacion"
-								required
 								selectedOption={orientation}
 								setSelectedOption={setOrientation}
 								open={openSelectOrientation}
@@ -755,7 +808,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="characteristics.numberOfFloors"
 								placeholder="Numero de Pisos"
-								required
 								label="Numero de Pisos"
 								component={Input}
 							/>
@@ -763,7 +815,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="characteristics.numberOfElevators"
 								placeholder="Numero de Ascensores"
-								required
 								label="Numero de Ascensores"
 								component={Input}
 							/>
@@ -772,7 +823,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Logia / Conexion a Lavadora"
-								required
 								selectedOption={washingMachine}
 								setSelectedOption={setWashingMachine}
 								open={openSelectWashingMachine}
@@ -782,7 +832,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Tipo de Gas"
-								required
 								selectedOption={typeOfGas}
 								setSelectedOption={setTypeOfGas}
 								open={openSelectTypeOfGas}
@@ -792,7 +841,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Tipo de Agua Caliente"
-								required
 								selectedOption={typeOfHotWater}
 								setSelectedOption={setTypeOfHotWater}
 								open={openSelectTypeOfHotWater}
@@ -802,7 +850,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Tipo de Calefaccion"
-								required
 								selectedOption={typeOfHeating}
 								setSelectedOption={setTypeOfHeating}
 								open={openSelectTypeOfHeating}
@@ -814,7 +861,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Tipo de Cocina"
-								required
 								selectedOption={typeOfKitchen}
 								setSelectedOption={setTypeOfKitchen}
 								open={openSelectTypeOfKitchen}
@@ -824,7 +870,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Tipo de Construccion"
-								required
 								selectedOption={typeOfConstruction}
 								setSelectedOption={setTypeOfConstruction}
 								open={openSelectTypeOfConstruction}
@@ -834,7 +879,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<Select
 								options={operationTypeOptions}
 								label="Tipo de Ventana"
-								required
 								selectedOption={typesOfWindows}
 								setSelectedOption={setTypesOfWindows}
 								open={openSelectTypesOfWindows}
@@ -870,7 +914,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="characteristics.outdoorParkingNumber"
 								placeholder="N. de Estacionamientos Exterior"
-								required
 								label="N. de Estacionamientos Exterior"
 								component={Input}
 							/>
@@ -878,7 +921,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 								type="text"
 								name="characteristics.subwayParkingNumber"
 								placeholder="N. de Estacionamientos Subterraneo"
-								required
 								label="N. de Estacionamientos Subterraneo"
 								component={Input}
 							/>
@@ -959,24 +1001,30 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 							<h4>Observaciones</h4>
 						</div>
 						<div className={styles["form-row-6"]}>
-							<Field
-								type="text"
-								name="observations.publicTitle"
-								placeholder="Titulo publico"
-								required
-								label="Titulo publico"
-								component={Input}
-							/>
+							<div>
+								<Field
+									type="text"
+									name="observations.publicTitle"
+									placeholder="Titulo publico"
+									required
+									label="Titulo publico"
+									component={Input}
+								/>
+								<ErrorMessage name="observations.publicTitle" render={renderError} />
+							</div>
 						</div>
 						<div className={styles["form-row-6"]}>
-							<Field
-								name="observations.description"
-								placeholder="Descripcion"
-								required
-								textarea
-								label="Descripcion"
-								component={Input}
-							/>
+							<div>
+								<Field
+									name="observations.description"
+									placeholder="Descripcion"
+									required
+									textarea
+									label="Descripcion"
+									component={Input}
+								/>
+								<ErrorMessage name="observations.description" render={renderError} />
+							</div>
 						</div>
 						<div className={styles["form-footer"]}>
 							<Button type='submit' disabled={!isValid || !dirty}>Siguiente</Button>
@@ -984,6 +1032,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 					</Form>
 				)}
 			</Formik>
+			<ToastContainer />
 		</div>
 	);
 };

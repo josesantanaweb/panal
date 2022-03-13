@@ -85,3 +85,8 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.input-error {
+  color: var(--danger-color);
+  font-size: var(--small-font-size);
+}
