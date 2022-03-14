@@ -788,7 +788,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         					<Field
         						type="text"
         						name="distribution.totalRooms"
-        						disabled
         						placeholder="2"
         						label="Total de Habitaciones"
         						component={Input}
@@ -806,7 +805,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						type="text"
         						name="distribution.totalBathrooms"
         						placeholder="Total de Baños"
-        						disabled
         						label="Total de Baños"
         						component={Input}
         					/>
