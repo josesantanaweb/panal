@@ -13,7 +13,7 @@ import Input from "components/Input";
 import styles from "./styles.module.scss";
 import { IValues } from './types';
 import { isAuthenticatedSelector } from 'store/selectors';
-import { setAuthenticated, setRole } from 'store/features/authSlice';
+import { setAuthenticated, setRole, setUsername } from 'store/features/authSlice';
 import logo from "../../assets/img/logo-small.svg";
 import AuthServices from 'services/authServices';
 import { saveValue } from "utils/localStorage";
@@ -26,7 +26,9 @@ const Login = () => {
 			dispatch(setAuthenticated(true));
 			saveValue('token', data.access_token);
 			saveValue('role', data.rol.name);
+			saveValue('username', `${data.name} ${data.lastName}`);
 			dispatch(setRole(data.rol.name));
+			dispatch(setUsername(`${data.name} ${data.lastName}`));
 		},
 		onError: () => {
 			toast.error(`${"Credenciales Invalidas"}`, {
