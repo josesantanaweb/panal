@@ -94,7 +94,7 @@ const EditRealtors:React.FC<EditRealtorsProps> = ({setOpenModal, openModal, real
 		email: '',
 		identityDocumentId: 1,
 		identityDocumentNumber: '',
-		phone: '',
+		contactPhone: '',
 		// password: '',
 		// confirm_password: ''
 	};
@@ -105,7 +105,7 @@ const EditRealtors:React.FC<EditRealtorsProps> = ({setOpenModal, openModal, real
 			lastName,
 			email,
 			identityDocumentNumber,
-			phone,
+			contactPhone,
 			// password,
 		} = values;
 		mutate({
@@ -115,7 +115,7 @@ const EditRealtors:React.FC<EditRealtorsProps> = ({setOpenModal, openModal, real
 			email,
 			identityDocumentId: documentType.value,
 			identityDocumentNumber,
-			phone,
+			contactPhone,
 			// password,
 		});
 		resetForm({ values: ''});
@@ -207,12 +207,12 @@ const EditRealtors:React.FC<EditRealtorsProps> = ({setOpenModal, openModal, real
 								<div className={styles["form-rows"]}>
 									<Field
 										type="text"
-										name="phone"
+										name="contactPhone"
 										required
 										placeholder="Ingrese su Teléfono celular"
 										label="Teléfono celular"
 										component={Input}
-										error={errors.phone && touched.phone ? errors.phone : null}
+										error={errors.contactPhone && touched.contactPhone ? errors.contactPhone : null}
 									/>
 									<Field
 										type="email"

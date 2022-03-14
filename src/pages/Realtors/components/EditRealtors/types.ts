@@ -10,7 +10,7 @@ export interface IValues {
   email: string,
   identityDocumentId: number,
   identityDocumentNumber: string,
-  phone: string,
+  contactPhone: string,
   password: string,
   confirm_password: string,
 }

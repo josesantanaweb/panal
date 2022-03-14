@@ -74,6 +74,98 @@ const countryOptions = [
 	},
 ];
 
+const cityOptions = [
+	{
+		label: 'Santiago Chile',
+		value: 1,
+	},
+	{
+		label: 'Caracas',
+		value: 2,
+	},
+];
+
+const floorTypeOptions = [
+	{
+		label: 'Piso Tipo 1',
+		value: 1,
+	}
+];
+
+const apartmentTypeOptions = [
+	{
+		label: 'Apartamento Tipo 1',
+		value: 1,
+	}
+];
+
+const finalReceptionTypeOptions = [
+	{
+		label: 'Si',
+		value: 1,
+	}
+];
+
+const gasTypeOptions = [
+	{
+		label: 'Gas Tipo 1',
+		value: 1,
+	}
+];
+
+const hotWaterTypeOptions = [
+	{
+		label: 'Agua Tipo 1',
+		value: 1,
+	}
+];
+
+const heatingTypeOptions = [
+	{
+		label: 'Calefaccion Tipo 1',
+		value: 1,
+	}
+];
+
+const constructionTypeOptions = [
+	{
+		label: 'Construccion Tipo 1',
+		value: 1,
+	}
+];
+
+const kitchenTypeOptions = [
+	{
+		label: 'Cocina Tipo 1',
+		value: 1,
+	}
+];
+
+const washingMachineTypeOptions = [
+	{
+		label: 'Si',
+		value: 1,
+	}
+];
+
+const windowsTypeOptions = [
+	{
+		label: 'Ventana Tipo 1',
+		value: 1,
+	}
+];
+
+const orientationTypeOptions = [
+	{
+		label: 'Vertical',
+		value: 1,
+	},
+	{
+		label: 'Horizontal',
+		value: 2,
+	},
+];
+
 const AddProperty:React.FC<AddPropertyProps> = () => {
 	const navigate = useNavigate();
 	const [customer, setCustomer] = useState<any>();
@@ -88,20 +180,20 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [operationType, setOperationType] = useState(operationTypeOptions[0]);
 	const [country, setCountry] = useState(countryOptions[0]);
 	const [region, setRegion] = useState(countryOptions[0]);
-	const [city, setCity] = useState(countryOptions[0]);
+	const [city, setCity] = useState(cityOptions[0]);
 	const [state, setState] = useState(countryOptions[0]);
 	const [commune, setCommune] = useState(countryOptions[0]);
-	const [typeOfFloor, setTypeOfFloor] = useState(countryOptions[0]);
-	const [typeOfApartment, setTypeOfApartment] = useState(countryOptions[0]);
-	const [finalReception, setFinalReception] = useState(countryOptions[0]);
-	const [orientation, setOrientation] = useState(countryOptions[0]);
-	const [washingMachine, setWashingMachine] = useState(countryOptions[0]);
-	const [typeOfGas, setTypeOfGas] = useState(countryOptions[0]);
-	const [typeOfHotWater, setTypeOfHotWater] = useState(countryOptions[0]);
-	const [typeOfHeating, setTypeOfHeating] = useState(countryOptions[0]);
-	const [typeOfKitchen, setTypeOfKitchen] = useState(countryOptions[0]);
-	const [typeOfConstruction, setTypeOfConstruction] = useState(countryOptions[0]);
-	const [typesOfWindows, setTypesOfWindows] = useState(countryOptions[0]);
+	const [typeOfFloor, setTypeOfFloor] = useState(floorTypeOptions[0]);
+	const [typeOfApartment, setTypeOfApartment] = useState(apartmentTypeOptions[0]);
+	const [finalReception, setFinalReception] = useState(finalReceptionTypeOptions[0]);
+	const [orientation, setOrientation] = useState(orientationTypeOptions[0]);
+	const [washingMachine, setWashingMachine] = useState(washingMachineTypeOptions[0]);
+	const [typeOfGas, setTypeOfGas] = useState(gasTypeOptions[0]);
+	const [typeOfHotWater, setTypeOfHotWater] = useState(hotWaterTypeOptions[0]);
+	const [typeOfHeating, setTypeOfHeating] = useState(heatingTypeOptions[0]);
+	const [typeOfKitchen, setTypeOfKitchen] = useState(kitchenTypeOptions[0]);
+	const [typeOfConstruction, setTypeOfConstruction] = useState(constructionTypeOptions[0]);
+	const [typesOfWindows, setTypesOfWindows] = useState(windowsTypeOptions[0]);
 
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
 	const [openSelectCustomer, setOpenSelectCustomer] = useState<boolean>(false);
@@ -567,7 +659,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectPropertyType(true)}
         					/>
         					<Select
-        						options={propertyTypeOptions}
+        						options={customersOptions}
         						label="Cliente"
         						selectedOption={customer}
         						setSelectedOption={setCustomer}
@@ -610,7 +702,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectState(true)}
         					/>
         					<Select
-        						options={countryOptions}
+        						options={cityOptions}
         						label="Ciudad"
         						selectedOption={city}
         						setSelectedOption={setCity}
@@ -771,7 +863,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						component={Input}
         					/>
         					<Select
-        						options={operationTypeOptions}
+        						options={floorTypeOptions}
         						label="Tipo de piso"
         						selectedOption={typeOfFloor}
         						setSelectedOption={setTypeOfFloor}
@@ -780,8 +872,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectTypeOfFloor(true)}
         					/>
         					<Select
-        						options={operationTypeOptions}
-        						label="Tipo de piso"
+        						options={apartmentTypeOptions}
+        						label="Tipo de departamento"
         						selectedOption={typeOfApartment}
         						setSelectedOption={setTypeOfApartment}
         						open={openSelectTypeOfApartment}
@@ -791,8 +883,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         				</div>
         				<div className={styles["form-row-4"]}>
         					<Select
-        						options={operationTypeOptions}
-        						label="Tipo de piso"
+        						options={finalReceptionTypeOptions}
+        						label="Recepcion Final"
         						selectedOption={finalReception}
         						setSelectedOption={setFinalReception}
         						open={openSelectFinalReception}
@@ -800,7 +892,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectFinalReception(true)}
         					/>
         					<Select
-        						options={operationTypeOptions}
+        						options={orientationTypeOptions}
         						label="Orientacion"
         						selectedOption={orientation}
         						setSelectedOption={setOrientation}
@@ -825,7 +917,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         				</div>
         				<div className={styles["form-row-4"]}>
         					<Select
-        						options={operationTypeOptions}
+        						options={washingMachineTypeOptions}
         						label="Logia / Conexion a Lavadora"
         						selectedOption={washingMachine}
         						setSelectedOption={setWashingMachine}
@@ -834,7 +926,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectWashingMachine(true)}
         					/>
         					<Select
-        						options={operationTypeOptions}
+        						options={gasTypeOptions}
         						label="Tipo de Gas"
         						selectedOption={typeOfGas}
         						setSelectedOption={setTypeOfGas}
@@ -843,7 +935,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectTypeOfGas(true)}
         					/>
         					<Select
-        						options={operationTypeOptions}
+        						options={hotWaterTypeOptions}
         						label="Tipo de Agua Caliente"
         						selectedOption={typeOfHotWater}
         						setSelectedOption={setTypeOfHotWater}
@@ -852,7 +944,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectTypeOfHotWater(true)}
         					/>
         					<Select
-        						options={operationTypeOptions}
+        						options={heatingTypeOptions}
         						label="Tipo de Calefaccion"
         						selectedOption={typeOfHeating}
         						setSelectedOption={setTypeOfHeating}
@@ -863,7 +955,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         				</div>
         				<div className={styles["form-row-4"]}>
         					<Select
-        						options={operationTypeOptions}
+        						options={kitchenTypeOptions}
         						label="Tipo de Cocina"
         						selectedOption={typeOfKitchen}
         						setSelectedOption={setTypeOfKitchen}
@@ -872,7 +964,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectTypeOfKitchen(true)}
         					/>
         					<Select
-        						options={operationTypeOptions}
+        						options={constructionTypeOptions}
         						label="Tipo de Construccion"
         						selectedOption={typeOfConstruction}
         						setSelectedOption={setTypeOfConstruction}
@@ -881,7 +973,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectTypeOfConstruction(true)}
         					/>
         					<Select
-        						options={operationTypeOptions}
+        						options={windowsTypeOptions}
         						label="Tipo de Ventana"
         						selectedOption={typesOfWindows}
         						setSelectedOption={setTypesOfWindows}
