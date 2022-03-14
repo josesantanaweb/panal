@@ -89,7 +89,7 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			name: Yup.string().required("Requerido"),
 			lastName: Yup.string().required("Requerido"),
 			email: Yup.string().email("Correo Invalido").required("Requerido"),
-			phone: Yup.string().required("Requerido"),
+			contactPhone: Yup.string().required("Requerido"),
 			identityDocumentNumber: Yup.string().required("Requerido"),
 			password: Yup.string().required("Requirido").min(5).max(25),
 			confirm_password: Yup.string().required("Requerido").oneOf([Yup.ref('password'), null], 'Contraseñas no coinciden'),
@@ -103,7 +103,7 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 		email: '',
 		identityDocumentId: 1,
 		identityDocumentNumber: '',
-		phone: '',
+		contactPhone: '',
 		password: '',
 		confirm_password: ''
 	};
@@ -114,7 +114,7 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			lastName,
 			email,
 			identityDocumentNumber,
-			phone,
+			contactPhone,
 			password,
 		} = values;
 		mutate({
@@ -123,7 +123,7 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			email,
 			identityDocumentId: documentType.value,
 			identityDocumentNumber,
-			phone,
+			contactPhone,
 			password,
 		});
 		resetForm({ values: ''});
@@ -186,12 +186,12 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 						<div className={styles["form-rows"]}>
 							<Field
 								type="text"
-								name="phone"
+								name="contactPhone"
 								required
 								placeholder="Ingrese su Teléfono celular"
 								label="Teléfono celular"
 								component={Input}
-								error={errors.phone && touched.phone ? errors.phone : null}
+								error={errors.contactPhone && touched.contactPhone ? errors.contactPhone : null}
 							/>
 							<Field
 								type="email"

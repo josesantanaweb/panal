@@ -173,7 +173,7 @@ const Realtors = () => {
 														{realtor.email}
 													</td>
 													<td>
-														{realtor.phone}
+														{realtor.contactPhone}
 													</td>
 													<td>
 														<span className={`${styles["table-role"]} ${styles.admin}`}>{realtor.status.name}</span>
