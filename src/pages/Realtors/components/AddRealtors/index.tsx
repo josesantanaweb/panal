@@ -30,10 +30,36 @@ import zoom from "assets/img/zoom.png";
 import propiv from "assets/img/propiv.png";
 import yapo from "assets/img/yapo.png";
 
+const countryOptions = [
+	{
+		label: 'Chile',
+		value: 1,
+	},
+	{
+		label: 'Venezuela',
+		value: 2,
+	},
+];
+
+const cityOptions = [
+	{
+		label: 'Santiago Chile',
+		value: 1,
+	},
+	{
+		label: 'Caracas',
+		value: 2,
+	},
+];
+
 const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 	const [documentTypeOptions, setDocumentTypeOptions] = useState<ISelect[]>([]);
+	const [country, setCountry] = useState(countryOptions[0]);
+	const [city, setCity] = useState(cityOptions[0]);
 	const [documentType, setDocumentType] = useState<any>();
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
+	const [openSelectCountry, setOpenSelectCountry] = useState<boolean>(false);
+	const [openSelectCity, setOpenSelectCity] = useState<boolean>(false);
 	const queryClient = useQueryClient();
 	const { data: documents, isLoading, isError } = useQuery(["documents"], DocumentsServices.getDocuments);
 	const { mutate } = useMutation(RealtorsServices.addRealtors, {
@@ -89,7 +115,6 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			name: Yup.string().required("Requerido"),
 			lastName: Yup.string().required("Requerido"),
 			email: Yup.string().email("Correo Invalido").required("Requerido"),
-			contactPhone: Yup.string().required("Requerido"),
 			identityDocumentNumber: Yup.string().required("Requerido"),
 			password: Yup.string().required("Requirido").min(5).max(25),
 			confirm_password: Yup.string().required("Requerido").oneOf([Yup.ref('password'), null], 'Contraseñas no coinciden'),
@@ -104,8 +129,19 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 		identityDocumentId: 1,
 		identityDocumentNumber: '',
 		contactPhone: '',
+		whatsappPhone: '',
 		password: '',
-		confirm_password: ''
+		confirm_password: '',
+		website: false,
+		address: {
+			countryId: 1,
+			detailedAddress: {
+				cityId: 1,
+				commune: '',
+				address: '',
+				officeNumber: 0
+			}
+		}
 	};
 
 	const onSubmit = (values: IValues, {resetForm}: any) => {
@@ -115,7 +151,10 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			email,
 			identityDocumentNumber,
 			contactPhone,
+			whatsappPhone,
 			password,
+			address,
+			website,
 		} = values;
 		mutate({
 			name,
@@ -124,7 +163,18 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 			identityDocumentId: documentType.value,
 			identityDocumentNumber,
 			contactPhone,
+			whatsappPhone,
 			password,
+			website,
+			address: {
+				countryId: Number(country.value),
+				detailedAddress: {
+					cityId: Number(city.value),
+					commune: address.detailedAddress.commune,
+					address: address.detailedAddress.address,
+					officeNumber: address.detailedAddress.officeNumber
+				}
+			}
 		});
 		resetForm({ values: ''});
 	};
@@ -187,12 +237,21 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 							<Field
 								type="text"
 								name="contactPhone"
-								required
 								placeholder="Ingrese su Teléfono celular"
 								label="Teléfono celular"
 								component={Input}
 								error={errors.contactPhone && touched.contactPhone ? errors.contactPhone : null}
 							/>
+							<Field
+								type="text"
+								name="whatsappPhone"
+								placeholder="Ingrese su Teléfono de whatsaap"
+								label="Teléfono whatsaap"
+								component={Input}
+								error={errors.contactPhone && touched.contactPhone ? errors.contactPhone : null}
+							/>
+						</div>
+						<div className={styles["form-rows"]}>
 							<Field
 								type="email"
 								name="email"
@@ -202,11 +261,6 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 								component={Input}
 								error={errors.email && touched.email ? errors.email : null}
 							/>
-						</div>
-						<div className={styles["form-section"]}>
-							<div className={styles["form-label"]}>
-								<p>Aplicación</p>
-							</div>
 						</div>
 						<div className={styles["form-rows"]}>
 							<Field
@@ -228,23 +282,57 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 						</div>
 						<div className={styles["form-section"]}>
 							<div className={styles["form-label"]}>
-								<p>Perfil de evaluacion</p>
+								<p>Ubicacion</p>
 							</div>
 						</div>
-						<div className={styles["form-checkbox"]}>
-							<Field
-								name="mortgage"
-								type="checkbox"
-								label="Es Vendedor"
-								component={Checkbox}
-							/>
-							<Field
-								name="cashPayment"
-								type="checkbox"
-								label="Es Captador"
-								component={Checkbox}
+						<div className={styles["form-rows"]}>
+							<Select
+								options={countryOptions}
+								label="Pais"
+								required
+								selectedOption={country}
+								setSelectedOption={setCountry}
+								open={openSelectCountry}
+								setOpen={setOpenSelectCountry}
+								handleOpenSelect={() => setOpenSelectCountry(true)}
 							/>
 						</div>
+						<div className={styles["form-rows"]}>
+							<Select
+								options={cityOptions}
+								label="Ciudad"
+								required
+								selectedOption={city}
+								setSelectedOption={setCity}
+								open={openSelectCity}
+								setOpen={setOpenSelectCity}
+								handleOpenSelect={() => setOpenSelectCity(true)}
+							/>
+							<Field
+								type="text"
+								name="address.detailedAddress.commune"
+								placeholder="Comuna"
+								label="Comuna"
+								component={Input}
+							/>
+						</div>
+						<div className={styles["form-rows"]}>
+							<Field
+								type="text"
+								name="address.detailedAddress.officeNumber"
+								placeholder="Numero de oficina"
+								label="Numero de oficina"
+								component={Input}
+							/>
+							<Field
+								type="text"
+								name="address.detailedAddress.address"
+								placeholder="Direccion"
+								label="Direccion"
+								component={Input}
+							/>
+						</div>
+
 						<div className={styles["form-section"]}>
 							<div className={styles["form-label"]}>
 								<p>Sitio web</p>
@@ -252,7 +340,7 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 						</div>
 						<div className={styles["form-checkbox"]}>
 							<Field
-								name="mortgage"
+								name="website"
 								type="checkbox"
 								label="Visible en web"
 								component={Checkbox}
@@ -265,13 +353,13 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 						</div>
 						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={portalInmobilario}
 								component={Checkbox}
 							/>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={goplaceit}
 								component={Checkbox}
@@ -279,13 +367,13 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 						</div>
 						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={icasa}
 								component={Checkbox}
 							/>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={chilePropiedades}
 								component={Checkbox}
@@ -293,13 +381,13 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 						</div>
 						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={enlaceInmobilario}
 								component={Checkbox}
 							/>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={doomos}
 								component={Checkbox}
@@ -307,13 +395,13 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 						</div>
 						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={toctoc}
 								component={Checkbox}
 							/>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={emol}
 								component={Checkbox}
@@ -321,13 +409,13 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 						</div>
 						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={zoom}
 								component={Checkbox}
 							/>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={portalTerreno}
 								component={Checkbox}
@@ -335,13 +423,13 @@ const AddRealtors:React.FC<AddRealtorsProps> = ({setOpenModal, openModal}) => {
 						</div>
 						<div className={`${styles["form-checkbox"]} ${styles["width-imagen"]}`}>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={propiv}
 								component={Checkbox}
 							/>
 							<Field
-								name="mortgage"
+								name="todavianohaynada"
 								type="checkbox"
 								imagen={yapo}
 								component={Checkbox}
