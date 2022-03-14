@@ -27,7 +27,6 @@
     font-size: var(--title-font-size);
     font-weight: 500;
     color: var(--secondary-text-color);
-    margin-left: 1rem;
   }
 }
 
@@ -89,4 +88,35 @@
 .input-error {
   color: var(--danger-color);
   font-size: var(--small-font-size);
+}
+
+.imagen-list {
+  display: grid;
+  grid-template-columns: repeat(5, 100px);
+  grid-gap: 1rem;
+  margin-bottom: 2rem;
+  img {
+    height: 100px;
+    width: 100%;
+    border-radius: 10px;
+  }
+}
+
+.imagen-upload {
+  width: 100%;
+  border-radius: 10px;
+  height: 200px;
+  border: 2px dashed var(--placeholder-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  span {
+    margin-top: 1rem;
+  }
+
+  input {
+    display: none;
+  }
 }

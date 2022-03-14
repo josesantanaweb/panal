@@ -14,6 +14,12 @@ const PropertiesServices = {
 		});
 		return response.data;
 	},
+	uploadImagen: async (data: any, id: number) => {
+		const response = await api.post(`/properties/${id}/images`, data, {
+			headers: {Authorization:  `Bearer ${getValue('token')}`}
+		});
+		return response.data;
+	},
 };
 
 export default PropertiesServices;

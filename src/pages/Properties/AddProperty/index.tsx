@@ -11,6 +11,7 @@ import Button from "components/Button";
 import Checkbox from "components/Checkbox";
 import Select from "components/Select";
 import Input from "components/Input";
+import Upload from "./components/Upload";
 
 import {AddPropertyProps, IValues, IOwnerLessor} from "./types";
 import {ISelect} from "interfaces";
@@ -126,6 +127,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [openSelectTypeOfKitchen, setOpenSelectTypeOfKitchen] = useState<boolean>(false);
 	const [openSelectTypeOfConstruction, setOpenSelectTypeOfConstruction] = useState<boolean>(false);
 	const [openSelectTypesOfWindows, setOpenSelectTypesOfWindows] = useState<boolean>(false);
+	const [upload, setUpload] = useState<boolean>(false);
 	const queryClient = useQueryClient();
 	const { data: customersData, isLoading, isError } = useQuery(["customers", 100], CustomersServices.getCustomers);
 	const { mutate } = useMutation(PropertiesServices.addProperties, {
@@ -141,7 +143,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			});
 			queryClient.invalidateQueries(['properties']);
 			setTimeout(() => {
-				return navigate(`/properties`);
+				return setUpload(true);
 			}, 3000);
 		},
 		onError: (error: any) => {
@@ -395,644 +397,650 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 		<div className={styles["add-property"]}>
 			<div className={styles["add-property-top"]}>
 				<div className={styles["add-property-title"]}>
-					<BiArrowBack/>
 					<h3>Agregar Propiedades</h3>
 				</div>
 			</div>
-			<Formik
-				initialValues={INITIAL_VALUES}
-				validationSchema={validationSchema.addProperty}
-				onSubmit={onSubmit}
-			>
-				{({ errors, touched, isValid, dirty}) => (
-					<Form className={styles["form-wrapper"]}>
-						<div className={styles["section-title"]}>
-							<h4>Operación</h4>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<Select
-								options={operationTypeOptions}
-								label="Operacion"
-								selectedOption={operationType}
-								setSelectedOption={setOperationType}
-								open={openSelectOperationType}
-								setOpen={setOpenSelectOperationType}
-								handleOpenSelect={() => setOpenSelectOperationType(true)}
-							/>
-							<Select
-								options={currencyTypeOptions}
-								label="Tipo de moneda"
-								selectedOption={currencyType}
-								setSelectedOption={setCurrencyType}
-								open={openSelectCurrencyType}
-								setOpen={setOpenSelectCurrencyType}
-								handleOpenSelect={() => setOpenSelectCurrencyType(true)}
-							/>
-							<Field
-								type="number"
-								name="price"
-								placeholder="Precio"
-								required
-								label="Precio"
-								component={Input}
-								error={errors.price && touched.price ? errors.price : null}
-							/>
-						</div>
-						<div className={styles["add-requirements"]}>
-							<Button type='button'>
-								<BiPlus size={18} />
-                Agregar requisitos de arriendo
-							</Button>
-						</div>
-						<div className={styles["section-title"]}>
-							<h4>Asignación de Ejecutivo</h4>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<Select
-								options={customersOptions}
-								label="Corredor Vendedor"
-								selectedOption={realtorSaler}
-								setSelectedOption={setRealtorSaler}
-								open={openSelectRealtorSaler}
-								setOpen={setOpenSelectRealtorSaler}
-								handleOpenSelect={() => setOpenSelectRealtorSaler(true)}
-							/>
-							<Select
-								options={customersOptions}
-								label="Corredor Comprador"
-								selectedOption={realtorBuyer}
-								setSelectedOption={setRealtorBuyer}
-								open={openSelectRealtorBuyer}
-								setOpen={setOpenSelectRealtorBuyer}
-								handleOpenSelect={() => setOpenSelectRealtorBuyer(true)}
-							/>
-							<Field
-								type="number"
-								name="commission"
-								placeholder="Comision"
-								required
-								label="Comision"
-								component={Input}
-								error={errors.commission && touched.commission ? errors.commission : null}
-							/>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<Select
-								options={customersOptions}
-								label="Corredor Captador"
-								selectedOption={realtorCatcher}
-								setSelectedOption={setRealtorCatcher}
-								open={openSelectRealtorCatcher}
-								setOpen={setOpenSelectRealtorCatcher}
-								handleOpenSelect={() => setOpenSelectRealtorCatcher(true)}
-							/>
-						</div>
-						<div className={styles["section-title"]}>
-							<h4>Propiedad</h4>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<div>
-								<Field
-									type="text"
-									name="ownerLessor.name"
-									placeholder="Nombre"
-									required
-									label="Nombre"
-									component={Input}
-								/>
-								<ErrorMessage name="ownerLessor.name" render={renderError} />
-							</div>
-							<div>
-								<Field
-									type="text"
-									name="ownerLessor.lastName"
-									placeholder="Apellido"
-									required
-									label="Apellido"
-									component={Input}
-								/>
-								<ErrorMessage name="ownerLessor.lastName" render={renderError} />
-							</div>
-							<div>
-								<Field
-									type="text"
-									name="ownerLessor.rut"
-									placeholder="RUT"
-									required
-									label="RUT"
-									component={Input}
-								/>
-								<ErrorMessage name="ownerLessor.rut" render={renderError} />
-							</div>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<div>
-								<Field
-									type="email"
-									name="ownerLessor.email"
-									placeholder="Correo Electronico"
-									required
-									label="Correo Electronico"
-									component={Input}
-								/>
-								<ErrorMessage name="ownerLessor.email" render={renderError} />
-							</div>
-							<Field
-								type="text"
-								name="ownerLessor.fono"
-								placeholder="Fono"
-								label="Fono"
-								component={Input}
-							/>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<Field
-								type="number"
-								name="ownerLessor.rolNumber"
-								placeholder="Numero de rol"
-								label="Numero de rol"
-								component={Input}
-							/>
-							<Select
-								options={propertyTypeOptions}
-								label="Tipo de Propiedad"
-								selectedOption={propertyType}
-								setSelectedOption={setPropertyType}
-								open={openSelectPropertyType}
-								setOpen={setOpenSelectPropertyType}
-								handleOpenSelect={() => setOpenSelectPropertyType(true)}
-							/>
-							<Select
-								options={propertyTypeOptions}
-								label="Cliente"
-								selectedOption={customer}
-								setSelectedOption={setCustomer}
-								open={openSelectCustomer}
-								setOpen={setOpenSelectCustomer}
-								handleOpenSelect={() => setOpenSelectCustomer(true)}
-							/>
-						</div>
-						<div className={styles["form-single"]}>
-							<Field
-								name="ownerLessor.privateObservations"
-								placeholder="Observación privadas"
-								label="Observación privadas"
-								textarea
-								component={Input}
-							/>
-						</div>
-						<div className={styles["section-title"]}>
-							<h4>Ubicación</h4>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<Select
-								options={countryOptions}
-								label="Pais"
-								selectedOption={country}
-								setSelectedOption={setCountry}
-								open={openSelectCountry}
-								setOpen={setOpenSelectCountry}
-								handleOpenSelect={() => setOpenSelectCountry(true)}
-							/>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<Select
-								options={countryOptions}
-								label="Estado"
-								selectedOption={state}
-								setSelectedOption={setState}
-								open={openSelectState}
-								setOpen={setOpenSelectState}
-								handleOpenSelect={() => setOpenSelectState(true)}
-							/>
-							<Select
-								options={countryOptions}
-								label="Ciudad"
-								selectedOption={city}
-								setSelectedOption={setCity}
-								open={openSelectCity}
-								setOpen={setOpenSelectCity}
-								handleOpenSelect={() => setOpenSelectCity(true)}
-							/>
-							<div>
-								<Field
-									type="text"
-									name="address.detailedAddress.commune"
-									placeholder="Comuna"
-									label="Comuna"
-									required
-									component={Input}
-								/>
-								<ErrorMessage name="address.detailedAddress.commune" render={renderError} />
-							</div>
-						</div>
-						<div className={styles["form-row-3"]}>
-							<div>
-								<Field
-									type="number"
-									name="address.detailedAddress.number"
-									placeholder="N. dpto / N. casa / N. ofic"
-									label="N. dpto / N. casa / N. ofic"
-									required
-									component={Input}
-								/>
-								<ErrorMessage name="address.detailedAddress.number" render={renderError} />
-							</div>
-							<div>
-								<Field
-									type="text"
-									name="address.detailedAddress.sector"
-									placeholder="Sector"
-									label="Sector"
-									required
-									component={Input}
-								/>
-								<ErrorMessage name="address.detailedAddress.sector" render={renderError} />
-							</div>
-							<div>
-								<Field
-									type="text"
-									name="address.address"
-									placeholder="Direccion"
-									label="Direccion"
-									required
-									component={Input}
-								/>
-								<ErrorMessage name="address.address" render={renderError} />
-							</div>
-						</div>
-						<div className={styles["section-title"]}>
-							<h4>Características</h4>
-						</div>
-						<div className={styles["section-title"]}>
-							<h5>Distribucion</h5>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Field
-								type="text"
-								name="distribution.numberOfSuites"
-								placeholder="Superficie Contruida"
-								label="Superficie Contruida"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="distribution.rooms"
-								placeholder="Habitaciones"
-								label="Habitaciones"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="distribution.serviceRooms"
-								placeholder="Habitaciones de Servicio"
-								label="Habitaciones de Servicio"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="distribution.totalRooms"
-								disabled
-								placeholder="2"
-								label="Total de Habitaciones"
-								component={Input}
-							/>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Field
-								type="text"
-								name="distribution.bathrooms"
-								placeholder="Baños"
-								label="Baños"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="distribution.totalBathrooms"
-								placeholder="Total de Baños"
-								disabled
-								label="Total de Baños"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="distribution.livingRoom"
-								placeholder="Salas de estar"
-								label="Salas de estar"
-								component={Input}
-							/>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Field
-								name="distribution.studio"
-								type="checkbox"
-								label="Estudio"
-								component={Checkbox}
-							/>
-							<Field
-								name="distribution.warehouse"
-								type="checkbox"
-								label="Bodega"
-								component={Checkbox}
-							/>
-							<Field
-								name="distribution.receipts"
-								type="checkbox"
-								label="Recibos"
-								component={Checkbox}
-							/>
-							<Field
-								name="distribution.serviceBathrooms"
-								type="checkbox"
-								label="Baños de servicio"
-								component={Checkbox}
-							/>
-						</div>
-						<div className={styles["section-title"]}>
-							<h5>Características</h5>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Field
-								type="text"
-								name="characteristics.constructedSurface"
-								placeholder="Superficie Contruida"
-								label="Superficie Contruida"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="characteristics.terraceSurface"
-								placeholder="Superficie Terraza"
-								label="Superficie Contruida"
-								component={Input}
-							/>
-							<Select
-								options={operationTypeOptions}
-								label="Tipo de piso"
-								selectedOption={typeOfFloor}
-								setSelectedOption={setTypeOfFloor}
-								open={openSelectTypeOfFloor}
-								setOpen={setOpenSelectTypeOfFloor}
-								handleOpenSelect={() => setOpenSelectTypeOfFloor(true)}
-							/>
-							<Select
-								options={operationTypeOptions}
-								label="Tipo de piso"
-								selectedOption={typeOfApartment}
-								setSelectedOption={setTypeOfApartment}
-								open={openSelectTypeOfApartment}
-								setOpen={setOpenSelectTypeOfApartment}
-								handleOpenSelect={() => setOpenSelectTypeOfApartment(true)}
-							/>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Select
-								options={operationTypeOptions}
-								label="Tipo de piso"
-								selectedOption={finalReception}
-								setSelectedOption={setFinalReception}
-								open={openSelectFinalReception}
-								setOpen={setOpenSelectFinalReception}
-								handleOpenSelect={() => setOpenSelectFinalReception(true)}
-							/>
-							<Select
-								options={operationTypeOptions}
-								label="Orientacion"
-								selectedOption={orientation}
-								setSelectedOption={setOrientation}
-								open={openSelectOrientation}
-								setOpen={setOpenSelectOrientation}
-								handleOpenSelect={() => setOpenSelectOrientation(true)}
-							/>
-							<Field
-								type="text"
-								name="characteristics.numberOfFloors"
-								placeholder="Numero de Pisos"
-								label="Numero de Pisos"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="characteristics.numberOfElevators"
-								placeholder="Numero de Ascensores"
-								label="Numero de Ascensores"
-								component={Input}
-							/>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Select
-								options={operationTypeOptions}
-								label="Logia / Conexion a Lavadora"
-								selectedOption={washingMachine}
-								setSelectedOption={setWashingMachine}
-								open={openSelectWashingMachine}
-								setOpen={setOpenSelectWashingMachine}
-								handleOpenSelect={() => setOpenSelectWashingMachine(true)}
-							/>
-							<Select
-								options={operationTypeOptions}
-								label="Tipo de Gas"
-								selectedOption={typeOfGas}
-								setSelectedOption={setTypeOfGas}
-								open={openSelectTypeOfGas}
-								setOpen={setOpenSelectTypeOfGas}
-								handleOpenSelect={() => setOpenSelectTypeOfGas(true)}
-							/>
-							<Select
-								options={operationTypeOptions}
-								label="Tipo de Agua Caliente"
-								selectedOption={typeOfHotWater}
-								setSelectedOption={setTypeOfHotWater}
-								open={openSelectTypeOfHotWater}
-								setOpen={setOpenSelectTypeOfHotWater}
-								handleOpenSelect={() => setOpenSelectTypeOfHotWater(true)}
-							/>
-							<Select
-								options={operationTypeOptions}
-								label="Tipo de Calefaccion"
-								selectedOption={typeOfHeating}
-								setSelectedOption={setTypeOfHeating}
-								open={openSelectTypeOfHeating}
-								setOpen={setOpenSelectTypeOfHeating}
-								handleOpenSelect={() => setOpenSelectTypeOfHeating(true)}
-							/>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Select
-								options={operationTypeOptions}
-								label="Tipo de Cocina"
-								selectedOption={typeOfKitchen}
-								setSelectedOption={setTypeOfKitchen}
-								open={openSelectTypeOfKitchen}
-								setOpen={setOpenSelectTypeOfKitchen}
-								handleOpenSelect={() => setOpenSelectTypeOfKitchen(true)}
-							/>
-							<Select
-								options={operationTypeOptions}
-								label="Tipo de Construccion"
-								selectedOption={typeOfConstruction}
-								setSelectedOption={setTypeOfConstruction}
-								open={openSelectTypeOfConstruction}
-								setOpen={setOpenSelectTypeOfConstruction}
-								handleOpenSelect={() => setOpenSelectTypeOfConstruction(true)}
-							/>
-							<Select
-								options={operationTypeOptions}
-								label="Tipo de Ventana"
-								selectedOption={typesOfWindows}
-								setSelectedOption={setTypesOfWindows}
-								open={openSelectTypesOfWindows}
-								setOpen={setOpenSelectTypesOfWindows}
-								handleOpenSelect={() => setOpenSelectTypesOfWindows(true)}
-							/>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Field
-								name="characteristics.furnished"
-								type="checkbox"
-								label="Amoblado"
-								component={Checkbox}
-							/>
-							<Field
-								name="characteristics.regularized"
-								type="checkbox"
-								label="Regularizada"
-								component={Checkbox}
-							/>
-							<Field
-								name="characteristics.petsAllowed"
-								type="checkbox"
-								label="Permiten Mascotas"
-								component={Checkbox}
-							/>
-						</div>
-						<div className={styles["section-title"]}>
-							<h4>Exteriores</h4>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Field
-								type="text"
-								name="characteristics.outdoorParkingNumber"
-								placeholder="N. de Estacionamientos Exterior"
-								label="N. de Estacionamientos Exterior"
-								component={Input}
-							/>
-							<Field
-								type="text"
-								name="characteristics.subwayParkingNumber"
-								placeholder="N. de Estacionamientos Subterraneo"
-								label="N. de Estacionamientos Subterraneo"
-								component={Input}
-							/>
-						</div>
-						<div className={styles["section-title"]}>
-							<h4>Areas comunes</h4>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Field
-								name="characteristics.gym"
-								type="checkbox"
-								label="Gimnasio"
-								component={Checkbox}
-							/>
-							<Field
-								name="characteristics.multipurposeRooms"
-								type="checkbox"
-								label="Salas multiples"
-								component={Checkbox}
-							/>
-							<Field
-								name="characteristics.childrensGames"
-								type="checkbox"
-								label="Juegos infantiles"
-								component={Checkbox}
-							/>
-							<Field
-								name="characteristics.barbecue"
-								type="checkbox"
-								label="Quincho"
-								component={Checkbox}
-							/>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Field
-								name="characteristics.studyRoom"
-								type="checkbox"
-								label="Sala de estudio"
-								component={Checkbox}
-							/>
-							<Field
-								name="characteristics.pool"
-								type="checkbox"
-								label="Piscina"
-								component={Checkbox}
-							/>
-							<Field
-								name="characteristics.laundryRoom"
-								type="checkbox"
-								label="Sala de lavanderia"
-								component={Checkbox}
-							/>
-							<Field
-								name="characteristics.parkingVisit"
-								type="checkbox"
-								label="Estacionamiento de visita"
-								component={Checkbox}
-							/>
-						</div>
-						<div className={styles["section-title"]}>
-							<h4>Otros</h4>
-						</div>
-						<div className={styles["form-row-4"]}>
-							<Field
-								name="characteristics.haveAPoster"
-								type="checkbox"
-								label="Tiene letreros"
-								component={Checkbox}
-							/>
-							<Field
-								name="characteristics.keysInTheOffice"
-								type="checkbox"
-								label="Llaves en la oficina"
-								component={Checkbox}
-							/>
-						</div>
-						<div className={styles["section-title"]}>
-							<h4>Observaciones</h4>
-						</div>
-						<div className={styles["form-row-6"]}>
-							<div>
-								<Field
-									type="text"
-									name="observations.publicTitle"
-									placeholder="Titulo publico"
-									required
-									label="Titulo publico"
-									component={Input}
-								/>
-								<ErrorMessage name="observations.publicTitle" render={renderError} />
-							</div>
-						</div>
-						<div className={styles["form-row-6"]}>
-							<div>
-								<Field
-									name="observations.description"
-									placeholder="Descripcion"
-									required
-									textarea
-									label="Descripcion"
-									component={Input}
-								/>
-								<ErrorMessage name="observations.description" render={renderError} />
-							</div>
-						</div>
-						<div className={styles["form-footer"]}>
-							<Button type='submit' disabled={!isValid || !dirty}>Siguiente</Button>
-						</div>
-					</Form>
-				)}
-			</Formik>
-			<ToastContainer />
+			{
+				!upload ?
+					<>
+        	<Formik
+        		initialValues={INITIAL_VALUES}
+        		validationSchema={validationSchema.addProperty}
+        		onSubmit={onSubmit}
+        	>
+        		{({ errors, touched, isValid, dirty}) => (
+        			<Form className={styles["form-wrapper"]}>
+        				<div className={styles["section-title"]}>
+        					<h4>Operación</h4>
+        				</div>
+        				<div className={styles["form-row-3"]}>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Operacion"
+        						selectedOption={operationType}
+        						setSelectedOption={setOperationType}
+        						open={openSelectOperationType}
+        						setOpen={setOpenSelectOperationType}
+        						handleOpenSelect={() => setOpenSelectOperationType(true)}
+        					/>
+        					<Select
+        						options={currencyTypeOptions}
+        						label="Tipo de moneda"
+        						selectedOption={currencyType}
+        						setSelectedOption={setCurrencyType}
+        						open={openSelectCurrencyType}
+        						setOpen={setOpenSelectCurrencyType}
+        						handleOpenSelect={() => setOpenSelectCurrencyType(true)}
+        					/>
+        					<Field
+        						type="number"
+        						name="price"
+        						placeholder="Precio"
+        						required
+        						label="Precio"
+        						component={Input}
+        						error={errors.price && touched.price ? errors.price : null}
+        					/>
+        				</div>
+        				<div className={styles["add-requirements"]}>
+        					<Button type='button'>
+        						<BiPlus size={18} />
+                    Agregar requisitos de arriendo
+        					</Button>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h4>Asignación de Ejecutivo</h4>
+        				</div>
+        				<div className={styles["form-row-3"]}>
+        					<Select
+        						options={customersOptions}
+        						label="Corredor Vendedor"
+        						selectedOption={realtorSaler}
+        						setSelectedOption={setRealtorSaler}
+        						open={openSelectRealtorSaler}
+        						setOpen={setOpenSelectRealtorSaler}
+        						handleOpenSelect={() => setOpenSelectRealtorSaler(true)}
+        					/>
+        					<Select
+        						options={customersOptions}
+        						label="Corredor Comprador"
+        						selectedOption={realtorBuyer}
+        						setSelectedOption={setRealtorBuyer}
+        						open={openSelectRealtorBuyer}
+        						setOpen={setOpenSelectRealtorBuyer}
+        						handleOpenSelect={() => setOpenSelectRealtorBuyer(true)}
+        					/>
+        					<Field
+        						type="number"
+        						name="commission"
+        						placeholder="Comision"
+        						required
+        						label="Comision"
+        						component={Input}
+        						error={errors.commission && touched.commission ? errors.commission : null}
+        					/>
+        				</div>
+        				<div className={styles["form-row-3"]}>
+        					<Select
+        						options={customersOptions}
+        						label="Corredor Captador"
+        						selectedOption={realtorCatcher}
+        						setSelectedOption={setRealtorCatcher}
+        						open={openSelectRealtorCatcher}
+        						setOpen={setOpenSelectRealtorCatcher}
+        						handleOpenSelect={() => setOpenSelectRealtorCatcher(true)}
+        					/>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h4>Propiedad</h4>
+        				</div>
+        				<div className={styles["form-row-3"]}>
+        					<div>
+        						<Field
+        							type="text"
+        							name="ownerLessor.name"
+        							placeholder="Nombre"
+        							required
+        							label="Nombre"
+        							component={Input}
+        						/>
+        						<ErrorMessage name="ownerLessor.name" render={renderError} />
+        					</div>
+        					<div>
+        						<Field
+        							type="text"
+        							name="ownerLessor.lastName"
+        							placeholder="Apellido"
+        							required
+        							label="Apellido"
+        							component={Input}
+        						/>
+        						<ErrorMessage name="ownerLessor.lastName" render={renderError} />
+        					</div>
+        					<div>
+        						<Field
+        							type="text"
+        							name="ownerLessor.rut"
+        							placeholder="RUT"
+        							required
+        							label="RUT"
+        							component={Input}
+        						/>
+        						<ErrorMessage name="ownerLessor.rut" render={renderError} />
+        					</div>
+        				</div>
+        				<div className={styles["form-row-3"]}>
+        					<div>
+        						<Field
+        							type="email"
+        							name="ownerLessor.email"
+        							placeholder="Correo Electronico"
+        							required
+        							label="Correo Electronico"
+        							component={Input}
+        						/>
+        						<ErrorMessage name="ownerLessor.email" render={renderError} />
+        					</div>
+        					<Field
+        						type="text"
+        						name="ownerLessor.fono"
+        						placeholder="Fono"
+        						label="Fono"
+        						component={Input}
+        					/>
+        				</div>
+        				<div className={styles["form-row-3"]}>
+        					<Field
+        						type="number"
+        						name="ownerLessor.rolNumber"
+        						placeholder="Numero de rol"
+        						label="Numero de rol"
+        						component={Input}
+        					/>
+        					<Select
+        						options={propertyTypeOptions}
+        						label="Tipo de Propiedad"
+        						selectedOption={propertyType}
+        						setSelectedOption={setPropertyType}
+        						open={openSelectPropertyType}
+        						setOpen={setOpenSelectPropertyType}
+        						handleOpenSelect={() => setOpenSelectPropertyType(true)}
+        					/>
+        					<Select
+        						options={propertyTypeOptions}
+        						label="Cliente"
+        						selectedOption={customer}
+        						setSelectedOption={setCustomer}
+        						open={openSelectCustomer}
+        						setOpen={setOpenSelectCustomer}
+        						handleOpenSelect={() => setOpenSelectCustomer(true)}
+        					/>
+        				</div>
+        				<div className={styles["form-single"]}>
+        					<Field
+        						name="ownerLessor.privateObservations"
+        						placeholder="Observación privadas"
+        						label="Observación privadas"
+        						textarea
+        						component={Input}
+        					/>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h4>Ubicación</h4>
+        				</div>
+        				<div className={styles["form-row-3"]}>
+        					<Select
+        						options={countryOptions}
+        						label="Pais"
+        						selectedOption={country}
+        						setSelectedOption={setCountry}
+        						open={openSelectCountry}
+        						setOpen={setOpenSelectCountry}
+        						handleOpenSelect={() => setOpenSelectCountry(true)}
+        					/>
+        				</div>
+        				<div className={styles["form-row-3"]}>
+        					<Select
+        						options={countryOptions}
+        						label="Estado"
+        						selectedOption={state}
+        						setSelectedOption={setState}
+        						open={openSelectState}
+        						setOpen={setOpenSelectState}
+        						handleOpenSelect={() => setOpenSelectState(true)}
+        					/>
+        					<Select
+        						options={countryOptions}
+        						label="Ciudad"
+        						selectedOption={city}
+        						setSelectedOption={setCity}
+        						open={openSelectCity}
+        						setOpen={setOpenSelectCity}
+        						handleOpenSelect={() => setOpenSelectCity(true)}
+        					/>
+        					<div>
+        						<Field
+        							type="text"
+        							name="address.detailedAddress.commune"
+        							placeholder="Comuna"
+        							label="Comuna"
+        							required
+        							component={Input}
+        						/>
+        						<ErrorMessage name="address.detailedAddress.commune" render={renderError} />
+        					</div>
+        				</div>
+        				<div className={styles["form-row-3"]}>
+        					<div>
+        						<Field
+        							type="number"
+        							name="address.detailedAddress.number"
+        							placeholder="N. dpto / N. casa / N. ofic"
+        							label="N. dpto / N. casa / N. ofic"
+        							required
+        							component={Input}
+        						/>
+        						<ErrorMessage name="address.detailedAddress.number" render={renderError} />
+        					</div>
+        					<div>
+        						<Field
+        							type="text"
+        							name="address.detailedAddress.sector"
+        							placeholder="Sector"
+        							label="Sector"
+        							required
+        							component={Input}
+        						/>
+        						<ErrorMessage name="address.detailedAddress.sector" render={renderError} />
+        					</div>
+        					<div>
+        						<Field
+        							type="text"
+        							name="address.address"
+        							placeholder="Direccion"
+        							label="Direccion"
+        							required
+        							component={Input}
+        						/>
+        						<ErrorMessage name="address.address" render={renderError} />
+        					</div>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h4>Características</h4>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h5>Distribucion</h5>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Field
+        						type="text"
+        						name="distribution.numberOfSuites"
+        						placeholder="Superficie Contruida"
+        						label="Superficie Contruida"
+        						component={Input}
+        					/>
+        					<Field
+        						type="text"
+        						name="distribution.rooms"
+        						placeholder="Habitaciones"
+        						label="Habitaciones"
+        						component={Input}
+        					/>
+        					<Field
+        						type="text"
+        						name="distribution.serviceRooms"
+        						placeholder="Habitaciones de Servicio"
+        						label="Habitaciones de Servicio"
+        						component={Input}
+        					/>
+        					<Field
+        						type="text"
+        						name="distribution.totalRooms"
+        						disabled
+        						placeholder="2"
+        						label="Total de Habitaciones"
+        						component={Input}
+        					/>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Field
+        						type="text"
+        						name="distribution.bathrooms"
+        						placeholder="Baños"
+        						label="Baños"
+        						component={Input}
+        					/>
+        					<Field
+        						type="text"
+        						name="distribution.totalBathrooms"
+        						placeholder="Total de Baños"
+        						disabled
+        						label="Total de Baños"
+        						component={Input}
+        					/>
+        					<Field
+        						type="text"
+        						name="distribution.livingRoom"
+        						placeholder="Salas de estar"
+        						label="Salas de estar"
+        						component={Input}
+        					/>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Field
+        						name="distribution.studio"
+        						type="checkbox"
+        						label="Estudio"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="distribution.warehouse"
+        						type="checkbox"
+        						label="Bodega"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="distribution.receipts"
+        						type="checkbox"
+        						label="Recibos"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="distribution.serviceBathrooms"
+        						type="checkbox"
+        						label="Baños de servicio"
+        						component={Checkbox}
+        					/>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h5>Características</h5>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Field
+        						type="text"
+        						name="characteristics.constructedSurface"
+        						placeholder="Superficie Contruida"
+        						label="Superficie Contruida"
+        						component={Input}
+        					/>
+        					<Field
+        						type="text"
+        						name="characteristics.terraceSurface"
+        						placeholder="Superficie Terraza"
+        						label="Superficie Contruida"
+        						component={Input}
+        					/>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Tipo de piso"
+        						selectedOption={typeOfFloor}
+        						setSelectedOption={setTypeOfFloor}
+        						open={openSelectTypeOfFloor}
+        						setOpen={setOpenSelectTypeOfFloor}
+        						handleOpenSelect={() => setOpenSelectTypeOfFloor(true)}
+        					/>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Tipo de piso"
+        						selectedOption={typeOfApartment}
+        						setSelectedOption={setTypeOfApartment}
+        						open={openSelectTypeOfApartment}
+        						setOpen={setOpenSelectTypeOfApartment}
+        						handleOpenSelect={() => setOpenSelectTypeOfApartment(true)}
+        					/>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Tipo de piso"
+        						selectedOption={finalReception}
+        						setSelectedOption={setFinalReception}
+        						open={openSelectFinalReception}
+        						setOpen={setOpenSelectFinalReception}
+        						handleOpenSelect={() => setOpenSelectFinalReception(true)}
+        					/>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Orientacion"
+        						selectedOption={orientation}
+        						setSelectedOption={setOrientation}
+        						open={openSelectOrientation}
+        						setOpen={setOpenSelectOrientation}
+        						handleOpenSelect={() => setOpenSelectOrientation(true)}
+        					/>
+        					<Field
+        						type="text"
+        						name="characteristics.numberOfFloors"
+        						placeholder="Numero de Pisos"
+        						label="Numero de Pisos"
+        						component={Input}
+        					/>
+        					<Field
+        						type="text"
+        						name="characteristics.numberOfElevators"
+        						placeholder="Numero de Ascensores"
+        						label="Numero de Ascensores"
+        						component={Input}
+        					/>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Logia / Conexion a Lavadora"
+        						selectedOption={washingMachine}
+        						setSelectedOption={setWashingMachine}
+        						open={openSelectWashingMachine}
+        						setOpen={setOpenSelectWashingMachine}
+        						handleOpenSelect={() => setOpenSelectWashingMachine(true)}
+        					/>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Tipo de Gas"
+        						selectedOption={typeOfGas}
+        						setSelectedOption={setTypeOfGas}
+        						open={openSelectTypeOfGas}
+        						setOpen={setOpenSelectTypeOfGas}
+        						handleOpenSelect={() => setOpenSelectTypeOfGas(true)}
+        					/>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Tipo de Agua Caliente"
+        						selectedOption={typeOfHotWater}
+        						setSelectedOption={setTypeOfHotWater}
+        						open={openSelectTypeOfHotWater}
+        						setOpen={setOpenSelectTypeOfHotWater}
+        						handleOpenSelect={() => setOpenSelectTypeOfHotWater(true)}
+        					/>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Tipo de Calefaccion"
+        						selectedOption={typeOfHeating}
+        						setSelectedOption={setTypeOfHeating}
+        						open={openSelectTypeOfHeating}
+        						setOpen={setOpenSelectTypeOfHeating}
+        						handleOpenSelect={() => setOpenSelectTypeOfHeating(true)}
+        					/>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Tipo de Cocina"
+        						selectedOption={typeOfKitchen}
+        						setSelectedOption={setTypeOfKitchen}
+        						open={openSelectTypeOfKitchen}
+        						setOpen={setOpenSelectTypeOfKitchen}
+        						handleOpenSelect={() => setOpenSelectTypeOfKitchen(true)}
+        					/>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Tipo de Construccion"
+        						selectedOption={typeOfConstruction}
+        						setSelectedOption={setTypeOfConstruction}
+        						open={openSelectTypeOfConstruction}
+        						setOpen={setOpenSelectTypeOfConstruction}
+        						handleOpenSelect={() => setOpenSelectTypeOfConstruction(true)}
+        					/>
+        					<Select
+        						options={operationTypeOptions}
+        						label="Tipo de Ventana"
+        						selectedOption={typesOfWindows}
+        						setSelectedOption={setTypesOfWindows}
+        						open={openSelectTypesOfWindows}
+        						setOpen={setOpenSelectTypesOfWindows}
+        						handleOpenSelect={() => setOpenSelectTypesOfWindows(true)}
+        					/>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Field
+        						name="characteristics.furnished"
+        						type="checkbox"
+        						label="Amoblado"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="characteristics.regularized"
+        						type="checkbox"
+        						label="Regularizada"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="characteristics.petsAllowed"
+        						type="checkbox"
+        						label="Permiten Mascotas"
+        						component={Checkbox}
+        					/>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h4>Exteriores</h4>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Field
+        						type="text"
+        						name="characteristics.outdoorParkingNumber"
+        						placeholder="N. de Estacionamientos Exterior"
+        						label="N. de Estacionamientos Exterior"
+        						component={Input}
+        					/>
+        					<Field
+        						type="text"
+        						name="characteristics.subwayParkingNumber"
+        						placeholder="N. de Estacionamientos Subterraneo"
+        						label="N. de Estacionamientos Subterraneo"
+        						component={Input}
+        					/>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h4>Areas comunes</h4>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Field
+        						name="characteristics.gym"
+        						type="checkbox"
+        						label="Gimnasio"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="characteristics.multipurposeRooms"
+        						type="checkbox"
+        						label="Salas multiples"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="characteristics.childrensGames"
+        						type="checkbox"
+        						label="Juegos infantiles"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="characteristics.barbecue"
+        						type="checkbox"
+        						label="Quincho"
+        						component={Checkbox}
+        					/>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Field
+        						name="characteristics.studyRoom"
+        						type="checkbox"
+        						label="Sala de estudio"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="characteristics.pool"
+        						type="checkbox"
+        						label="Piscina"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="characteristics.laundryRoom"
+        						type="checkbox"
+        						label="Sala de lavanderia"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="characteristics.parkingVisit"
+        						type="checkbox"
+        						label="Estacionamiento de visita"
+        						component={Checkbox}
+        					/>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h4>Otros</h4>
+        				</div>
+        				<div className={styles["form-row-4"]}>
+        					<Field
+        						name="characteristics.haveAPoster"
+        						type="checkbox"
+        						label="Tiene letreros"
+        						component={Checkbox}
+        					/>
+        					<Field
+        						name="characteristics.keysInTheOffice"
+        						type="checkbox"
+        						label="Llaves en la oficina"
+        						component={Checkbox}
+        					/>
+        				</div>
+        				<div className={styles["section-title"]}>
+        					<h4>Observaciones</h4>
+        				</div>
+        				<div className={styles["form-row-6"]}>
+        					<div>
+        						<Field
+        							type="text"
+        							name="observations.publicTitle"
+        							placeholder="Titulo publico"
+        							required
+        							label="Titulo publico"
+        							component={Input}
+        						/>
+        						<ErrorMessage name="observations.publicTitle" render={renderError} />
+        					</div>
+        				</div>
+        				<div className={styles["form-row-6"]}>
+        					<div>
+        						<Field
+        							name="observations.description"
+        							placeholder="Descripcion"
+        							required
+        							textarea
+        							label="Descripcion"
+        							component={Input}
+        						/>
+        						<ErrorMessage name="observations.description" render={renderError} />
+        					</div>
+        				</div>
+        				<div className={styles["form-footer"]}>
+        					<Button type='submit' disabled={!isValid || !dirty}>Siguiente</Button>
+        				</div>
+        			</Form>
+        		)}
+        	</Formik>
+        	<ToastContainer />
+					</>
+					:
+					<Upload/>
+			}
 		</div>
 	);
 };
