@@ -17,7 +17,7 @@ import styles from "../../styles.module.scss";
 import PropertiesServices from 'services/propertiesServices';
 
 
-const AddProperty:React.FC<AddUploadProps> = () => {
+const AddProperty:React.FC<AddUploadProps> = ({propertyId}) => {
 	const navigate = useNavigate();
 
 	const [images, setImages] = useState<any>();
@@ -56,13 +56,11 @@ const AddProperty:React.FC<AddUploadProps> = () => {
 			for (let i = 0; i < images.length; i++) {
 				newArr.push(images[i]);
 				formData.append('images', images[i]);
-				console.log(newArr);
 			}
 		}
 
-		PropertiesServices.uploadImagen(formData, 6)
+		PropertiesServices.uploadImagen(formData, propertyId)
 			.then((response) => {
-				console.log(response);
 				toast.success("Propiedad Guardada", {
 					position: "top-right",
 					autoClose: 2000,

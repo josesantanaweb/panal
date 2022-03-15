@@ -123,10 +123,7 @@ const Realtors = () => {
 										<th>Email</th>
 										<th>Telefono</th>
 										<th>Estado</th>
-										{
-											role !== "CORREDOR ADMIN" &&
-										  <th>Acciones</th>
-										}
+										<th>Acciones</th>
 									</tr>
 								</thead>
 								{
@@ -184,15 +181,12 @@ const Realtors = () => {
 													<td>
 														<span className={`${styles["table-role"]} ${styles.admin}`}>{realtor.status.name}</span>
 													</td>
-													{
-														role !== "CORREDOR ADMIN" &&
 													<td>
 														<div className={styles["table-action"]}>
 															<span className={styles["table-edit"]} onClick={() => handleEditRealtors(realtor.id)}><BiEdit/></span>
 															<span className={styles["table-delete"]} onClick={() => handleDelete(realtor.id)}><BiTrashAlt/></span>
 														</div>
 													</td>
-													}
 												</tr>
 											))}
 										</tbody>

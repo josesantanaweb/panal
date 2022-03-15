@@ -221,12 +221,14 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [openSelectTypeOfKitchen, setOpenSelectTypeOfKitchen] = useState<boolean>(false);
 	const [openSelectTypeOfConstruction, setOpenSelectTypeOfConstruction] = useState<boolean>(false);
 	const [openSelectTypesOfWindows, setOpenSelectTypesOfWindows] = useState<boolean>(false);
+	const [propertyId, setPropertyId] = useState();
 	const [upload, setUpload] = useState<boolean>(false);
 	const queryClient = useQueryClient();
 	const { data: customersData} = useQuery(["customers", 100], CustomersServices.getCustomers);
 	const { data: realtorsData} = useQuery(["realtors", 100], RealtorsServices.getRealtors);
 	const { mutate } = useMutation(PropertiesServices.addProperties, {
 		onSuccess: (data) => {
+			setPropertyId(data.id);
 			toast.success("Propiedad Agregada", {
 				position: "top-right",
 				autoClose: 2000,
@@ -1146,7 +1148,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         	<ToastContainer />
 					</>
 					:
-					<Upload/>
+					<Upload propertyId={propertyId}/>
 			}
 		</div>
 	);
