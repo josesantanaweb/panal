@@ -60,7 +60,7 @@ const AddProperty:React.FC<AddUploadProps> = () => {
 			}
 		}
 
-		PropertiesServices.uploadImagen(formData, 5)
+		PropertiesServices.uploadImagen(formData, 6)
 			.then((response) => {
 				console.log(response);
 				toast.success("Propiedad Guardada", {
