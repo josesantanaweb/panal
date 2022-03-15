@@ -3,6 +3,7 @@ import {BiEdit, BiTrashAlt} from "react-icons/bi";
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector, useDispatch } from "react-redux";
 
 import Button from "components/Button";
 import Select from "components/Select";
@@ -16,6 +17,7 @@ import RealtorsServices from 'services/realtorsServices';
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { roleSelector } from 'store/selectors';
 
 const pageOptions = [
 	{
@@ -35,6 +37,7 @@ const pageOptions = [
 const skeleton = [0,1,2,3];
 
 const Realtors = () => {
+	const role = useSelector(roleSelector);
 	const [page, setPage] = useState<ISelect>(pageOptions[0]);
 	const [realtorId, setRealtorId] = useState<number>(0);
 	const [openModalAddRealtors, setOpenModalAddRealtors] = useState<boolean>(false);
@@ -120,7 +123,10 @@ const Realtors = () => {
 										<th>Email</th>
 										<th>Telefono</th>
 										<th>Estado</th>
-										<th>Acciones</th>
+										{
+											role !== "CORREDOR ADMIN" &&
+										  <th>Acciones</th>
+										}
 									</tr>
 								</thead>
 								{
@@ -178,12 +184,15 @@ const Realtors = () => {
 													<td>
 														<span className={`${styles["table-role"]} ${styles.admin}`}>{realtor.status.name}</span>
 													</td>
+													{
+														role !== "CORREDOR ADMIN" &&
 													<td>
 														<div className={styles["table-action"]}>
 															<span className={styles["table-edit"]} onClick={() => handleEditRealtors(realtor.id)}><BiEdit/></span>
 															<span className={styles["table-delete"]} onClick={() => handleDelete(realtor.id)}><BiTrashAlt/></span>
 														</div>
 													</td>
+													}
 												</tr>
 											))}
 										</tbody>

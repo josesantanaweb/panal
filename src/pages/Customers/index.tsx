@@ -194,7 +194,7 @@ const Customers = () => {
 														<span className={styles["table-bitacora"]} onClick={handleBinnacle}><BiListUl/></span>
 													</td>
 													{
-														role !== "ADMIN" &&
+														role === "CORREDOR ADMIN" &&
                             <td>
                             	<div className={styles["table-action"]}>
                             		<span className={styles["table-edit"]} onClick={() => handleEditCustomers(client.id)}><BiEdit/></span>
