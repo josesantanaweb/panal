@@ -7,6 +7,8 @@ import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import axios from 'axios';
+
 import Button from "components/Button";
 import Input from "components/Input";
 
@@ -18,7 +20,7 @@ import PropertiesServices from 'services/propertiesServices';
 const AddProperty:React.FC<AddUploadProps> = () => {
 	const navigate = useNavigate();
 
-	const [images, setImages] = useState([]);
+	const [images, setImages] = useState("");
 
     	// Validataions
 	const validationSchema = {
@@ -37,24 +39,28 @@ const AddProperty:React.FC<AddUploadProps> = () => {
 	// Handle Upload Image
 	const handleChange = async (e: any) => {
 		const selectedFIles: any = [];
-		const targetFiles = e.target.files;
-		const targetFilesObject= [...targetFiles];
-		targetFilesObject.map((file) => {
-			return selectedFIles.push(URL.createObjectURL(file));
-		});
-		setImages(selectedFIles);
+		const targetFiles = e.target.files[0];
+		// const targetFilesObject= [...targetFiles];
+		// targetFilesObject.map((file) => {
+		// 	return selectedFIles.push(URL.createObjectURL(file));
+		// });
+		setImages(targetFiles);
 	};
 
 	// Send Upload Image
 	const onSubmit = () => {
-		const formData = new FormData();
-		images.map((file) => {
-			return formData.append('images', file);
-		});
-		PropertiesServices.uploadImagen(formData, 1)
+		const data: any = new FormData();
+		data.append('images', images);
+
+
+		// for(let i = 0; i < images.length; i++) {
+		// 	data.append('image', images[i]);
+		// }
+
+		PropertiesServices.uploadImagen(data, 4)
 			.then((response) => {
 				console.log(response);
-				toast.success("Propiedad Agregada", {
+				toast.success("Propiedad Guardada", {
 					position: "top-right",
 					autoClose: 2000,
 					hideProgressBar: false,
@@ -70,6 +76,7 @@ const AddProperty:React.FC<AddUploadProps> = () => {
 			.catch((error) => {
 				console.log(error);
 			});
+
 	};
 
 	return (
@@ -82,7 +89,7 @@ const AddProperty:React.FC<AddUploadProps> = () => {
 			<div className={styles["section-title"]}>
 				<h3>Imagenes</h3>
 			</div>
-			{
+			{/* {
 				images.length > 0 &&
         <div className={styles["imagen-list"]}>
         	{
@@ -90,14 +97,21 @@ const AddProperty:React.FC<AddUploadProps> = () => {
         			<img key={index} src={img} alt="" />)
         	}
         </div>
-			}
+			} */}
+
+			{/* {
+				images &&
+        <div className={styles["imagen-list"]}>
+        	<img  src={images} alt="" />
+        </div>
+			} */}
 
 			<label htmlFor="upload" className={styles["imagen-upload"]}>
 				<BiImageAdd size={24} />
 				<span>Subir Imagenes</span>
-				<input type="file" name="file[]" id="upload" multiple onChange={handleChange} />
+				<input type="file" id="upload" multiple onChange={handleChange} />
 			</label>
-			<Formik
+			{/* <Formik
 				initialValues={INITIAL_VALUES}
 				validationSchema={validationSchema.addProperty}
 				onSubmit={onSubmit}
@@ -125,11 +139,11 @@ const AddProperty:React.FC<AddUploadProps> = () => {
 							/>
 						</div>
 						<div className={styles["form-footer"]}>
-							<Button type='submit'>Guardar</Button>
 						</div>
 					</Form>
 				)}
-			</Formik>
+			</Formik> */}
+			<Button type='button' onClick={onSubmit}>Guardar</Button>
 			<ToastContainer />
 		</div>
 	);

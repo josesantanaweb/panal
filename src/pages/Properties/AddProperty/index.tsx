@@ -16,6 +16,7 @@ import Upload from "./components/Upload";
 import {AddPropertyProps, IValues, IOwnerLessor} from "./types";
 import {ISelect} from "interfaces";
 import styles from "./styles.module.scss";
+import RealtorsServices from 'services/realtorsServices';
 import CustomersServices from 'services/customersServices';
 import PropertiesServices from 'services/propertiesServices';
 
@@ -173,6 +174,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [realtorBuyer, setRealtorBuyer] = useState<any>();
 	const [realtorCatcher, setRealtorCatcher] = useState<any>();
 	const [customersOptions, setCustomersOptions] = useState<ISelect[]>([]);
+	const [realtorsOptions, setRealtorsOptions] = useState<ISelect[]>([]);
 
 	const [documentType, setDocumentType] = useState(documentTypeOptions[0]);
 	const [propertyType, setPropertyType] = useState(propertyTypeOptions[0]);
@@ -221,7 +223,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [openSelectTypesOfWindows, setOpenSelectTypesOfWindows] = useState<boolean>(false);
 	const [upload, setUpload] = useState<boolean>(false);
 	const queryClient = useQueryClient();
-	const { data: customersData, isLoading, isError } = useQuery(["customers", 100], CustomersServices.getCustomers);
+	const { data: customersData} = useQuery(["customers", 100], CustomersServices.getCustomers);
+	const { data: realtorsData} = useQuery(["realtors", 100], RealtorsServices.getRealtors);
 	const { mutate } = useMutation(PropertiesServices.addProperties, {
 		onSuccess: (data) => {
 			toast.success("Propiedad Agregada", {
@@ -258,14 +261,28 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 		}
 	}, [customersData]);
 
-  	// Create array of options for dcustomers
+	useEffect(() => {
+		if (realtorsData !== undefined) {
+			realtorsOptionsData();
+		}
+	}, [realtorsData]);
+
+  	// Create array of options for realtors
+	const realtorsOptionsData = () => {
+		const realtorsOptionsData = realtorsData?.data?.map((item: any) => ({label: item.name, value: item.id}));
+		setRealtorsOptions(realtorsOptionsData);
+		if(realtorsOptionsData !== undefined) {
+			setRealtorSaler(realtorsOptionsData[0]);
+			setRealtorBuyer(realtorsOptionsData[0]);
+			setRealtorCatcher(realtorsOptionsData[0]);
+		}
+	};
+
+  	// Create array of options for customers
 	const customersOptionsData = () => {
 		const customersOptionsData = customersData?.data?.map((item: any) => ({label: item.name, value: item.id}));
 		setCustomersOptions(customersOptionsData);
 		if(customersOptionsData !== undefined) {
-			setRealtorSaler(customersOptionsData[0]);
-			setRealtorBuyer(customersOptionsData[0]);
-			setRealtorCatcher(customersOptionsData[0]);
 			setCustomer(customersOptionsData[0]);
 		}
 	};
@@ -307,12 +324,12 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 		realtorCatcherId: 1,
 		commission: 0,
 		ownerLessor: {
-			name: 'Jose',
-			lastName: 'Santana',
-			rut: '342',
-			email: 'jose@gmail.com',
-			fono: '123123',
-			privateObservations: 'Ninguna',
+			name: '',
+			lastName: '',
+			rut: '',
+			email: '',
+			fono: '',
+			privateObservations: '',
 			propertyTypeId: 1,
 			customerId: 1,
 			rolNumber: 1,
@@ -320,11 +337,11 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 		address: {
 			countryId: 1,
 			stateId: 1,
-			address: 'Sanford Cam',
+			address: '',
 			detailedAddress: {
-				commune: "6229 Sanford Camp",
+				commune: "",
 				number: 3,
-				sector: "3316 Funk Manor",
+				sector: "",
 				cityId: 1,
 			},
 		},
@@ -342,8 +359,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			serviceBathrooms: false,
 		},
 		characteristics: {
-			constructedSurface: 'District',
-			terraceSurface: 'Chief',
+			constructedSurface: '',
+			terraceSurface: '',
 			typeOfFloor: 1,
 			typeOfApartment: 1,
 			finalReception: 1,
@@ -374,8 +391,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			keysInTheOffice: false,
 		},
 		observations: {
-			publicTitle: 'Dunas Park',
-			description: 'Water Park',
+			publicTitle: '',
+			description: '',
 		}
 	};
 
@@ -545,7 +562,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         				</div>
         				<div className={styles["form-row-3"]}>
         					<Select
-        						options={customersOptions}
+        						options={realtorsOptions}
         						label="Corredor Vendedor"
         						selectedOption={realtorSaler}
         						setSelectedOption={setRealtorSaler}
@@ -554,7 +571,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						handleOpenSelect={() => setOpenSelectRealtorSaler(true)}
         					/>
         					<Select
-        						options={customersOptions}
+        						options={realtorsOptions}
         						label="Corredor Comprador"
         						selectedOption={realtorBuyer}
         						setSelectedOption={setRealtorBuyer}
@@ -574,7 +591,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         				</div>
         				<div className={styles["form-row-3"]}>
         					<Select
-        						options={customersOptions}
+        						options={realtorsOptions}
         						label="Corredor Captador"
         						selectedOption={realtorCatcher}
         						setSelectedOption={setRealtorCatcher}
