@@ -20,7 +20,8 @@ import PropertiesServices from 'services/propertiesServices';
 const AddProperty:React.FC<AddUploadProps> = () => {
 	const navigate = useNavigate();
 
-	const [images, setImages] = useState("");
+	const [images, setImages] = useState<any>();
+	const [preview, setPreview] = useState([]);
 
     	// Validataions
 	const validationSchema = {
@@ -36,28 +37,30 @@ const AddProperty:React.FC<AddUploadProps> = () => {
 		tour: '',
 	};
 
-	// Handle Upload Image
-	const handleChange = async (e: any) => {
-		const selectedFIles: any = [];
-		const targetFiles = e.target.files[0];
-		// const targetFilesObject= [...targetFiles];
-		// targetFilesObject.map((file) => {
-		// 	return selectedFIles.push(URL.createObjectURL(file));
-		// });
-		setImages(targetFiles);
+	const onChange = (e: any) => {
+		setImages(e.target.files);
+		const selectedFiles: any = [];
+		const targetFiles = e.target.files;
+		const targetFilesObject= [...targetFiles];
+		targetFilesObject.map((file) => {
+			return selectedFiles.push(URL.createObjectURL(file));
+		});
+		setPreview(selectedFiles);
 	};
 
 	// Send Upload Image
 	const onSubmit = () => {
-		const data: any = new FormData();
-		data.append('images', images);
+		const formData: any = new FormData();
+		if(images) {
+			let newArr = [];
+			for (let i = 0; i < images.length; i++) {
+				newArr.push(images[i]);
+				formData.append('images', images[i]);
+				console.log(newArr);
+			}
+		}
 
-
-		// for(let i = 0; i < images.length; i++) {
-		// 	data.append('image', images[i]);
-		// }
-
-		PropertiesServices.uploadImagen(data, 4)
+		PropertiesServices.uploadImagen(formData, 5)
 			.then((response) => {
 				console.log(response);
 				toast.success("Propiedad Guardada", {
@@ -89,27 +92,20 @@ const AddProperty:React.FC<AddUploadProps> = () => {
 			<div className={styles["section-title"]}>
 				<h3>Imagenes</h3>
 			</div>
-			{/* {
-				images.length > 0 &&
+			{
+				preview.length > 0 &&
         <div className={styles["imagen-list"]}>
         	{
-        		images.map((img: any, index: number) =>
+        		preview.map((img: any, index: number) =>
         			<img key={index} src={img} alt="" />)
         	}
         </div>
-			} */}
-
-			{/* {
-				images &&
-        <div className={styles["imagen-list"]}>
-        	<img  src={images} alt="" />
-        </div>
-			} */}
+			}
 
 			<label htmlFor="upload" className={styles["imagen-upload"]}>
 				<BiImageAdd size={24} />
 				<span>Subir Imagenes</span>
-				<input type="file" id="upload" multiple onChange={handleChange} />
+				<input type="file" id="upload" multiple onChange={onChange} />
 			</label>
 			{/* <Formik
 				initialValues={INITIAL_VALUES}
