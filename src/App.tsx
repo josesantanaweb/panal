@@ -15,7 +15,7 @@ import AddProperty from 'pages/Properties/AddProperty';
 
 import { isAuthenticatedSelector } from 'store/selectors';
 import { ROUTES } from "constants/routes";
-import Business from 'pages/Business';
+import Company from 'pages/Company';
 
 const AppLayout = () => {
 	const isAuthenticated = useSelector(isAuthenticatedSelector);
@@ -44,7 +44,7 @@ function App() {
 						<Route path={ROUTES.USERS} element={<Users />} />
 						<Route path={ROUTES.CUSTOMERS} element={<Customers />} />
 						<Route path={ROUTES.ORDERS} element={<Orders />} />
-						<Route path={ROUTES.BUSINESS} element={<Business />} />
+						<Route path={ROUTES.COMPANY} element={<Company />} />
 						<Route path={ROUTES.SUPPORT} element={<Support />} />
 						<Route path={ROUTES.REALTORS} element={<Realtors />} />
 					</Route>

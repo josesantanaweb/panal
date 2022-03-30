@@ -48,7 +48,7 @@ const Sidebar = () => {
 						</Link>
 					</li>
 					<li className={styles["sidebar-item"]}>
-						<Link to="/business" className={`${styles['sidebar-link']} ${splitLocation[1] === "business" ? styles.active : ""}`}>
+						<Link to="/company" className={`${styles['sidebar-link']} ${splitLocation[1] === "business" ? styles.active : ""}`}>
 							<BiBuildings />
 							<span>Empresa</span>
 						</Link>
