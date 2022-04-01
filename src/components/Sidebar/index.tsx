@@ -65,14 +65,22 @@ const Sidebar = () => {
 							<span>Ordenes</span>
 						</Link>
 					</li>
-					<li className={styles["sidebar-item"]}>
-						<Link to="/support" className={styles["sidebar-link"]}>
-							<BiCog />
-							<span>Soporte</span>
-						</Link>
-					</li>
-
-
+					{
+						role === "ADMIN"
+							? <li className={styles["sidebar-item"]}>
+								<Link to="/support-list" className={styles["sidebar-link"]}>
+									<BiCog />
+									<span>Soporte</span>
+								</Link>
+							</li>
+							:
+							<li className={styles["sidebar-item"]}>
+								<Link to="/support" className={styles["sidebar-link"]}>
+									<BiCog />
+									<span>Soporte</span>
+								</Link>
+							</li>
+					}
 					<li className={`${styles['sidebar-item']} ${splitLocation[1] === "clients" ? styles.active : ""}`}>
 						<Link to="/customers" className={`${styles['sidebar-link']} ${splitLocation[1] === "customers" ? styles.active : ""}`}>
 							<BiGroup />

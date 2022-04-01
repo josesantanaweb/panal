@@ -10,6 +10,7 @@ import Login from 'pages/Login';
 import Customers from 'pages/Customers';
 import Orders from 'pages/Orders';
 import Support from 'pages/Support';
+import SupportList from 'pages/Support/SupportList';
 import Realtors from 'pages/Realtors';
 import AddProperty from 'pages/Properties/AddProperty';
 
@@ -46,6 +47,7 @@ function App() {
 						<Route path={ROUTES.ORDERS} element={<Orders />} />
 						<Route path={ROUTES.COMPANY} element={<Company />} />
 						<Route path={ROUTES.SUPPORT} element={<Support />} />
+						<Route path={ROUTES.SUPPORTLIST} element={<SupportList />} />
 						<Route path={ROUTES.REALTORS} element={<Realtors />} />
 					</Route>
 				</Routes>
