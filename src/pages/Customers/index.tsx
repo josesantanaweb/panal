@@ -95,7 +95,10 @@ const Customers = () => {
 	return (
 		<div className={styles.customers}>
 			<div className={styles["customers-top"]}>
-				<h2 className={styles["customers-title"]}>Listado de Clientes</h2>
+				<div>
+					<h2 className={styles["customers-title"]}>Clientes</h2>
+					<p className={styles["users-subtitle"]}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, voluptatum?</p>
+				</div>
 				<Button onClick={handleAddCustomers}>Agregar Cliente</Button>
 			</div>
 			<div className={styles["customers-filter"]}>

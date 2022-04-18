@@ -1,70 +1,69 @@
 /*=============== Properties ===============*/
 .properties {
-  background-color: var(--secondary-bg-color);
-  padding: 1rem;
-  border-radius: 5px;
-  @media only screen and (min-width: 600px) {
-    padding: 2rem;
-  }
+	background-color: var(--secondary-bg-color);
+	padding: 1rem;
+	border-radius: 5px;
+	@media only screen and (min-width: 600px) {
+		padding: 2rem;
+	}
 }
 
 .properties-top {
-  margin-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
-  @media only screen and (min-width: 600px) {
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 4rem;
-    align-items: center;
-  }
+	margin-bottom: 2rem;
+	display: flex;
+	flex-direction: column;
+	@media only screen and (min-width: 600px) {
+		flex-direction: row;
+		justify-content: space-between;
+		margin-bottom: 4rem;
+		align-items: center;
+	}
 }
 
 .properties-title {
-  font-size: var(--title-font-size);
-  color: var(--secondary-text-color);
-  font-weight: 500;
-  margin-bottom: 1rem;
+	font-size: var(--title-font-size);
+	color: var(--secondary-text-color);
+	font-weight: 500;
+	margin-bottom: 1rem;
 }
 
 .properties-total {
-  font-size: var(--text-font-size);
-  color: var(--primary-text-color);
-  font-weight: 400;
-  margin-bottom: 1rem;
-  margin-bottom: 1rem;
-  @media only screen and (min-width: 600px) {
-    margin-bottom: 0;
-  }
+	font-size: var(--text-font-size);
+	color: var(--primary-text-color);
+	font-weight: 400;
+	margin-bottom: 1rem;
+	margin-bottom: 1rem;
+	@media only screen and (min-width: 600px) {
+		margin-bottom: 0;
+	}
 }
 
 .properties-filter {
-  display: grid;
-  margin-bottom: 2rem;
-  grid-gap: 1rem;
-  align-items: center;
-  @media only screen and (min-width: 600px) {
-    margin-bottom: 5rem;
-    grid-template-columns: 70px 200px 300px 40px 40px;
-  }
+	display: grid;
+	margin-bottom: 2rem;
+	grid-gap: 1rem;
+	align-items: center;
+	@media only screen and (min-width: 600px) {
+		margin-bottom: 5rem;
+		grid-template-columns: 70px 200px 300px 40px 40px;
+	}
 }
 
 .properties-toggle {
-  color: var(--primary-text-color);
-  cursor: pointer;
-  font-size: var(--icons-font-size);
-  display: none;
-  justify-content: center;
-  @media only screen and (min-width: 600px) {
-    display: flex;
-  }
+	color: var(--primary-text-color);
+	cursor: pointer;
+	font-size: var(--icons-font-size);
+	display: none;
+	justify-content: center;
+	@media only screen and (min-width: 600px) {
+		display: flex;
+	}
 }
 
 .properties-items {
-  display: grid;
-  grid-gap: 2rem;
-  @media only screen and (min-width: 600px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
+	display: grid;
+	grid-gap: 2rem;
+	@media only screen and (min-width: 600px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }
-
