@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { BiMap, BiHotel, BiBath, BiCar, BiFilterAlt, BiListUl } from "react-icons/bi";
+import { BiMap, BiHotel, BiBath, BiCar, BiFilterAlt, BiListUl, BiSquare, BiGrid, BiGridAlt } from "react-icons/bi";
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useNavigate } from 'react-router-dom';
@@ -13,43 +13,68 @@ import styles from "./styles.module.scss";
 
 import PropertiesServices from 'services/propertiesServices';
 
-// Status Options
-const statusOptions = [
+// Operation Options
+const operationOptions = [
 	{
-		label: "Publicada",
+		label: "Tipo de Operacion",
 		value: "publicada",
-	},
-	{
-		label: "No Publicada",
-		value: "no publicada",
-	},
-	{
-		label: "Vendida",
-		value: "vendida",
 	}
 ];
 
-const pageOptions = [
+const propertyOptions = [
 	{
-		label: 10,
-		value: 10,
-	},
-	{
-		label: 20,
-		value: 20,
-	},
-	{
-		label: 30,
-		value: 30,
+		label: "Tipo de Propiedad",
+		value: "publicada",
 	}
 ];
+
+const regionOptions = [
+	{
+		label: "Region",
+		value: "publicada",
+	}
+];
+
+const comunaOptions = [
+	{
+		label: "Comuna",
+		value: "publicada",
+	}
+];
+
+const monedaOptions = [
+	{
+		label: "Tipo de Moneda",
+		value: "publicada",
+	}
+];
+
+const dormitoriosOptions = [
+	{
+		label: "Dormitorios",
+		value: "publicada",
+	}
+];
+
+const banosOptions = [
+	{
+		label: "Banos",
+		value: "publicada",
+	}
+];
+
 
 const Properties = () => {
 	const navigate = useNavigate();
 	const [openSelectStatus, setOpenSelectStatus] = useState<boolean>(false);
 	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
-	const [filterStatus, setFilterStatus] = useState<ISelect>(statusOptions[0]);
-	const [page, setPage] = useState<ISelect>(pageOptions[0]);
+	const [operation, setOperation] = useState<ISelect>(operationOptions[0]);
+	const [comuna, setComuna] = useState<ISelect>(comunaOptions[0]);
+	const [property, setProperty] = useState<ISelect>(propertyOptions[0]);
+	const [region, setRegion] = useState<ISelect>(regionOptions[0]);
+	const [dormitorios, setDormitorios] = useState<ISelect>(dormitoriosOptions[0]);
+	const [moneda, setMoneda] = useState<ISelect>(monedaOptions[0]);
+	const [banos, setBanos] = useState<ISelect>(banosOptions[0]);
 	const { data, isLoading, isError } = useQuery('properties', PropertiesServices.getProperties);
 	const queryClient = useQueryClient();
 	const handleOpenStatus = () => setOpenSelectStatus(true);
@@ -72,35 +97,91 @@ const Properties = () => {
 							</div>
 							<Button onClick={() => navigate(`/add-property`)}>Agregar Propiedad</Button>
 						</div>
+						<div className={styles["properties-search"]}>
+							<div className={styles["properties-column"]}>
+								<Input placeholder="Buscar..." search/>
+							</div>
+							<div className={styles["properties-toggle"]}>
+								<BiGridAlt/>
+							</div>
+							<div className={styles["properties-toggle"]}>
+								<BiListUl/>
+							</div>
+						</div>
 						<div className={styles["properties-filter"]}>
 							<div className={styles["properties-column"]}>
 								<Select
-									options={pageOptions}
-									selectedOption={page}
-									setSelectedOption={setPage}
-									open={openSelectPage}
-									setOpen={setOpenSelectPage}
-									handleOpenSelect={handleOpenPage}
-								/>
-							</div>
-							<div className={styles["properties-column"]}>
-								<Select
-									options={statusOptions}
-									selectedOption={filterStatus}
-									setSelectedOption={setFilterStatus}
+									options={operationOptions}
+									selectedOption={operation}
+									setSelectedOption={setOperation}
 									open={openSelectStatus}
 									setOpen={setOpenSelectStatus}
 									handleOpenSelect={handleOpenStatus}
 								/>
 							</div>
 							<div className={styles["properties-column"]}>
-								<Input placeholder="Buscar..." search/>
+								<Select
+									options={propertyOptions}
+									selectedOption={property}
+									setSelectedOption={setProperty}
+									open={openSelectStatus}
+									setOpen={setOpenSelectStatus}
+									handleOpenSelect={handleOpenStatus}
+								/>
 							</div>
-							<div className={styles["properties-toggle"]}>
-								<BiFilterAlt/>
+							<div className={styles["properties-column"]}>
+								<Select
+									options={regionOptions}
+									selectedOption={region}
+									setSelectedOption={setRegion}
+									open={openSelectStatus}
+									setOpen={setOpenSelectStatus}
+									handleOpenSelect={handleOpenStatus}
+								/>
 							</div>
-							<div className={styles["properties-toggle"]}>
-								<BiListUl/>
+							<div className={styles["properties-column"]}>
+								<Select
+									options={comunaOptions}
+									selectedOption={comuna}
+									setSelectedOption={setComuna}
+									open={openSelectStatus}
+									setOpen={setOpenSelectStatus}
+									handleOpenSelect={handleOpenStatus}
+								/>
+							</div>
+							<div className={styles["properties-column"]}>
+								<Select
+									options={monedaOptions}
+									selectedOption={moneda}
+									setSelectedOption={setMoneda}
+									open={openSelectStatus}
+									setOpen={setOpenSelectStatus}
+									handleOpenSelect={handleOpenStatus}
+								/>
+							</div>
+							<div className={styles["properties-prices"]}>
+								<Input placeholder="Precio min..." />
+								<Input placeholder="Precio max..." />
+							</div>
+							<div className={styles["properties-column"]}>
+								<Select
+									options={dormitoriosOptions}
+									selectedOption={dormitorios}
+									setSelectedOption={setDormitorios}
+									open={openSelectStatus}
+									setOpen={setOpenSelectStatus}
+									handleOpenSelect={handleOpenStatus}
+								/>
+							</div>
+							<div className={styles["properties-column"]}>
+								<Select
+									options={banosOptions}
+									selectedOption={banos}
+									setSelectedOption={setBanos}
+									open={openSelectStatus}
+									setOpen={setOpenSelectStatus}
+									handleOpenSelect={handleOpenStatus}
+								/>
 							</div>
 						</div>
 						<div className={styles["properties-items"]}>

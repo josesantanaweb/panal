@@ -15,7 +15,7 @@
 	@media only screen and (min-width: 600px) {
 		flex-direction: row;
 		justify-content: space-between;
-		margin-bottom: 4rem;
+		margin-bottom: 2rem;
 		align-items: center;
 	}
 }
@@ -38,14 +38,23 @@
 	}
 }
 
+.properties-search {
+	display: grid;
+	margin-bottom: 2rem;
+	grid-gap: 1rem;
+	align-items: center;
+	@media only screen and (min-width: 600px) {
+		grid-template-columns: 300px 40px 40px;
+	}
+}
+
 .properties-filter {
 	display: grid;
 	margin-bottom: 2rem;
 	grid-gap: 1rem;
 	align-items: center;
 	@media only screen and (min-width: 600px) {
-		margin-bottom: 5rem;
-		grid-template-columns: 70px 200px 300px 40px 40px;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 }
 
@@ -58,6 +67,13 @@
 	@media only screen and (min-width: 600px) {
 		display: flex;
 	}
+}
+
+.properties-prices {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 1rem;
+	align-items: center;
 }
 
 .properties-items {
