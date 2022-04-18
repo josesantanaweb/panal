@@ -1,24 +1,24 @@
 /*=============== Layout ===============*/
 .layout {
-  position: relative;
-  display: flex;
+	position: relative;
+	display: flex;
 }
 
 .layout-main {
-  width: 100%;
-  @media only screen and (min-width: 600px) {
-    margin-left: 80px;
-  }
+	width: 100%;
+	@media only screen and (min-width: 600px) {
+		margin-left: 80px;
+	}
 }
 
 .is-open {
-  @media only screen and (min-width: 600px) {
-    margin-left: 230px;
-  }
+	@media only screen and (min-width: 600px) {
+		margin-left: 260px;
+	}
 }
 
 .layout-content {
-  background-color: var(--primay-bg-color);
-  padding: 94px 30px 60px;
-  min-height: calc(100vh - 160px);
+	background-color: var(--primay-bg-color);
+	padding: 94px 30px 60px;
+	min-height: calc(100vh - 160px);
 }

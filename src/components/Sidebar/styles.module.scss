@@ -1,126 +1,124 @@
 /*=============== Sidebar ===============*/
 .sidebar {
-  width: var(--sidebar-collapse-width);
-  height: 100%;
-  background-color: var(--secondary-color);
-  transition: all 0.2s;
-  position: fixed;
-  top: 0;
-  left: -80px;
-  z-index: 10;
-  @media only screen and (min-width: 600px) {
-    top: 0;
-    left: 0;
-  }
+	width: var(--sidebar-collapse-width);
+	height: 100%;
+	background-color: var(--secondary-color);
+	transition: all 0.2s;
+	position: fixed;
+	top: 0;
+	left: -80px;
+	z-index: 10;
+	@media only screen and (min-width: 600px) {
+		top: 0;
+		left: 0;
+	}
 }
 
 .sidebar-logo {
-  align-items: center;
-  justify-content: center;
-  height: 64px;
-  padding-right: 5px;
-  display: none;
-  @media only screen and (min-width: 600px) {
-    display: flex;
-  }
+	align-items: center;
+	justify-content: center;
+	height: 64px;
+	padding-right: 5px;
+	display: none;
+	@media only screen and (min-width: 600px) {
+		display: flex;
+	}
 }
 
 .sidebar-logo-movil {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 64px;
-  @media only screen and (min-width: 600px) {
-    display: none;
-  }
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 64px;
+	@media only screen and (min-width: 600px) {
+		display: none;
+	}
 }
 
 .sidebar-menu {
-  margin-top: 2rem;
+	margin-top: 2rem;
 }
 
 .sidebar-item {
-  padding: 0 1rem;
-  text-overflow: clip;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  line-height: 50px;
+	text-overflow: clip;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 50px;
+	line-height: 50px;
 }
 
 .sidebar-item.active {
-  background-color: #091835;
+	background-color: #091835;
 }
 
 .sidebar-link {
-  color: var(--tertiary-color);
-  font-size: var(--icons-font-size);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  position: relative;
-  &:hover {
-    color: var(--primary-color);
-  }
+	color: white;
+	font-size: var(--icons-font-size);
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	position: relative;
+	padding: 0 2rem;
+	&:hover {
+		color: var(--primary-color);
+	}
 }
 
 .sidebar-link.active {
-  color: var(--primary-color);
-  &:after {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 50px;
-    right: -29px;
-    background-color: var(--primary-color);
-  }
+	color: var(--primary-color);
+	&:after {
+		content: '';
+		position: absolute;
+		width: 3px;
+		height: 50px;
+		right: -29px;
+		background-color: var(--primary-color);
+	}
 }
 
 .sidebar-link span {
-  display: none;
+	display: none;
 }
 
 .is-open {
-  width: 80px;
-  left: 0;
-  @media only screen and (min-width: 600px) {
-    width: 230px;
-  }
+	width: 80px;
+	left: 0;
+	@media only screen and (min-width: 600px) {
+		width: 260px;
+	}
 }
 
 .is-open .sidebar-item {
-  padding: 0 1rem;
-  @media only screen and (min-width: 600px) {
-    justify-content: flex-end;
-    padding: 0 2rem;
-  }
+	@media only screen and (min-width: 600px) {
+		justify-content: flex-end;
+	}
 }
 
 .is-open .sidebar-link {
-  display: flex;
-  align-items: center;
-  @media only screen and (min-width: 600px) {
-    width: 100%;
-  }
+	display: flex;
+	align-items: center;
+	@media only screen and (min-width: 600px) {
+		width: 100%;
+	}
 }
 
 .is-open .sidebar-link.active {
-  &:after {
-    right: -29px;
-  }
-  @media only screen and (min-width: 600px) {
-    &:after {
-      right: -32px;
-    }
-  }
+	&:after {
+		right: -29px;
+	}
+	@media only screen and (min-width: 600px) {
+		&:after {
+			right: 0px;
+		}
+	}
 }
 
 .is-open .sidebar-link span {
-  @media only screen and (min-width: 600px) {
-    display: block;
-    font-size: 1rem;
-    margin-left: 1rem;
-  }
+	@media only screen and (min-width: 600px) {
+		display: block;
+		font-size: 1rem;
+		margin-left: 1rem;
+	}
 }

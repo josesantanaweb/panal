@@ -30,9 +30,10 @@ const Layout:React.FC = ({children}) => {
 	return (
 		<div className={styles.layout}>
 			<Sidebar/>
-			<div ref={ref}>
+			{/* <div ref={ref}>
 				<Navbar/>
-			</div>
+			</div> */}
+			<Navbar/>
 			<div className={layoutClasses}>
 				<div className={styles["layout-content"]}>
 					{children}

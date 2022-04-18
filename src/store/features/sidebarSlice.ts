@@ -1,11 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-	open: false,
+	open: true,
 };
 
 export const sidebarSlice = createSlice({
-	name: "sidebar",
+	name: 'sidebar',
 	initialState,
 	reducers: {
 		setOpenSidebar: (state, action) => {
