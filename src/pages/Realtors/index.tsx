@@ -19,26 +19,34 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { roleSelector } from 'store/selectors';
 
-const pageOptions = [
+const statusOptions = [
 	{
-		label: 10,
-		value: 10,
+		label: "Activa",
+		value: "active",
 	},
+];
+
+const usersOptions = [
 	{
-		label: 20,
-		value: 20,
+		label: "Usuarios",
+		value: "users",
 	},
+];
+
+const companyOptions = [
 	{
-		label: 30,
-		value: 30,
-	}
+		label: "Empresa",
+		value: "company",
+	},
 ];
 
 const skeleton = [0,1,2,3];
 
 const Realtors = () => {
 	const role = useSelector(roleSelector);
-	const [page, setPage] = useState<ISelect>(pageOptions[0]);
+	const [page, setPage] = useState<ISelect>(statusOptions[0]);
+	const [users, setUsers] = useState<ISelect>(usersOptions[0]);
+	const [company, setCompany] = useState<ISelect>(companyOptions[0]);
 	const [realtorId, setRealtorId] = useState<number>(0);
 	const [openModalAddRealtors, setOpenModalAddRealtors] = useState<boolean>(false);
 	const [openModalEditRealtor, setOpenModalEditRealtor] = useState<boolean>(false);
@@ -90,13 +98,19 @@ const Realtors = () => {
 	return (
 		<div className={styles.realtors}>
 			<div className={styles["realtors-top"]}>
-				<h2 className={styles["realtors-title"]}>Listado de Agentes</h2>
+				<div>
+					<h2 className={styles["realtors-title"]}>Agentes</h2>
+					<p className={styles["users-subtitle"]}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, voluptatum?</p>
+				</div>
 				<Button onClick={handleAddRealtors}>Agregar Agente</Button>
 			</div>
 			<div className={styles["realtors-filter"]}>
 				<div>
+					<Input placeholder="Buscar..." search/>
+				</div>
+				<div>
 					<Select
-						options={pageOptions}
+						options={statusOptions}
 						selectedOption={page}
 						setSelectedOption={setPage}
 						open={openSelectPage}
@@ -105,7 +119,24 @@ const Realtors = () => {
 					/>
 				</div>
 				<div>
-					<Input placeholder="Buscar..." search/>
+					<Select
+						options={statusOptions}
+						selectedOption={users}
+						setSelectedOption={setUsers}
+						open={openSelectPage}
+						setOpen={setOpenSelectPage}
+						handleOpenSelect={handleOpenPage}
+					/>
+				</div>
+				<div>
+					<Select
+						options={companyOptions}
+						selectedOption={company}
+						setSelectedOption={setCompany}
+						open={openSelectPage}
+						setOpen={setOpenSelectPage}
+						handleOpenSelect={handleOpenPage}
+					/>
 				</div>
 			</div>
 			<div className={styles.content}>

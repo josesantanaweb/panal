@@ -19,6 +19,7 @@ const Button:React.FC<ButtonProps> = (
 		variant === "tertiary" ? styles["button-tertiary"] : "",
 		variant === "gray" ? styles["button-gray"] : "",
 		variant === "error" ? styles["button-error"] : "",
+		variant === "outline" ? styles["button-outline"] : "",
 		disabled ? styles["button-disabled"] : "",
 		full ? styles["button-full"] : "",
 	].join(' ');

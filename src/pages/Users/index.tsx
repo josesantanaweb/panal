@@ -17,25 +17,33 @@ import UsersServices from 'services/usersServices';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-const pageOptions = [
+const statusOptions = [
 	{
-		label: 10,
-		value: 10,
+		label: "Activa",
+		value: "active",
 	},
+];
+
+const usersOptions = [
 	{
-		label: 20,
-		value: 20,
+		label: "Usuarios",
+		value: "users",
 	},
+];
+
+const companyOptions = [
 	{
-		label: 30,
-		value: 30,
-	}
+		label: "Empresa",
+		value: "company",
+	},
 ];
 
 const skeleton = [0,1,2,3];
 
 const Users = () => {
-	const [page, setPage] = useState<ISelect>(pageOptions[0]);
+	const [page, setPage] = useState<ISelect>(statusOptions[0]);
+	const [users, setUsers] = useState<ISelect>(usersOptions[0]);
+	const [company, setCompany] = useState<ISelect>(companyOptions[0]);
 	const [userId, setUserId] = useState<number>(0);
 	const [openModalAddUsers, setOpenModalAddUsers] = useState<boolean>(false);
 	const [openModalEditUser, setOpenModalEditUser] = useState<boolean>(false);
@@ -87,13 +95,19 @@ const Users = () => {
 	return (
 		<div className={styles.users}>
 			<div className={styles["users-top"]}>
-				<h2 className={styles["users-title"]}>Listado de Usuarios</h2>
+				<div>
+					<h2 className={styles["users-title"]}>Usuarios</h2>
+					<p className={styles["users-subtitle"]}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, voluptatum?</p>
+				</div>
 				<Button onClick={handleAddUsers}>Agregar Usuario</Button>
 			</div>
 			<div className={styles["users-filter"]}>
 				<div>
+					<Input placeholder="Buscar..." search/>
+				</div>
+				<div>
 					<Select
-						options={pageOptions}
+						options={statusOptions}
 						selectedOption={page}
 						setSelectedOption={setPage}
 						open={openSelectPage}
@@ -102,7 +116,24 @@ const Users = () => {
 					/>
 				</div>
 				<div>
-					<Input placeholder="Buscar..." search/>
+					<Select
+						options={statusOptions}
+						selectedOption={users}
+						setSelectedOption={setUsers}
+						open={openSelectPage}
+						setOpen={setOpenSelectPage}
+						handleOpenSelect={handleOpenPage}
+					/>
+				</div>
+				<div>
+					<Select
+						options={companyOptions}
+						selectedOption={company}
+						setSelectedOption={setCompany}
+						open={openSelectPage}
+						setOpen={setOpenSelectPage}
+						handleOpenSelect={handleOpenPage}
+					/>
 				</div>
 			</div>
 			<div className={styles.content}>
@@ -116,9 +147,10 @@ const Users = () => {
 								<thead>
 									<tr className={styles["table-head"]}>
 										<th>#</th>
-										<th>Usuario</th>
-										<th>Rol</th>
+										<th>Nombre Usuario</th>
+										<th>Tipo de Usuario</th>
 										<th>Email</th>
+										<th>Estado</th>
 										<th>Acciones</th>
 									</tr>
 								</thead>
@@ -168,10 +200,11 @@ const Users = () => {
 													<td>
 														{user.name} {user.lastName}
 													</td>
-													<td>
-														<span className={`${styles["table-role"]} ${styles.admin}`}>Admin</span>
-													</td>
+													<td>Admin</td>
 													<td style={{width: '400px'}}>{user.email}</td>
+													<td>
+														<span className={`${styles["table-role"]} ${styles.admin}`}>Activo</span>
+													</td>
 													<td>
 														<div className={styles["table-action"]}>
 															<span className={styles["table-edit"]} onClick={() => handleEditUsers(user.id)}><BiEdit/></span>

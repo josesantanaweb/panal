@@ -67,10 +67,10 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 	// Validataions
 	const validationSchema = {
 		addCustomer : Yup.object({
-			name: Yup.string().required("Requerido"),
-			lastName: Yup.string().required("Requerido"),
-			email: Yup.string().email("Correo Invalido").required("Requerido"),
-			documentNumber: Yup.string().required("Requerido"),
+			// name: Yup.string().required("Requerido"),
+			// lastName: Yup.string().required("Requerido"),
+			// email: Yup.string().email("Correo Invalido").required("Requerido"),
+			// documentNumber: Yup.string().required("Requerido"),
 		})
 	};
 
@@ -127,18 +127,6 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 			>
 				{({ errors, touched, isValid, dirty}) => (
 					<Form className={styles["form-container"]}>
-						<div className={styles["form-single"]}>
-							<Select
-								options={documentTypeOptions}
-								label="Cliente"
-								required
-								selectedOption={documentType}
-								setSelectedOption={setDocumentType}
-								open={openSelectDocumentType}
-								setOpen={setOpenSelectDocumentType}
-								handleOpenSelect={handleOpenDocumentType}
-							/>
-						</div>
 						<div className={styles["form-rows"]}>
 							<Field
 								type="text"
@@ -230,19 +218,28 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 								<p>Propiedad</p>
 							</div>
 						</div>
+						<div className={styles["form-single"]}>
+							<Field
+								type="text"
+								name="address"
+								required
+								label="Direccion*"
+								component={Input}
+							/>
+						</div>
 						<div className={styles["form-checkbox"]}>
 							<Field
 								name="mortgage"
 								type="checkbox"
-								label="Mostrar propiedad exacta"
+								label="Mostrar direccion exacta"
 								component={Checkbox}
 							/>
 						</div>
 						<div className={styles["form-footer"]}>
-							<Button type='submit' variant="gray">Atras</Button>
+							<Button type='submit' variant="outline">Atras</Button>
 							<div className={styles["form-button-group"]}>
-								<Button type='submit' disabled={!isValid || !dirty}>Generar</Button>
-								<Button type='button' variant="error">Previsualizar</Button>
+								<Button type='button' variant="outline">Vista Previa</Button>
+								<Button type='submit' variant="tertiary" disabled={!isValid || !dirty}>Generar</Button>
 							</div>
 						</div>
 					</Form>

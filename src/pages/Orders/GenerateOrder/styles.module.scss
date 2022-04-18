@@ -1,90 +1,90 @@
 /*=============== Generate Order ===============*/
 .form {
-  position: relative;
+	position: relative;
 }
 
 .form-label {
-  color: var(--secondary-text-color);
-  font-size: var(--normal-font-size);
-  margin-bottom: 2rem;
-  font-weight: 500;
+	color: var(--secondary-text-color);
+	font-size: var(--normal-font-size);
+	margin-bottom: 2rem;
+	font-weight: 600;
 }
 
 .form-container {
-  overflow-y: scroll;
-  max-height: 500px;
-  @media only screen and (min-width: 600px) {
-    overflow-y: hidden;
-    max-height: 100%;
-  }
+	overflow-y: scroll;
+	max-height: 500px;
+	@media only screen and (min-width: 600px) {
+		overflow-y: hidden;
+		max-height: 100%;
+	}
 }
 
 .form-rows {
-  align-items: center;
-  justify-content: space-between;
-  > div {
-    margin-bottom: 1rem;
-  }
-  @media only screen and (min-width: 600px) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
-    margin-bottom: 1rem;
-    > div {
-      margin-bottom: 0rem;
-    }
-  }
+	align-items: center;
+	justify-content: space-between;
+	> div {
+		margin-bottom: 1rem;
+	}
+	@media only screen and (min-width: 600px) {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 2rem;
+		margin-bottom: 1rem;
+		> div {
+			margin-bottom: 0rem;
+		}
+	}
 }
 
 .form-checkbox {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  > div {
-    margin-bottom: 1rem;
-  }
-  @media only screen and (min-width: 600px) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
-    margin-bottom: 1rem;
-    > div {
-      margin-bottom: 0rem;
-    }
-  }
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	> div {
+		margin-bottom: 1rem;
+	}
+	@media only screen and (min-width: 600px) {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 2rem;
+		margin-bottom: 1rem;
+		> div {
+			margin-bottom: 0rem;
+		}
+	}
 }
 
 .form-section {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  @media only screen and (min-width: 600px) {
-    margin-bottom: 2rem;
-  }
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+	@media only screen and (min-width: 600px) {
+		margin-bottom: 2rem;
+	}
 }
 
 .form-single {
-  margin-bottom: 1rem;
+	margin-bottom: 1rem;
 }
 
 .form-footer {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  display: grid;
-  justify-content: space-between;
-  grid-gap: 1rem;
-  grid-template-columns: 1fr;
-  @media only screen and (min-width: 600px) {
-    margin-top: 4rem;
-    grid-gap: 0;
-    grid-template-columns: 100px 300px;
-  }
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	display: grid;
+	justify-content: space-between;
+	grid-gap: 1rem;
+	grid-template-columns: 1fr;
+	@media only screen and (min-width: 600px) {
+		margin-top: 4rem;
+		grid-gap: 0;
+		grid-template-columns: 100px 300px;
+	}
 }
 
 .form-button-group {
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 1fr;
-  @media only screen and (min-width: 600px) {
-    grid-template-columns: 1fr 1fr;
-  }
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: 1fr;
+	@media only screen and (min-width: 600px) {
+		grid-template-columns: 1fr 1fr;
+	}
 }
