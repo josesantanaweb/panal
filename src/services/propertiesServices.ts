@@ -2,8 +2,8 @@ import api from '../config/api';
 import { getValue } from '../utils/localStorage';
 
 const PropertiesServices = {
-	getProperties: async () => {
-		const response = await api.get(`properties`, {
+	getProperties: async ({ queryKey }: any) => {
+		const response = await api.get(`properties?titleOrId=${queryKey[1]}`, {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		});
 		return response.data;

@@ -67,10 +67,10 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 	// Validataions
 	const validationSchema = {
 		addCustomer : Yup.object({
-			// name: Yup.string().required("Requerido"),
-			// lastName: Yup.string().required("Requerido"),
-			// email: Yup.string().email("Correo Invalido").required("Requerido"),
-			// documentNumber: Yup.string().required("Requerido"),
+			name: Yup.string().required("Requerido"),
+			lastName: Yup.string().required("Requerido"),
+			email: Yup.string().email("Correo Invalido").required("Requerido"),
+			documentNumber: Yup.string().required("Requerido"),
 		})
 	};
 
@@ -203,15 +203,15 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 								setOpen={setOpenSelectDocumentType}
 								handleOpenSelect={handleOpenDocumentType}
 							/>
-							<Field
-								type="date"
+							{/* <Field
+								type="text"
 								name="email"
 								date
 								required
 								label="Fecha y hora*"
 								component={Input}
 								error={errors.email && touched.email ? errors.email : null}
-							/>
+							/> */}
 						</div>
 						<div className={styles["form-section"]}>
 							<div className={styles["form-label"]}>

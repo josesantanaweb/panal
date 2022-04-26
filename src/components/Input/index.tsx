@@ -8,6 +8,7 @@ const Input:React.FC<InputProps> = (
 	{
 		type="text",
 		onChange,
+		handeleSearch,
 		disabled,
 		search,
 		id,
@@ -32,7 +33,7 @@ const Input:React.FC<InputProps> = (
 			{label && <label htmlFor={id}>{label} {required && <span>*</span>}</label>}
 			{
 				search &&
-			  <span className={styles["icon-search"]}><BiSearch/></span>
+			  <span className={styles["icon-search"]} onClick={handeleSearch}><BiSearch/></span>
 			}
 			{
 				textarea ?
