@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {BiEdit, BiTrashAlt} from "react-icons/bi";
+import {BiCog, BiEdit, BiHomeSmile, BiTrashAlt} from "react-icons/bi";
 import { useQuery } from 'react-query';
 
 import Button from "components/Button";
@@ -15,29 +15,62 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import GenerateOrder from './GenerateOrder';
 
-const pageOptions = [
+const operationOptions = [
 	{
-		label: 10,
-		value: 10,
+		label: "Venta",
+		value: "Venta",
 	},
+];
+
+const propertyOptions = [
 	{
-		label: 20,
-		value: 20,
+		label: "Casa",
+		value: "Departamento",
 	},
+];
+
+const regionOptions = [
 	{
-		label: 30,
-		value: 30,
-	}
+		label: "Region",
+		value: "Region",
+	},
+];
+
+const communeOptions = [
+	{
+		label: "Comuna",
+		value: "Comuna",
+	},
+];
+
+const currencyOptions = [
+	{
+		label: "Moneda",
+		value: "Moneda",
+	},
 ];
 
 const skeleton = [0,1,2,3];
 
 const Orders = () => {
-	const [page, setPage] = useState<ISelect>(pageOptions[0]);
+	const [operation, setOperation] = useState<ISelect>(operationOptions[0]);
+	const [property, setProperty] = useState<ISelect>(propertyOptions[0]);
+	const [region, setRegion] = useState<ISelect>(regionOptions[0]);
+	const [commune, setCommune] = useState<ISelect>(communeOptions[0]);
+	const [currency, setCurrency] = useState<ISelect>(currencyOptions[0]);
 	const { data, isLoading, isError } = useQuery('users', UsersServices.getUsers);
 	const [openModalGenerateOrder, setOpenModalGenerateOrder] = useState<boolean>(false);
-	const [openSelectPage, setOpenSelectPage] = useState<boolean>(false);
-	const handleOpenPage = () => setOpenSelectPage(true);
+	const [openOperation, setOpenOperation] = useState<boolean>(false);
+	const [openProperty, setOpenProperty] = useState<boolean>(false);
+	const [openRegion, setOpenRegion] = useState<boolean>(false);
+	const [openCommune, setOpenCommune] = useState<boolean>(false);
+	const [openCurrency, setOpenCurrency] = useState<boolean>(false);
+
+	const handleOpenOperation = () => setOpenOperation(true);
+	const handleOpenProperty = () => setOpenProperty(true);
+	const handleOpenRegion = () => setOpenRegion(true);
+	const handleOpenCommune = () => setOpenCommune(true);
+	const handleOpenCurrency = () => setOpenCurrency(true);
 
   	// Handle Generate order
 	const handleGenerateOrder = () => setOpenModalGenerateOrder(true);
@@ -45,22 +78,80 @@ const Orders = () => {
 	return (
 		<div className={styles.orders}>
 			<div className={styles["orders-top"]}>
-				<h2 className={styles["orders-title"]}>Listado de Ordenes</h2>
+				<div>
+					<h2 className={styles["orders-title"]}>Listado de Ordenes</h2>
+					<p className={styles["users-subtitle"]}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, voluptatum?</p>
+				</div>
 				<Button onClick={handleGenerateOrder}>Generar Orden</Button>
+			</div>
+			<div className={styles["orders-search"]}>
+				<div>
+					<Input placeholder="Buscar..." search/>
+				</div>
+				<span>
+					<BiCog size={24}/>
+				</span>
 			</div>
 			<div className={styles["orders-filter"]}>
 				<div>
 					<Select
-						options={pageOptions}
-						selectedOption={page}
-						setSelectedOption={setPage}
-						open={openSelectPage}
-						setOpen={setOpenSelectPage}
-						handleOpenSelect={handleOpenPage}
+						options={operationOptions}
+						selectedOption={operation}
+						setSelectedOption={setOperation}
+						open={openOperation}
+						setOpen={setOpenOperation}
+						handleOpenSelect={handleOpenOperation}
 					/>
 				</div>
 				<div>
-					<Input placeholder="Buscar..." search/>
+					<Select
+						options={propertyOptions}
+						selectedOption={property}
+						setSelectedOption={setProperty}
+						open={openProperty}
+						setOpen={setOpenProperty}
+						handleOpenSelect={handleOpenProperty}
+					/>
+				</div>
+				<div>
+					<Select
+						options={regionOptions}
+						selectedOption={region}
+						setSelectedOption={setRegion}
+						open={openRegion}
+						setOpen={setOpenRegion}
+						handleOpenSelect={handleOpenRegion}
+					/>
+				</div>
+				<div>
+					<Select
+						options={communeOptions}
+						selectedOption={commune}
+						setSelectedOption={setCommune}
+						open={openCommune}
+						setOpen={setOpenCommune}
+						handleOpenSelect={handleOpenCommune}
+					/>
+				</div>
+				<div>
+					<Select
+						options={currencyOptions}
+						selectedOption={currency}
+						setSelectedOption={setCurrency}
+						open={openCurrency}
+						setOpen={setOpenCurrency}
+						handleOpenSelect={handleOpenCurrency}
+					/>
+				</div>
+				<div className={styles["orders-filter-inputs"]}>
+					<Input placeholder="Precio min"/>
+					<Input placeholder="Precio max"/>
+				</div>
+				<div>
+					<Input placeholder="Dormitorios"/>
+				</div>
+				<div>
+					<Input placeholder="Baños"/>
 				</div>
 			</div>
 			<div className={styles.content}>
@@ -79,6 +170,7 @@ const Orders = () => {
 										<th>Ejecutivo/a</th>
 										<th>Propiedades</th>
 										<th>Estado</th>
+										<th>Canje</th>
 										<th>Acciones</th>
 									</tr>
 								</thead>
@@ -139,6 +231,11 @@ const Orders = () => {
 													<td>NI231231</td>
 													<td>
 														<span className={`${styles["table-status"]} ${styles.pending}`}>Pendiente</span>
+													</td>
+													<td>
+														<span className={styles["table-canje"]}>
+															<BiHomeSmile size={24}/>
+														</span>
 													</td>
 													<td>
 														<div className={styles["table-action"]}>
