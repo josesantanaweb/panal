@@ -25,9 +25,9 @@ const Login = () => {
 		onSuccess: (data) => {
 			dispatch(setAuthenticated(true));
 			saveValue('token', data.access_token);
-			saveValue('role', data.rol.name);
+			saveValue('role', data.rol);
 			saveValue('username', `${data.name} ${data.lastName}`);
-			dispatch(setRole(data.rol.name));
+			dispatch(setRole(data.rol));
 			dispatch(setUsername(`${data.name} ${data.lastName}`));
 		},
 		onError: () => {

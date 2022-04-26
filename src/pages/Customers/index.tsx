@@ -133,7 +133,7 @@ const Customers = () => {
 										<th>Tipo</th>
 										<th>Bitacora</th>
 										{
-											role !== "ADMIN" &&
+											role === "REALTOR ADMIN" &&
 										  <th>Acciones</th>
 										}
 									</tr>
@@ -197,7 +197,7 @@ const Customers = () => {
 														<span className={styles["table-bitacora"]} onClick={handleBinnacle}><BiListUl/></span>
 													</td>
 													{
-														role === "CORREDOR ADMIN" &&
+														role === "REALTOR ADMIN" &&
                             <td>
                             	<div className={styles["table-action"]}>
                             		<span className={styles["table-edit"]} onClick={() => handleEditCustomers(client.id)}><BiEdit/></span>

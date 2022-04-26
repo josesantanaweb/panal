@@ -29,6 +29,10 @@ const operationTypeOptions = [
 		label: 'Arriendo',
 		value: 2,
 	},
+	{
+		label: 'Arriendo Temporal',
+		value: 3,
+	},
 ];
 
 const propertyTypeOptions = [
@@ -89,83 +93,73 @@ const cityOptions = [
 const floorTypeOptions = [
 	{
 		label: 'Piso Tipo 1',
-		value: 1,
+		value: 'Piso Tipo 1',
 	}
 ];
 
 const apartmentTypeOptions = [
 	{
 		label: 'Apartamento Tipo 1',
-		value: 1,
+		value: 'Apartamento Tipo 1',
 	}
 ];
 
 const finalReceptionTypeOptions = [
 	{
 		label: 'Si',
-		value: 1,
+		value: 'Si',
 	}
 ];
 
 const gasTypeOptions = [
 	{
 		label: 'Gas Tipo 1',
-		value: 1,
+		value: 'Gas Tipo 1',
 	}
 ];
 
 const hotWaterTypeOptions = [
 	{
 		label: 'Agua Tipo 1',
-		value: 1,
+		value: 'Agua Tipo 1',
 	}
 ];
 
 const heatingTypeOptions = [
 	{
 		label: 'Calefaccion Tipo 1',
-		value: 1,
+		value:'Calefaccion Tipo 1',
 	}
 ];
 
 const constructionTypeOptions = [
 	{
 		label: 'Construccion Tipo 1',
-		value: 1,
+		value: 'Construccion Tipo 1',
 	}
 ];
 
 const kitchenTypeOptions = [
 	{
 		label: 'Cocina Tipo 1',
-		value: 1,
+		value: 'Cocina Tipo 1',
 	}
 ];
 
 const washingMachineTypeOptions = [
 	{
 		label: 'Si',
-		value: 1,
+		value: 'Si',
 	}
 ];
 
 const windowsTypeOptions = [
 	{
 		label: 'Ventana Tipo 1',
-		value: 1,
+		value: 'Ventana Tipo 1',
 	}
 ];
 
-const orientationTypeOptions = [
-	{
-		label: 'Vertical',
-		value: 1,
-	},
-	{
-		label: 'Horizontal',
-		value: 2,
-	},
-];
 
 const AddProperty:React.FC<AddPropertyProps> = () => {
 	const navigate = useNavigate();
@@ -188,7 +182,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [typeOfFloor, setTypeOfFloor] = useState(floorTypeOptions[0]);
 	const [typeOfApartment, setTypeOfApartment] = useState(apartmentTypeOptions[0]);
 	const [finalReception, setFinalReception] = useState(finalReceptionTypeOptions[0]);
-	const [orientation, setOrientation] = useState(orientationTypeOptions[0]);
 	const [washingMachine, setWashingMachine] = useState(washingMachineTypeOptions[0]);
 	const [typeOfGas, setTypeOfGas] = useState(gasTypeOptions[0]);
 	const [typeOfHotWater, setTypeOfHotWater] = useState(hotWaterTypeOptions[0]);
@@ -321,7 +314,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 		operationId: 1,
 		currencyTypeId: 1,
 		price: 0,
-		realtorSalerId: 1,
+		realtorSellerId: 1,
 		realtorBuyerId: 1,
 		realtorCatcherId: 1,
 		commission: 0,
@@ -331,10 +324,12 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			rut: '',
 			email: '',
 			fono: '',
-			privateObservations: '',
+			rolNumber: 1,
 			propertyTypeId: 1,
 			customerId: 1,
-			rolNumber: 1,
+			privateObservations: '',
+			newProperty: false,
+			usedProperty: false
 		},
 		address: {
 			countryId: 1,
@@ -343,54 +338,81 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			detailedAddress: {
 				commune: "",
 				number: 3,
-				sector: "",
 				cityId: 1,
+				sector: "",
 			},
 		},
-		distribution: {
-			numberOfSuites: 1,
-			rooms: 1,
-			serviceRooms: 1,
-			totalRooms: 1,
-			bathrooms: 1,
-			totalBathrooms: 1,
-			livingRoom: 1,
-			studio: false,
-			warehouse: false,
-			receipts: false,
-			serviceBathrooms: false,
-		},
 		characteristics: {
+			numberOfSuites: '',
+			bedrooms: '',
+			serviceBedroom: '',
+			totalBedrooms: '',
+			bathrooms: '',
+			totalBathrooms: '',
+			usableSurface: '',
+			terraceArea: '',
+			totalArea: '',
+			landArea: '',
 			constructedSurface: '',
-			terraceSurface: '',
-			typeOfFloor: 1,
-			typeOfApartment: 1,
-			finalReception: 1,
-			orientation: 1,
-			numberOfFloors: 1,
-			numberOfElevators: 1,
-			washingMachine: 1,
-			typeOfGas: 1,
-			typeOfHotWater: 1,
-			typeOfHeating: 1,
-			typeOfKitchen: 1,
-			typeOfConstruction: 1,
-			typesOfWindows: 1,
+			numberOfCoveredParkingSpaces: '',
+			numberOfUncoveredParkingSpaces: '',
+			study: false,
+			jacuzzi: false,
+			dailyEater: false,
+			warehouse:false,
+			sauna:false,
+			bedroomFloors: '',
+			bathroomFloor: '',
+			kitchenFloor: '',
+			diningRoomFloor: '',
+			livingRoomFloor: '',
+			entranceHallFloor: '',
+			styleOfHouse: '',
+			typeOfHouse: '',
+			orientation: '',
+			receipts: false,
+			yearOfConstruction: '',
+			typesOfKitchenFurniture: '',
+			typeOfInsulation: '',
+			typeOfFloor: '',
+			typeOfApartment: '',
+			thermoPanel: '',
+			roofType: '',
+			finalReception: '',
+			numberOfFloors: '',
+			numberOfElevators: '',
+			washingMachineConnection: '',
+			typeOfGas: '',
+			typeOfHotWater: '',
+			typeOfHeating: '',
+			typeOfKitchen: '',
+			typeOfConstruction: '',
+			typeOfWindows: '',
+			floor: '',
+			livingRoomNumber: '',
 			furnished: false,
 			regularized: false,
 			petsAllowed: false,
-			outdoorParkingNumber: 1,
-			subwayParkingNumber: 1,
+			inflatableGames: false,
+			automaticPorton: false,
+			swimmingPoolFence: false,
+			sewer: false,
+			irrigationWater: false,
+			inCondominium: false,
+			wellWater: false,
+			automaticWatering: false,
+			closedCircuitSurveillance: false,
+			electricFence: false,
+			tennisCourt: false,
+			barbecue: false,
 			gym: false,
 			multipurposeRooms: false,
-			childrensGames: false,
-			barbecue: false,
-			studyRoom: false,
-			pool: true,
+			studyRoom: '',
+			swimmingPool: '',
 			laundryRoom: false,
 			parkingVisit: false,
-			haveAPoster: false,
-			keysInTheOffice: false,
+			hasASign: false,
+			keysInTheOffice: false
 		},
 		observations: {
 			publicTitle: '',
@@ -398,7 +420,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 		}
 	};
 
-	const onSubmit = (values: IValues, {resetForm}: any) => {
+	const onSubmit = (values: any, {resetForm}: any) => {
 		const {
 			operationId,
 			currencyTypeId,
@@ -406,16 +428,16 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			commission,
 			ownerLessor,
 			address,
-			distribution,
 			characteristics,
 			observations,
 		} = values;
 
-		const data = {
+		// Departamento
+		const department = {
 			operationId,
 			currencyTypeId,
 			price: Number(price),
-			realtorSalerId: Number(realtorSaler.value),
+			realtorSellerId: Number(realtorSaler.value),
 			realtorBuyerId: Number(realtorBuyer.value),
 			realtorCatcherId: Number(realtorCatcher.value),
 			commission: Number(commission),
@@ -429,6 +451,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 				propertyTypeId: propertyType.value,
 				customerId: Number(customer.value),
 				privateObservations: ownerLessor.privateObservations,
+				newProperty: ownerLessor.newProperty,
+				usedProperty: ownerLessor.usedProperty,
 			},
 			address: {
 				countryId: city.value,
@@ -441,49 +465,47 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 					sector: address.detailedAddress.sector,
 				}
 			},
-			distribution: {
-				numberOfSuites:  Number(distribution.numberOfSuites),
-				rooms:  Number(distribution.rooms),
-				serviceRooms:  Number(distribution.serviceRooms),
-				totalRooms:  Number(distribution.totalRooms),
-				bathrooms:  Number(distribution.bathrooms),
-				totalBathrooms:  Number(distribution.totalBathrooms),
-				livingRoom:  Number(distribution.livingRoom),
-				studio:  distribution.studio,
-				warehouse:  distribution.warehouse,
-				receipts:  distribution.receipts,
-				serviceBathrooms:  distribution.serviceBathrooms,
-			},
 			characteristics: {
-				constructedSurface: characteristics.constructedSurface,
-				terraceSurface: characteristics.terraceSurface,
-				typeOfFloor: Number(characteristics.typeOfFloor),
-				typeOfApartment: Number(characteristics.typeOfApartment),
-				finalReception: Number(characteristics.finalReception),
-				orientation: Number(characteristics.orientation),
+			  numberOfSuites:  Number(characteristics.numberOfSuites),
+			  bedrooms:  Number(characteristics.bedrooms),
+			  serviceBedroom:  Number(characteristics.serviceBedroom),
+			  totalBedrooms:  Number(characteristics.totalBedrooms),
+			  bathrooms:  Number(characteristics.bathrooms),
+			  totalBathrooms:  Number(characteristics.totalBathrooms),
+			  usableSurface:  characteristics.usableSurface,
+			  terraceArea:  characteristics.terraceArea,
+			  totalArea:  characteristics.totalArea,
+			  numberOfCoveredParkingSpaces:  Number(characteristics.numberOfCoveredParkingSpaces),
+			  numberOfUncoveredParkingSpaces:  Number(characteristics.numberOfUncoveredParkingSpaces),
+			  study:  characteristics.study,
+			  warehouse:  characteristics.warehouse,
+			  receipts:  characteristics.receipts,
+			  yearOfConstruction:  characteristics.yearOfConstruction,
+				typeOfFloor: characteristics.typeOfFloor,
+				typeOfApartment: characteristics.typeOfApartment,
+				finalReception: characteristics.finalReception,
 				numberOfFloors: Number(characteristics.numberOfFloors),
 				numberOfElevators: Number(characteristics.numberOfElevators),
-				washingMachine: Number(characteristics.washingMachine),
-				typeOfGas: Number(characteristics.typeOfGas),
-				typeOfHotWater: Number(characteristics.typeOfHotWater),
-				typeOfHeating: Number(characteristics.typeOfHeating),
-				typeOfKitchen: Number(characteristics.typeOfKitchen),
-				typeOfConstruction: Number(characteristics.typeOfConstruction),
-				typesOfWindows: Number(characteristics.typesOfWindows),
+				washingMachineConnection:  washingMachine.value,
+				typeOfGas: typeOfGas.value,
+				typeOfHotWater: typeOfHotWater.value,
+				typeOfHeating: typeOfHeating.value,
+				typeOfKitchen: typeOfKitchen.value,
+				typeOfConstruction: typeOfConstruction.value,
+				typesOfWindows: typesOfWindows.value,
+				floor: characteristics.floor,
+				livingRoomNumber: characteristics.livingRoomNumber,
 				furnished: characteristics.furnished,
 				regularized: characteristics.regularized,
 				petsAllowed: characteristics.petsAllowed,
-				outdoorParkingNumber: Number(characteristics.outdoorParkingNumber),
-				subwayParkingNumber: Number(characteristics.subwayParkingNumber),
+				barbecue: characteristics.barbecue,
 				gym: characteristics.gym,
 				multipurposeRooms: characteristics.multipurposeRooms,
-				childrensGames: characteristics.childrensGames,
-				barbecue: characteristics.barbecue,
 				studyRoom: characteristics.studyRoom,
-				pool: characteristics.pool,
+				swimmingPool: characteristics.swimmingPool,
 				laundryRoom: characteristics.laundryRoom,
 				parkingVisit: characteristics.parkingVisit,
-				haveAPoster: characteristics.haveAPoster,
+				hasASign: characteristics.hasASign,
 				keysInTheOffice: characteristics.keysInTheOffice,
 			},
 			observations: {
@@ -492,15 +514,116 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			}
 		};
 
-		console.log(data);
+		// Casa
+		const house = {
+			operationId,
+			currencyTypeId,
+			price: Number(price),
+			realtorSellerId: Number(realtorSaler.value),
+			realtorBuyerId: Number(realtorBuyer.value),
+			realtorCatcherId: Number(realtorCatcher.value),
+			commission: Number(commission),
+			ownerLessor: {
+				name: ownerLessor.name,
+				lastName: ownerLessor.lastName,
+				rut: ownerLessor.rut,
+				email: ownerLessor.email,
+				fono: ownerLessor.fono,
+				rolNumber: Number(ownerLessor.rolNumber),
+				propertyTypeId: propertyType.value,
+				customerId: Number(customer.value),
+				privateObservations: ownerLessor.privateObservations,
+				newProperty: ownerLessor.newProperty,
+				usedProperty: ownerLessor.usedProperty,
+			},
+			address: {
+				countryId: city.value,
+				stateId: country.value,
+				address: address.address,
+				detailedAddress: {
+					commune: address.detailedAddress.commune,
+					number:  Number(address.detailedAddress.number),
+					cityId: Number(city.value),
+					sector: address.detailedAddress.sector,
+				}
+			},
+			characteristics: {
+			  numberOfSuites:  Number(characteristics.numberOfSuites),
+			  bedrooms:  Number(characteristics.bedrooms),
+			  serviceBedroom:  Number(characteristics.serviceBedroom),
+			  totalBedrooms:  Number(characteristics.totalBedrooms),
+			  bathrooms:  Number(characteristics.bathrooms),
+			  totalBathrooms:  Number(characteristics.totalBathrooms),
+			  landArea:  characteristics.landArea,
+			  constructedSurface:  characteristics.constructedSurface,
+			  numberOfCoveredParkingSpaces:  Number(characteristics.numberOfCoveredParkingSpaces),
+			  numberOfUncoveredParkingSpaces:  Number(characteristics.numberOfUncoveredParkingSpaces),
+			  dailyEater:  characteristics.dailyEater,
+			  jacuzzi:  characteristics.jacuzzi,
+			  warehouse:  characteristics.warehouse,
+			  livingRoom:  characteristics.livingRoom,
+			  sauna:  characteristics.sauna,
+			  bedroomFloors:  characteristics.bedroomFloors,
+			  bathroomFloor:  characteristics.bathroomFloor,
+			  kitchenFloor:  characteristics.kitchenFloor,
+			  livingRoomFloor:  characteristics.livingRoomFloor,
+			  diningRoomFloor:  characteristics.diningRoomFloor,
+			  entranceHallFloor:  characteristics.entranceHallFloor,
+			  styleOfHouse:  characteristics.styleOfHouse,
+			  typeOfHouse:  characteristics.typeOfHouse,
+			  orientation:  characteristics.orientation,
+			  yearOfConstruction:  characteristics.yearOfConstruction,
+				typeOfFloor: characteristics.typeOfFloor,
+				typesOfKitchenFurniture: characteristics.typesOfKitchenFurniture,
+				typeOfInsulation: characteristics.typeOfInsulation,
+				finalReception: characteristics.finalReception,
+				numberOfFloors: Number(characteristics.numberOfFloors),
+				numberOfElevators: Number(characteristics.numberOfElevators),
+				washingMachineConnection:  washingMachine.value,
+				typeOfGas: typeOfGas.value,
+				thermoPanel: characteristics.thermoPanel,
+				typeOfHotWater: typeOfHotWater.value,
+				typeOfHeating: typeOfHeating.value,
+				typeOfKitchen: typeOfKitchen.value,
+				typeOfConstruction: typeOfConstruction.value,
+				typesOfWindows: typesOfWindows.value,
+				roofType: characteristics.roofType,
+				typeOfWindows: characteristics.typeOfWindows,
+				floor: characteristics.floor,
+				livingRoomNumber: characteristics.livingRoomNumber,
+				furnished: characteristics.furnished,
+				petsAllowed: characteristics.petsAllowed,
+				inflatableGames: characteristics.inflatableGames,
+				automaticPorton: characteristics.automaticPorton,
+				swimmingPoolFence: characteristics.swimmingPoolFence,
+				sewer: characteristics.sewer,
+				irrigationWater: characteristics.irrigationWater,
+				inCondominium: characteristics.inCondominium,
+				wellWater: characteristics.wellWater,
+				automaticWatering: characteristics.automaticWatering,
+				closedCircuitSurveillance: characteristics.closedCircuitSurveillance,
+				tennisCourt: characteristics.tennisCourt,
+				barbecue: characteristics.barbecue,
+				studyRoom: characteristics.studyRoom,
+				swimmingPool: characteristics.swimmingPool,
+				hasASign: characteristics.hasASign,
+				keysInTheOffice: characteristics.keysInTheOffice,
+			},
+			observations: {
+				publicTitle: observations.publicTitle,
+				description: observations.description,
+			}
+		};
 
-		mutate(data);
+		console.log(house);
 
-		resetForm({ values: ''});
+		// mutate(propertyType.value === 1 ? house : department);
+
+		// resetForm({ values: ''});
 	};
 
 	// Handle Open limit select
-	const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
+	// const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
 
 	const renderError = (message: any) => <span className={styles["input-error"]}>{message}</span>;
 
@@ -534,6 +657,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						setOpen={setOpenSelectOperationType}
         						handleOpenSelect={() => setOpenSelectOperationType(true)}
         					/>
+        				</div>
+        				<div className={styles["form-row-3"]}>
         					<Select
         						options={currencyTypeOptions}
         						label="Tipo de moneda"
@@ -553,7 +678,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						error={errors.price && touched.price ? errors.price : null}
         					/>
         				</div>
-        				<div className={styles["add-requirements"]}>
+        				<div className={styles["form-row-2"]}>
         					<Button type='button'>
         						<BiPlus size={18} />
                     Agregar requisitos de arriendo
@@ -659,8 +784,6 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						label="Fono"
         						component={Input}
         					/>
-        				</div>
-        				<div className={styles["form-row-3"]}>
         					<Field
         						type="number"
         						name="ownerLessor.rolNumber"
@@ -668,6 +791,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						label="Numero de rol"
         						component={Input}
         					/>
+        				</div>
+        				<div className={styles["form-row-3"]}>
         					<Select
         						options={propertyTypeOptions}
         						label="Tipo de Propiedad"
@@ -677,14 +802,19 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						setOpen={setOpenSelectPropertyType}
         						handleOpenSelect={() => setOpenSelectPropertyType(true)}
         					/>
-        					<Select
-        						options={customersOptions}
-        						label="Cliente"
-        						selectedOption={customer}
-        						setSelectedOption={setCustomer}
-        						open={openSelectCustomer}
-        						setOpen={setOpenSelectCustomer}
-        						handleOpenSelect={() => setOpenSelectCustomer(true)}
+        				</div>
+        				<div className={styles["form-row-3"]}>
+										<Field
+        						name="ownerLessor.newProperty"
+        						type="checkbox"
+        						label="Propiedad nueva"
+        						component={Checkbox}
+        					/>
+										<Field
+        						name="ownerLessor.usedProperty"
+        						type="checkbox"
+        						label="Propiedad usada"
+        						component={Checkbox}
         					/>
         				</div>
         				<div className={styles["form-single"]}>
@@ -709,17 +839,17 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						setOpen={setOpenSelectCountry}
         						handleOpenSelect={() => setOpenSelectCountry(true)}
         					/>
-        				</div>
-        				<div className={styles["form-row-3"]}>
         					<Select
         						options={countryOptions}
-        						label="Estado"
+        						label="Region"
         						selectedOption={state}
         						setSelectedOption={setState}
         						open={openSelectState}
         						setOpen={setOpenSelectState}
         						handleOpenSelect={() => setOpenSelectState(true)}
         					/>
+        				</div>
+        				<div className={styles["form-row-3"]}>
         					<Select
         						options={cityOptions}
         						label="Ciudad"
@@ -740,20 +870,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						/>
         						<ErrorMessage name="address.detailedAddress.commune" render={renderError} />
         					</div>
-        				</div>
-        				<div className={styles["form-row-3"]}>
-        					<div>
-        						<Field
-        							type="number"
-        							name="address.detailedAddress.number"
-        							placeholder="N. dpto / N. casa / N. ofic"
-        							label="N. dpto / N. casa / N. ofic"
-        							required
-        							component={Input}
-        						/>
-        						<ErrorMessage name="address.detailedAddress.number" render={renderError} />
-        					</div>
-        					<div>
+										<div>
         						<Field
         							type="text"
         							name="address.detailedAddress.sector"
@@ -764,6 +881,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						/>
         						<ErrorMessage name="address.detailedAddress.sector" render={renderError} />
         					</div>
+        				</div>
+        				<div className={styles["form-row-3"]}>
         					<div>
         						<Field
         							type="text"
@@ -775,340 +894,774 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         						/>
         						<ErrorMessage name="address.address" render={renderError} />
         					</div>
+        					<div>
+        						<Field
+        							type="number"
+        							name="address.detailedAddress.number"
+        							placeholder="N. dpto / N. casa / N. ofic"
+        							label="N. dpto / N. casa / N. ofic"
+        							required
+        							component={Input}
+        						/>
+        						<ErrorMessage name="address.detailedAddress.number" render={renderError} />
+        					</div>
         				</div>
         				<div className={styles["section-title"]}>
         					<h4>Características</h4>
         				</div>
-        				<div className={styles["section-title"]}>
-        					<h5>Distribucion</h5>
+        				<div className={styles["form-row-4"]}>
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+											<Field
+												type="text"
+												name="characteristics.numberOfSuites"
+												placeholder="N de suites"
+												label="N de suites"
+												component={Input}
+											/>
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	type="number"
+                      	name="characteristics.bedrooms"
+                      	placeholder="Dormitorios"
+                      	label="Dormitorios"
+                      	component={Input}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	type="number"
+                      	name="characteristics.serviceBedroom"
+                      	placeholder="Dormitorios de Servicio"
+                      	label="Dormitorios de Servicio"
+                      	component={Input}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	type="number"
+                      	name="characteristics.totalRooms"
+                      	placeholder="2"
+                      	label="Total de Dormitorios"
+                      	component={Input}
+                      />
+										}
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Field
-        						type="text"
-        						name="distribution.numberOfSuites"
-        						placeholder="Superficie Contruida"
-        						label="Superficie Contruida"
-        						component={Input}
-        					/>
-        					<Field
-        						type="text"
-        						name="distribution.rooms"
-        						placeholder="Habitaciones"
-        						label="Habitaciones"
-        						component={Input}
-        					/>
-        					<Field
-        						type="text"
-        						name="distribution.serviceRooms"
-        						placeholder="Habitaciones de Servicio"
-        						label="Habitaciones de Servicio"
-        						component={Input}
-        					/>
-        					<Field
-        						type="text"
-        						name="distribution.totalRooms"
-        						placeholder="2"
-        						label="Total de Habitaciones"
-        						component={Input}
-        					/>
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                    <Field
+                    	type="number"
+                    	name="characteristics.bathrooms"
+                    	placeholder="Baños"
+                    	label="Baños"
+                    	component={Input}
+                    />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                    <Field
+                    	type="number"
+                    	name="characteristics.totalBathrooms"
+                    	placeholder="Total de Baños"
+                    	label="Total de Baños"
+                    	component={Input}
+                    />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.landArea"
+                      	placeholder="Superficie de Terreno"
+                      	label="Superficie de Terreno"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.constructedSurface"
+                      	placeholder="Superficie de Construida"
+                      	label="Superficie de Construida"
+                      	component={Input}
+                      />
+										}
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Field
-        						type="text"
-        						name="distribution.bathrooms"
-        						placeholder="Baños"
-        						label="Baños"
-        						component={Input}
-        					/>
-        					<Field
-        						type="text"
-        						name="distribution.totalBathrooms"
-        						placeholder="Total de Baños"
-        						label="Total de Baños"
-        						component={Input}
-        					/>
-        					<Field
-        						type="text"
-        						name="distribution.livingRoom"
-        						placeholder="Salas de estar"
-        						label="Salas de estar"
-        						component={Input}
-        					/>
+										{
+											propertyType.value === 2 &&
+                    <Field
+                    	type="text"
+                    	name="characteristics.usableSurface"
+                    	placeholder="Superficie util"
+                    	label="Superficie util"
+                    	component={Input}
+                    />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.terraceArea"
+                      	placeholder="Superficie de terraza"
+                      	label="Superficie de terraza"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.totalArea"
+                      	placeholder="Total de superficies"
+                      	label="Total de superficies"
+                      	component={Input}
+                      />
+										}
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Field
-        						name="distribution.studio"
-        						type="checkbox"
-        						label="Estudio"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="distribution.warehouse"
-        						type="checkbox"
-        						label="Bodega"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="distribution.receipts"
-        						type="checkbox"
-        						label="Recibos"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="distribution.serviceBathrooms"
-        						type="checkbox"
-        						label="Baños de servicio"
-        						component={Checkbox}
-        					/>
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                    <Field
+                    	type="text"
+                    	name="characteristics.numberOfCoveredParkingSpaces"
+                    	placeholder="N de estacionamientos cubiertos"
+                    	label="N de estacionamientos cubiertos"
+                    	component={Input}
+                    />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.numberOfUncoveredParkingSpaces"
+                      	placeholder="N de estacionamientos descubiertos"
+                      	label="N de estacionamientos descubiertos"
+                      	component={Input}
+                      />
+										}
         				</div>
+									<div className={styles["form-row-4"]}>
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	name="characteristics.study"
+                      	type="checkbox"
+                      	label="Estudio"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.dailyEater"
+                      	type="checkbox"
+                      	label="Comedor Diario"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.jacuzzi"
+                      	type="checkbox"
+                      	label="Jacuzzi"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	name="characteristics.warehouse"
+                      	type="checkbox"
+                      	label="Bodega"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.livingRoom"
+                      	type="checkbox"
+                      	label="Sala de Estar"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.sauna"
+                      	type="checkbox"
+                      	label="Sauna"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	name="characteristics.receipts"
+                      	type="checkbox"
+                      	label="Recibos"
+                      	component={Checkbox}
+                      />
+										}
+									</div>
         				<div className={styles["section-title"]}>
         					<h5>Características</h5>
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Field
-        						type="text"
-        						name="characteristics.constructedSurface"
-        						placeholder="Superficie Contruida"
-        						label="Superficie Contruida"
-        						component={Input}
-        					/>
-        					<Field
-        						type="text"
-        						name="characteristics.terraceSurface"
-        						placeholder="Superficie Terraza"
-        						label="Superficie Contruida"
-        						component={Input}
-        					/>
-        					<Select
-        						options={floorTypeOptions}
-        						label="Tipo de piso"
-        						selectedOption={typeOfFloor}
-        						setSelectedOption={setTypeOfFloor}
-        						open={openSelectTypeOfFloor}
-        						setOpen={setOpenSelectTypeOfFloor}
-        						handleOpenSelect={() => setOpenSelectTypeOfFloor(true)}
-        					/>
-        					<Select
-        						options={apartmentTypeOptions}
-        						label="Tipo de departamento"
-        						selectedOption={typeOfApartment}
-        						setSelectedOption={setTypeOfApartment}
-        						open={openSelectTypeOfApartment}
-        						setOpen={setOpenSelectTypeOfApartment}
-        						handleOpenSelect={() => setOpenSelectTypeOfApartment(true)}
-        					/>
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.bedroomFloors"
+                      	placeholder="Piso de los Dormitorios"
+                      	label="Piso de los Dormitorios"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.bathroomFloor"
+                      	placeholder="Piso de los Baños"
+                      	label="Piso de los Baños"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.kitchenFloor"
+                      	placeholder="Piso de los Cocina"
+                      	label="Piso de los Cocina"
+                      	component={Input}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.yearOfConstruction"
+                      	placeholder="Año de construccion"
+                      	label="Año de construccion"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Select
+                      	options={floorTypeOptions}
+                      	label="Tipo de piso"
+                      	selectedOption={typeOfFloor}
+                      	setSelectedOption={setTypeOfFloor}
+                      	open={openSelectTypeOfFloor}
+                      	setOpen={setOpenSelectTypeOfFloor}
+                      	handleOpenSelect={() => setOpenSelectTypeOfFloor(true)}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Select
+                      	options={apartmentTypeOptions}
+                      	label="Tipo de departamento"
+                      	selectedOption={typeOfApartment}
+                      	setSelectedOption={setTypeOfApartment}
+                      	open={openSelectTypeOfApartment}
+                      	setOpen={setOpenSelectTypeOfApartment}
+                      	handleOpenSelect={() => setOpenSelectTypeOfApartment(true)}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.constructedSurface"
+                      	placeholder="Superficie Contruida"
+                      	label="Superficie Contruida"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.terraceSurface"
+                      	placeholder="Superficie Terraza"
+                      	label="Superficie Terraza"
+                      	component={Input}
+                      />
+										}
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Select
-        						options={finalReceptionTypeOptions}
-        						label="Recepcion Final"
-        						selectedOption={finalReception}
-        						setSelectedOption={setFinalReception}
-        						open={openSelectFinalReception}
-        						setOpen={setOpenSelectFinalReception}
-        						handleOpenSelect={() => setOpenSelectFinalReception(true)}
-        					/>
-        					<Select
-        						options={orientationTypeOptions}
-        						label="Orientacion"
-        						selectedOption={orientation}
-        						setSelectedOption={setOrientation}
-        						open={openSelectOrientation}
-        						setOpen={setOpenSelectOrientation}
-        						handleOpenSelect={() => setOpenSelectOrientation(true)}
-        					/>
-        					<Field
-        						type="text"
-        						name="characteristics.numberOfFloors"
-        						placeholder="Numero de Pisos"
-        						label="Numero de Pisos"
-        						component={Input}
-        					/>
-        					<Field
-        						type="text"
-        						name="characteristics.numberOfElevators"
-        						placeholder="Numero de Ascensores"
-        						label="Numero de Ascensores"
-        						component={Input}
-        					/>
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.diningRoomFloor"
+                      	placeholder="Piso del Comedor"
+                      	label="Piso del Comedor"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.livingRoomFloor"
+                      	placeholder="Superficie living"
+                      	label="Superficie living"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.entranceHallFloor"
+                      	placeholder="Hall de entrada"
+                      	label="Hall de entrada"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.styleOfHouse"
+                      	placeholder="Estilo de Casa"
+                      	label="Estilo de Casa"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.typeOfHouse"
+                      	placeholder="Tipo de Casa"
+                      	label="Tipo de Casa"
+                      	component={Input}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Select
+                      	options={finalReceptionTypeOptions}
+                      	label="Recepcion Final"
+                      	selectedOption={finalReception}
+                      	setSelectedOption={setFinalReception}
+                      	open={openSelectFinalReception}
+                      	setOpen={setOpenSelectFinalReception}
+                      	handleOpenSelect={() => setOpenSelectFinalReception(true)}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.orientation"
+                      	placeholder="Orientation"
+                      	label="Orientation"
+                      	component={Input}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.floor"
+                      	placeholder="Numero de Pisos"
+                      	label="Numero de Pisos"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.numberOfElevators"
+                      	placeholder="Numero de Ascensores"
+                      	label="Numero de Ascensores"
+                      	component={Input}
+                      />
+										}
+        				</div>
+        				  <div className={styles["form-row-4"]}>
+										{
+											(propertyType.value === 1) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.typesOfKitchenFurniture"
+                      	placeholder="Tipos Muebles Cocina"
+                      	label="Tipos Muebles Cocina"
+                      	component={Input}
+                      />
+										}
+										{
+											(propertyType.value === 1) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.typeOfInsulation"
+                      	placeholder="Tipo de aislamiento"
+                      	label="Tipo de aislamiento"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Select
+                      	options={washingMachineTypeOptions}
+                      	label="Logia / Conexion a Lavadora"
+                      	selectedOption={washingMachine}
+                      	setSelectedOption={setWashingMachine}
+                      	open={openSelectWashingMachine}
+                      	setOpen={setOpenSelectWashingMachine}
+                      	handleOpenSelect={() => setOpenSelectWashingMachine(true)}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Select
+                      	options={gasTypeOptions}
+                      	label="Tipo de Gas"
+                      	selectedOption={typeOfGas}
+                      	setSelectedOption={setTypeOfGas}
+                      	open={openSelectTypeOfGas}
+                      	setOpen={setOpenSelectTypeOfGas}
+                      	handleOpenSelect={() => setOpenSelectTypeOfGas(true)}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Select
+                      	options={hotWaterTypeOptions}
+                      	label="Tipo de Agua Caliente"
+                      	selectedOption={typeOfHotWater}
+                      	setSelectedOption={setTypeOfHotWater}
+                      	open={openSelectTypeOfHotWater}
+                      	setOpen={setOpenSelectTypeOfHotWater}
+                      	handleOpenSelect={() => setOpenSelectTypeOfHotWater(true)}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Select
+                      	options={heatingTypeOptions}
+                      	label="Tipo de Calefaccion"
+                      	selectedOption={typeOfHeating}
+                      	setSelectedOption={setTypeOfHeating}
+                      	open={openSelectTypeOfHeating}
+                      	setOpen={setOpenSelectTypeOfHeating}
+                      	handleOpenSelect={() => setOpenSelectTypeOfHeating(true)}
+                      />
+										}
+										{
+											(propertyType.value === 1) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.thermoPanel"
+                      	placeholder="Termo panel"
+                      	label="Termo panel"
+                      	component={Input}
+                      />
+										}
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Select
-        						options={washingMachineTypeOptions}
-        						label="Logia / Conexion a Lavadora"
-        						selectedOption={washingMachine}
-        						setSelectedOption={setWashingMachine}
-        						open={openSelectWashingMachine}
-        						setOpen={setOpenSelectWashingMachine}
-        						handleOpenSelect={() => setOpenSelectWashingMachine(true)}
-        					/>
-        					<Select
-        						options={gasTypeOptions}
-        						label="Tipo de Gas"
-        						selectedOption={typeOfGas}
-        						setSelectedOption={setTypeOfGas}
-        						open={openSelectTypeOfGas}
-        						setOpen={setOpenSelectTypeOfGas}
-        						handleOpenSelect={() => setOpenSelectTypeOfGas(true)}
-        					/>
-        					<Select
-        						options={hotWaterTypeOptions}
-        						label="Tipo de Agua Caliente"
-        						selectedOption={typeOfHotWater}
-        						setSelectedOption={setTypeOfHotWater}
-        						open={openSelectTypeOfHotWater}
-        						setOpen={setOpenSelectTypeOfHotWater}
-        						handleOpenSelect={() => setOpenSelectTypeOfHotWater(true)}
-        					/>
-        					<Select
-        						options={heatingTypeOptions}
-        						label="Tipo de Calefaccion"
-        						selectedOption={typeOfHeating}
-        						setSelectedOption={setTypeOfHeating}
-        						open={openSelectTypeOfHeating}
-        						setOpen={setOpenSelectTypeOfHeating}
-        						handleOpenSelect={() => setOpenSelectTypeOfHeating(true)}
-        					/>
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Select
+                      	options={kitchenTypeOptions}
+                      	label="Tipo de Cocina"
+                      	selectedOption={typeOfKitchen}
+                      	setSelectedOption={setTypeOfKitchen}
+                      	open={openSelectTypeOfKitchen}
+                      	setOpen={setOpenSelectTypeOfKitchen}
+                      	handleOpenSelect={() => setOpenSelectTypeOfKitchen(true)}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Select
+                      	options={constructionTypeOptions}
+                      	label="Tipo de Construccion"
+                      	selectedOption={typeOfConstruction}
+                      	setSelectedOption={setTypeOfConstruction}
+                      	open={openSelectTypeOfConstruction}
+                      	setOpen={setOpenSelectTypeOfConstruction}
+                      	handleOpenSelect={() => setOpenSelectTypeOfConstruction(true)}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Select
+                      	options={windowsTypeOptions}
+                      	label="Tipo de Ventana"
+                      	selectedOption={typesOfWindows}
+                      	setSelectedOption={setTypesOfWindows}
+                      	open={openSelectTypesOfWindows}
+                      	setOpen={setOpenSelectTypesOfWindows}
+                      	handleOpenSelect={() => setOpenSelectTypesOfWindows(true)}
+                      />
+										}
+										{
+											(propertyType.value === 1) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.roofType"
+                      	placeholder="Tipo de Techo"
+                      	label="Tipo de Techo"
+                      	component={Input}
+                      />
+										}
+										{
+											(propertyType.value === 1) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.typeOfWindows"
+                      	placeholder="Tipo de Ventana"
+                      	label="Tipo de Ventana"
+                      	component={Input}
+                      />
+										}
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Select
-        						options={kitchenTypeOptions}
-        						label="Tipo de Cocina"
-        						selectedOption={typeOfKitchen}
-        						setSelectedOption={setTypeOfKitchen}
-        						open={openSelectTypeOfKitchen}
-        						setOpen={setOpenSelectTypeOfKitchen}
-        						handleOpenSelect={() => setOpenSelectTypeOfKitchen(true)}
-        					/>
-        					<Select
-        						options={constructionTypeOptions}
-        						label="Tipo de Construccion"
-        						selectedOption={typeOfConstruction}
-        						setSelectedOption={setTypeOfConstruction}
-        						open={openSelectTypeOfConstruction}
-        						setOpen={setOpenSelectTypeOfConstruction}
-        						handleOpenSelect={() => setOpenSelectTypeOfConstruction(true)}
-        					/>
-        					<Select
-        						options={windowsTypeOptions}
-        						label="Tipo de Ventana"
-        						selectedOption={typesOfWindows}
-        						setSelectedOption={setTypesOfWindows}
-        						open={openSelectTypesOfWindows}
-        						setOpen={setOpenSelectTypesOfWindows}
-        						handleOpenSelect={() => setOpenSelectTypesOfWindows(true)}
-        					/>
-        				</div>
-        				<div className={styles["form-row-4"]}>
-        					<Field
-        						name="characteristics.furnished"
-        						type="checkbox"
-        						label="Amoblado"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="characteristics.regularized"
-        						type="checkbox"
-        						label="Regularizada"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="characteristics.petsAllowed"
-        						type="checkbox"
-        						label="Permiten Mascotas"
-        						component={Checkbox}
-        					/>
-        				</div>
-        				<div className={styles["section-title"]}>
-        					<h4>Exteriores</h4>
-        				</div>
-        				<div className={styles["form-row-4"]}>
-        					<Field
-        						type="text"
-        						name="characteristics.outdoorParkingNumber"
-        						placeholder="N. de Estacionamientos Exterior"
-        						label="N. de Estacionamientos Exterior"
-        						component={Input}
-        					/>
-        					<Field
-        						type="text"
-        						name="characteristics.subwayParkingNumber"
-        						placeholder="N. de Estacionamientos Subterraneo"
-        						label="N. de Estacionamientos Subterraneo"
-        						component={Input}
-        					/>
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	name="characteristics.furnished"
+                      	type="checkbox"
+                      	label="Amoblado"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	name="characteristics.regularized"
+                      	type="checkbox"
+                      	label="Regularizada"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	name="characteristics.petsAllowed"
+                      	type="checkbox"
+                      	label="Permiten Mascotas"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											(propertyType.value === 1) &&
+                      <Field
+                      	name="characteristics.tennisCourt"
+                      	type="checkbox"
+                      	label="Cancha de tenis"
+                      	component={Checkbox}
+                      />
+										}
         				</div>
         				<div className={styles["section-title"]}>
         					<h4>Areas comunes</h4>
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Field
-        						name="characteristics.gym"
-        						type="checkbox"
-        						label="Gimnasio"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="characteristics.multipurposeRooms"
-        						type="checkbox"
-        						label="Salas multiples"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="characteristics.childrensGames"
-        						type="checkbox"
-        						label="Juegos infantiles"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="characteristics.barbecue"
-        						type="checkbox"
-        						label="Quincho"
-        						component={Checkbox}
-        					/>
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.electricFence"
+                      	type="checkbox"
+                      	label="Cerco electrico"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.closedCircuitSurveillance"
+                      	type="checkbox"
+                      	label="Circuito cerrado de vigilancia"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.inflatableGames"
+                      	type="checkbox"
+                      	label="Juegos inflables"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.automaticPorton"
+                      	type="checkbox"
+                      	label="Porton automatico"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	name="characteristics.barbecue"
+                      	type="checkbox"
+                      	label="Quincho"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	name="characteristics.gym"
+                      	type="checkbox"
+                      	label="Gimnasio"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	name="characteristics.multipurposeRooms"
+                      	type="checkbox"
+                      	label="Salas multiples"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	name="characteristics.childrensGames"
+                      	type="checkbox"
+                      	label="Juegos infantiles"
+                      	component={Checkbox}
+                      />
+										}
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Field
-        						name="characteristics.studyRoom"
-        						type="checkbox"
-        						label="Sala de estudio"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="characteristics.pool"
-        						type="checkbox"
-        						label="Piscina"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="characteristics.laundryRoom"
-        						type="checkbox"
-        						label="Sala de lavanderia"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="characteristics.parkingVisit"
-        						type="checkbox"
-        						label="Estacionamiento de visita"
-        						component={Checkbox}
-        					/>
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.swimmingPoolFence"
+                      	type="checkbox"
+                      	label="Reja de piscina"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.sewer"
+                      	type="checkbox"
+                      	label="Alcantarillado"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.automaticWatering"
+                      	type="checkbox"
+                      	label="Riego automatico"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	name="characteristics.studyRoom"
+                      	type="checkbox"
+                      	label="Sala de estudio"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	name="characteristics.swimmingPool"
+                      	type="checkbox"
+                      	label="Piscina"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	name="characteristics.laundryRoom"
+                      	type="checkbox"
+                      	label="Sala de lavanderia"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 2 &&
+                      <Field
+                      	name="characteristics.parkingVisit"
+                      	type="checkbox"
+                      	label="Estacionamiento de visita"
+                      	component={Checkbox}
+                      />
+										}
         				</div>
         				<div className={styles["section-title"]}>
         					<h4>Otros</h4>
         				</div>
         				<div className={styles["form-row-4"]}>
-        					<Field
-        						name="characteristics.haveAPoster"
-        						type="checkbox"
-        						label="Tiene letreros"
-        						component={Checkbox}
-        					/>
-        					<Field
-        						name="characteristics.keysInTheOffice"
-        						type="checkbox"
-        						label="Llaves en la oficina"
-        						component={Checkbox}
-        					/>
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.irrigationWater"
+                      	type="checkbox"
+                      	label="Agua de riego"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.wellWater"
+                      	type="checkbox"
+                      	label="Agua de pozo"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 1 &&
+                      <Field
+                      	name="characteristics.inCondominium"
+                      	type="checkbox"
+                      	label="En condominio"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	name="characteristics.hasASign"
+                      	type="checkbox"
+                      	label="Tiene letreros"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2) &&
+                      <Field
+                      	name="characteristics.keysInTheOffice"
+                      	type="checkbox"
+                      	label="Llaves en la oficina"
+                      	component={Checkbox}
+                      />
+										}
         				</div>
         				<div className={styles["section-title"]}>
         					<h4>Observaciones</h4>
