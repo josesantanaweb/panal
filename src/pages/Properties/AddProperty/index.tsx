@@ -43,6 +43,10 @@ const propertyTypeOptions = [
 	{
 		label: 'Departamento',
 		value: 2
+	},
+	{
+		label: 'Local',
+		value: 3
 	}
 ];
 
@@ -412,7 +416,14 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			laundryRoom: false,
 			parkingVisit: false,
 			hasASign: false,
-			keysInTheOffice: false
+			keysInTheOffice: false,
+			metersOfShowCase: '',
+			typeofPremises: '',
+			shoppingMall: '',
+			localSeniority: '',
+			isInterior: '',
+			numberOfParkingCustomers:  '',
+			typeOfWater: '',
 		},
 		observations: {
 			publicTitle: '',
@@ -615,9 +626,70 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			}
 		};
 
-		console.log(house);
+		// Local
+		const local = {
+			operationId,
+			currencyTypeId,
+			price: Number(price),
+			realtorSellerId: Number(realtorSaler.value),
+			realtorBuyerId: Number(realtorBuyer.value),
+			realtorCatcherId: Number(realtorCatcher.value),
+			commission: Number(commission),
+			ownerLessor: {
+				name: ownerLessor.name,
+				lastName: ownerLessor.lastName,
+				rut: ownerLessor.rut,
+				email: ownerLessor.email,
+				fono: ownerLessor.fono,
+				rolNumber: Number(ownerLessor.rolNumber),
+				propertyTypeId: propertyType.value,
+				customerId: Number(customer.value),
+				privateObservations: ownerLessor.privateObservations,
+				newProperty: ownerLessor.newProperty,
+				usedProperty: ownerLessor.usedProperty,
+			},
+			address: {
+				countryId: city.value,
+				stateId: country.value,
+				address: address.address,
+				detailedAddress: {
+					commune: address.detailedAddress.commune,
+					number:  Number(address.detailedAddress.number),
+					cityId: Number(city.value),
+					sector: address.detailedAddress.sector,
+				}
+			},
+			characteristics: {
+				bathrooms:  Number(characteristics.bathrooms),
+				totalBathrooms:  Number(characteristics.totalBathrooms),
+				landArea:  characteristics.landArea,
+				constructedSurface:  characteristics.constructedSurface,
+				metersOfShowCase: characteristics.metersOfShowCase,
+				typeofPremises: characteristics.typeofPremises,
+				finalReception: characteristics.finalReception,
+				shoppingMall: characteristics.shoppingMall,
+				localSeniority: characteristics.localSeniority,
+				isInterior: characteristics.isInterior,
+			  numberOfCoveredParkingSpaces:  Number(characteristics.numberOfCoveredParkingSpaces),
+			  numberOfParkingCustomers:  Number(characteristics.numberOfParkingCustomers),
+				sewer: characteristics.sewer,
+				typeOfWater: characteristics.typeOfWater,
+			},
+			observations: {
+				publicTitle: observations.publicTitle,
+				description: observations.description,
+			}
+		};
 
-		// mutate(propertyType.value === 1 ? house : department);
+		console.log(local);
+
+		mutate(
+			propertyType.value === 1
+				? house
+				: propertyType.value === 2
+					? department
+					: local
+		);
 
 		// resetForm({ values: ''});
 	};
@@ -953,7 +1025,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         				</div>
         				<div className={styles["form-row-4"]}>
 										{
-											(propertyType.value === 1 || propertyType.value === 2) &&
+											(propertyType.value === 1 || propertyType.value === 2 || propertyType.value === 3) &&
                     <Field
                     	type="number"
                     	name="characteristics.bathrooms"
@@ -963,7 +1035,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
                     />
 										}
 										{
-											(propertyType.value === 1 || propertyType.value === 2) &&
+											(propertyType.value === 1 || propertyType.value === 2 || propertyType.value === 3) &&
                     <Field
                     	type="number"
                     	name="characteristics.totalBathrooms"
@@ -973,7 +1045,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
                     />
 										}
 										{
-											propertyType.value === 1 &&
+											(propertyType.value === 1 || propertyType.value === 3) &&
                       <Field
                       	type="text"
                       	name="characteristics.landArea"
@@ -983,7 +1055,7 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
                       />
 										}
 										{
-											propertyType.value === 1 &&
+											(propertyType.value === 1 || propertyType.value === 3) &&
                       <Field
                       	type="text"
                       	name="characteristics.constructedSurface"
@@ -996,13 +1068,33 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         				<div className={styles["form-row-4"]}>
 										{
 											propertyType.value === 2 &&
-                    <Field
-                    	type="text"
-                    	name="characteristics.usableSurface"
-                    	placeholder="Superficie util"
-                    	label="Superficie util"
-                    	component={Input}
-                    />
+                      <Field
+                      	type="text"
+                      	name="characteristics.usableSurface"
+                      	placeholder="Superficie util"
+                      	label="Superficie util"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 3 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.metersOfShowCase"
+                      	placeholder="Metros de Vitrina"
+                      	label="Metros de Vitrina"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 3 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.typeofPremises"
+                      	placeholder="Tipo de local"
+                      	label="Tipo de local"
+                      	component={Input}
+                      />
 										}
 										{
 											propertyType.value === 2 &&
@@ -1027,14 +1119,24 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
         				</div>
         				<div className={styles["form-row-4"]}>
 										{
-											(propertyType.value === 1 || propertyType.value === 2) &&
-                    <Field
-                    	type="text"
-                    	name="characteristics.numberOfCoveredParkingSpaces"
-                    	placeholder="N de estacionamientos cubiertos"
-                    	label="N de estacionamientos cubiertos"
-                    	component={Input}
-                    />
+											(propertyType.value === 1 || propertyType.value === 2 || propertyType.value === 3) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.numberOfCoveredParkingSpaces"
+                      	placeholder="N de estacionamientos cubiertos"
+                      	label="N de estacionamientos cubiertos"
+                      	component={Input}
+                      />
+										}
+										{
+											(propertyType.value === 3) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.numberOfParkingCustomers"
+                      	placeholder="N de estacionamientos clientes"
+                      	label="N de estacionamientos clientes"
+                      	component={Input}
+                      />
 										}
 										{
 											propertyType.value === 2 &&
@@ -1054,6 +1156,15 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
                       	name="characteristics.study"
                       	type="checkbox"
                       	label="Estudio"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											propertyType.value === 3 &&
+                      <Field
+                      	name="characteristics.isInterior"
+                      	type="checkbox"
+                      	label="Es interior"
                       	component={Checkbox}
                       />
 										}
@@ -1253,15 +1364,33 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
                       />
 										}
 										{
-											(propertyType.value === 1 || propertyType.value === 2) &&
-                      <Select
-                      	options={finalReceptionTypeOptions}
+											propertyType.value === 3 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.shoppingMall"
+                      	placeholder="Centro Comercial"
+                      	label="Centro Comercial"
+                      	component={Input}
+                      />
+										}
+										{
+											propertyType.value === 3 &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.localSeniority"
+                      	placeholder="Antigüedad local"
+                      	label="Antigüedad local"
+                      	component={Input}
+                      />
+										}
+										{
+											(propertyType.value === 1 || propertyType.value === 2 || propertyType.value === 3) &&
+                      <Field
+                      	type="text"
+                      	name="characteristics.finalReception"
+                      	placeholder="Recepcion Final"
                       	label="Recepcion Final"
-                      	selectedOption={finalReception}
-                      	setSelectedOption={setFinalReception}
-                      	open={openSelectFinalReception}
-                      	setOpen={setOpenSelectFinalReception}
-                      	handleOpenSelect={() => setOpenSelectFinalReception(true)}
+                      	component={Input}
                       />
 										}
 										{
@@ -1559,11 +1688,20 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
                       />
 										}
 										{
-											propertyType.value === 1 &&
+											(propertyType.value === 1 || propertyType.value === 3) &&
                       <Field
                       	name="characteristics.sewer"
                       	type="checkbox"
                       	label="Alcantarillado"
+                      	component={Checkbox}
+                      />
+										}
+										{
+											(propertyType.value === 3) &&
+                      <Field
+                      	name="characteristics.typeOfWater"
+                      	type="checkbox"
+                      	label="Tipo de Agua"
                       	component={Checkbox}
                       />
 										}
