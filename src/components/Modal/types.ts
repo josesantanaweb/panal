@@ -1,5 +1,6 @@
 export interface ModalProps {
-  setOpenModal: any;
-  openModal: boolean;
-  title: string;
+	setOpenModal: any;
+	openModal: boolean;
+	title: string;
+	size?: string;
 }

@@ -4,7 +4,7 @@ import { BiX } from 'react-icons/bi';
 import styles from "./styles.module.scss";
 import {ModalProps} from "./types";
 
-const Modal:React.FC<ModalProps> = ({openModal, setOpenModal, children, title}) => {
+const Modal:React.FC<ModalProps> = ({openModal, setOpenModal, children, title, size}) => {
 
 	const modalClasses = [
 		styles.modal,
@@ -13,6 +13,7 @@ const Modal:React.FC<ModalProps> = ({openModal, setOpenModal, children, title}) 
 
 	const modalContentClasses = [
 		styles['modal-content'],
+		size === 'large' ? styles['modal-large'] : '',
 		openModal ? styles['is-open'] : "",
 	].join(' ');
 

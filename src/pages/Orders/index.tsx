@@ -14,6 +14,7 @@ import UsersServices from 'services/usersServices';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import GenerateOrder from './GenerateOrder';
+import SelectProperty from './SelectProperty';
 
 const operationOptions = [
 	{
@@ -60,6 +61,7 @@ const Orders = () => {
 	const [currency, setCurrency] = useState<ISelect>(currencyOptions[0]);
 	const { data, isLoading, isError } = useQuery('users', UsersServices.getUsers);
 	const [openModalGenerateOrder, setOpenModalGenerateOrder] = useState<boolean>(false);
+	const [openModalSelectProperty, setOpenModalSelectProperty] = useState<boolean>(false);
 	const [openOperation, setOpenOperation] = useState<boolean>(false);
 	const [openProperty, setOpenProperty] = useState<boolean>(false);
 	const [openRegion, setOpenRegion] = useState<boolean>(false);
@@ -74,6 +76,7 @@ const Orders = () => {
 
   	// Handle Generate order
 	const handleGenerateOrder = () => setOpenModalGenerateOrder(true);
+	const handleSelectProperty = () => setOpenModalSelectProperty(true);
 
 	return (
 		<div className={styles.orders}>
@@ -82,7 +85,7 @@ const Orders = () => {
 					<h2 className={styles["orders-title"]}>Listado de Ordenes</h2>
 					<p className={styles["users-subtitle"]}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, voluptatum?</p>
 				</div>
-				<Button onClick={handleGenerateOrder}>Generar Orden</Button>
+				<Button onClick={handleSelectProperty}>Generar Orden</Button>
 			</div>
 			<div className={styles["orders-search"]}>
 				<div>
@@ -254,6 +257,10 @@ const Orders = () => {
 			<GenerateOrder
 				openModal={openModalGenerateOrder}
 				setOpenModal={setOpenModalGenerateOrder}
+			/>
+			<SelectProperty
+				openModal={openModalSelectProperty}
+				setOpenModal={setOpenModalSelectProperty}
 			/>
 		</div>
 	);
