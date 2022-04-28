@@ -75,7 +75,7 @@ const Properties = () => {
 	const [dormitorios, setDormitorios] = useState<ISelect>(dormitoriosOptions[0]);
 	const [moneda, setMoneda] = useState<ISelect>(monedaOptions[0]);
 	const [banos, setBanos] = useState<ISelect>(banosOptions[0]);
-	const { data, isLoading, isError } = useQuery('properties', PropertiesServices.getProperties);
+	const { data, isLoading, isError } = useQuery(['properties',  ""], PropertiesServices.getProperties);
 	const queryClient = useQueryClient();
 	const handleOpenStatus = () => setOpenSelectStatus(true);
 	const handleOpenPage = () => setOpenSelectPage(true);
