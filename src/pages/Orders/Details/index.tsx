@@ -2,11 +2,15 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { BiLocationPlus } from 'react-icons/bi';
 import IconsDescription from 'components/IconsDescription';
+import BackButton from 'components/BackButton';
+import Input from 'components/Input';
+
 type Props = {};
 
 const Details = (props: Props) => {
 	return (
 		<section className={styles['details']}>
+			<BackButton />
 			<div className={styles['details-message']}>
 				<div className={styles['title']}>
 					<span>¡Hola!</span>
@@ -65,6 +69,16 @@ const Details = (props: Props) => {
 				</p>
 				<Signature />
 				<div className={styles['card-price']}>550$</div>
+			</section>
+			<section className={styles['inputs']}>
+				<div className={styles['input-container']}>
+					<span>Datos del Ejecutivo</span>
+					<Input value="pedro perez" />
+				</div>
+				<div className={styles['input-container']}>
+					<span>Fecha de la visita</span>
+					<Input placeholder="Fecha" />
+				</div>
 			</section>
 		</section>
 	);
