@@ -221,8 +221,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 	const [propertyId, setPropertyId] = useState();
 	const [upload, setUpload] = useState<boolean>(false);
 	const queryClient = useQueryClient();
-	const { data: customersData} = useQuery(["customers", 100], CustomersServices.getCustomers);
-	const { data: realtorsData} = useQuery(["realtors", 100], RealtorsServices.getRealtors);
+	const { data: customersData} = useQuery(["customers", ''], CustomersServices.getCustomers);
+	const { data: realtorsData} = useQuery(["realtors", ''], RealtorsServices.getRealtors);
 	const { mutate } = useMutation(PropertiesServices.addProperties, {
 		onSuccess: (data) => {
 			setPropertyId(data.id);
@@ -442,6 +442,8 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			characteristics,
 			observations,
 		} = values;
+
+		console.log(values);
 
 		// Departamento
 		const department = {
@@ -681,15 +683,17 @@ const AddProperty:React.FC<AddPropertyProps> = () => {
 			}
 		};
 
-		console.log(local);
+		console.log(house);
 
-		mutate(
-			propertyType.value === 1
-				? house
-				: propertyType.value === 2
-					? department
-					: local
-		);
+		// mutate(
+		// 	propertyType.value === 1
+		// 		? house
+		// 		: propertyType.value === 2
+		// 			? department
+		// 			: local
+		// );
+
+		mutate(house);
 
 		// resetForm({ values: ''});
 	};

@@ -254,10 +254,6 @@ const Orders = () => {
 						</div>
 				}
 			</div>
-			<GenerateOrder
-				openModal={openModalGenerateOrder}
-				setOpenModal={setOpenModalGenerateOrder}
-			/>
 			<SelectProperty
 				openModal={openModalSelectProperty}
 				setOpenModal={setOpenModalSelectProperty}

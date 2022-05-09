@@ -18,33 +18,15 @@ import CustomersServices from 'services/customersServices';
 import Binnacle from './components/Binnacle';
 import { roleSelector } from 'store/selectors';
 
-
-const limitOptions = [
-	{
-		label: 10,
-		value: 10,
-	},
-	{
-		label: 20,
-		value: 20,
-	},
-	{
-		label: 30,
-		value: 30,
-	}
-];
-
 const skeleton = [0,1,2,3];
 
 const Customers = () => {
 	const role = useSelector(roleSelector);
-	const [limit, setLimit] = useState(limitOptions[0]);
 	const [clientId, setClientId] = useState<number>(0);
-	const [openSelectLimit, setOpenSelectLimit] = useState<boolean>(false);
 	const [openModalAddCustomer, setOpenModalAddCustomer] = useState<boolean>(false);
 	const [openModalEditCustomer, setOpenModalEditCustomer] = useState<boolean>(false);
 	const [openModalBinnacle, setOpenModalBinnacle] = useState<boolean>(false);
-	const { data, isLoading, isError } = useQuery(["customers", limit.value], CustomersServices.getCustomers);
+	const { data, isLoading, isError } = useQuery(["customers", ''], CustomersServices.getCustomers);
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation(CustomersServices.deleteCustomer, {
 		onSuccess: (data) => {
@@ -71,9 +53,6 @@ const Customers = () => {
 			});
 		}
 	});
-
-	// Handle Open limit select
-	const handleOpenLimit = () => setOpenSelectLimit(true);
 
 	// Handle Add Customers
 	const handleAddCustomers = () => setOpenModalAddCustomer(true);
@@ -102,16 +81,6 @@ const Customers = () => {
 				<Button onClick={handleAddCustomers}>Agregar Cliente</Button>
 			</div>
 			<div className={styles["customers-filter"]}>
-				<div>
-					<Select
-						options={limitOptions}
-						selectedOption={limit}
-						setSelectedOption={setLimit}
-						open={openSelectLimit}
-						setOpen={setOpenSelectLimit}
-						handleOpenSelect={handleOpenLimit}
-					/>
-				</div>
 				<div>
 					<Input placeholder="Buscar..." search/>
 				</div>

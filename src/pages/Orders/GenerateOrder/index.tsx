@@ -4,18 +4,21 @@ import * as Yup from 'yup';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from  'moment';
+import 'moment-timezone';
 
 import Button from "components/Button";
-import Modal from "components/Modal";
 import Select from "components/Select";
 import Input from "components/Input";
 import Checkbox from "components/Checkbox";
+import { useDebounce } from 'use-debounce';
 
 import styles from "./styles.module.scss";
-import {GenerateOrderProps, IValues} from "./types";
+import {GenerateOrderProps} from "./types";
 import CustomersServices from 'services/customersServices';
+import OrdersServices from 'services/ordersServices';
 
 const documentTypeOptions = [
 	{
@@ -28,13 +31,30 @@ const documentTypeOptions = [
 	},
 ];
 
-const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) => {
+const realtorOptions = [
+	{
+		label: 'Jhon Doe',
+		value: 1,
+	},
+];
+
+const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpenModal, openModal}) => {
 	const [documentType, setDocumentType] = useState(documentTypeOptions[0]);
+	const [orderDate, setOrderDate] = useState(new Date());
+	const [search, setSearch] = useState("");
+	const [realtor, setRealtor] = useState(realtorOptions[0]);
+	const [activeSearch, setActiveSearch] = useState(false);
+	const [customer, setCustomer] = useState({});
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
+	const [openSelectRealtor, setOpenSelectRealtor] = useState<boolean>(false);
+	const debouncedFilter = useDebounce(search, 500);
+	const { data: customers } = useQuery(["customers", debouncedFilter[0]], CustomersServices.getCustomers, { enabled: Boolean(debouncedFilter[0]) });
 	const queryClient = useQueryClient();
-	const { mutate } = useMutation(CustomersServices.addCustomer, {
+	const time = moment(orderDate).format('LT');
+
+	const { mutate } = useMutation(OrdersServices.generateOrder, {
 		onSuccess: (data) => {
-			toast.success("Cliente registrado exitosamente", {
+			toast.success("Orden registrada exitosamente", {
 				position: "top-right",
 				autoClose: 2000,
 				hideProgressBar: false,
@@ -43,13 +63,13 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 				draggable: true,
 				progress: undefined,
 			});
-			queryClient.invalidateQueries(['customers']);
+			queryClient.invalidateQueries(['orders']);
 			setTimeout(() => {
 				return setOpenModal(false);
 			}, 3000);
 		},
 		onError: (error: any) => {
-			toast.error(error.response.data.message === "This user already exists" && "Cliente ya existe", {
+			toast.error(error.response.data.message, {
 				position: "top-right",
 				autoClose: 3000,
 				hideProgressBar: false,
@@ -61,72 +81,64 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 		}
 	});
 
+
   	// Handle Open limit select
 	const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
 
-	// Validataions
-	const validationSchema = {
-		addCustomer : Yup.object({
-			name: Yup.string().required("Requerido"),
-			lastName: Yup.string().required("Requerido"),
-			email: Yup.string().email("Correo Invalido").required("Requerido"),
-			documentNumber: Yup.string().required("Requerido"),
-		})
+	const handleOpenRealtor = () => setOpenSelectRealtor(true);
+
+	const onSubmit = (values: any, {resetForm}: any) => {
+		const { id } = values;
+		const data = {
+			customerId: Number(id),
+			realtorId: Number(1),
+			propertyId: Number(property.code),
+			dateTimeOfVisits: orderDate
+		};
+		mutate(data);
 	};
 
-	// Initial values
-	const INITIAL_VALUES = {
-		name: '',
-		lastName: '',
-		email: '',
-		documentType: '',
-		documentNumber: '',
-		localPhone: '',
-		phone: '',
-		address: '',
-		cashPayment: false,
-		mortgage: false,
-		comments: ''
+	const searchCustomer = (e: any) => {
+		setSearch(e.target.value);
+		setActiveSearch(true);
 	};
 
-	const onSubmit = (values: IValues, {resetForm}: any) => {
-		const {
-			name,
-			lastName,
-			email,
-			documentNumber,
-			localPhone,
-			phone,
-			address,
-			cashPayment,
-		  mortgage,
-			comments
-		} = values;
-		mutate({
-			name,
-			lastName,
-			email,
-			documentType: documentType.value,
-			documentNumber,
-			localPhone,
-			phone,
-			address,
-			cashPayment,
-		  mortgage,
-			comments
-		});
-		resetForm({ values: ''});
+	const handleCustomer = (customer: any) => {
+		setCustomer(customer);
+		setActiveSearch(false);
 	};
+
+	console.log(customers);
 
 	return (
-		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Generar orden de visita">
+		<>
+			<div className={styles['search-client']}>
+				<Input
+					placeholder="Buscar cliente"
+					onChange={searchCustomer}
+					search
+				/>
+				{
+					activeSearch &&
+          <div className={styles['search-options']}>
+          	{
+          		customers?.data.map((item: any, index: number) => (
+          			<li key={index} onClick={() => handleCustomer(item)}>{item.name} {item.lastName}</li>
+          		))
+          	}
+          </div>
+				}
+			</div>
 			<Formik
-				initialValues={INITIAL_VALUES}
-				validationSchema={validationSchema.addCustomer}
+				initialValues={customer && customer}
 				onSubmit={onSubmit}
+				enableReinitialize
 			>
-				{({ errors, touched, isValid, dirty}) => (
+				{({ isValid, dirty}) => (
 					<Form className={styles["form-container"]}>
+
+						<div className={styles['select-property-top']}>
+        	</div>
 						<div className={styles["form-rows"]}>
 							<Field
 								type="text"
@@ -135,7 +147,6 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 								required
 								label="Nombre"
 								component={Input}
-								error={errors.name && touched.name ? errors.name : null}
 							/>
 							<Field
 								type="text"
@@ -144,7 +155,6 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 								label="Apellido"
 								required
 								component={Input}
-								error={errors.lastName && touched.lastName ? errors.lastName : null}
 							/>
 						</div>
 						<div className={styles["form-rows"]}>
@@ -160,22 +170,20 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 							/>
 							<Field
 								type="text"
-								name="documentNumber"
+								name="identityDocumentNumber"
 								placeholder="Ingrese su Numero de Documento"
 								label="Numero de Documento"
 								required
 								component={Input}
-								error={errors.documentNumber && touched.documentNumber ? errors.documentNumber : null}
 							/>
 						</div>
 						<div className={styles["form-rows"]}>
 							<Field
 								type="text"
-								name="localPhone"
+								name="phone"
 								placeholder="Ingrese su Teléfono"
 								label="Teléfono"
 								component={Input}
-								error={errors.localPhone && touched.localPhone ? errors.localPhone : null}
 							/>
 							<Field
 								type="email"
@@ -184,7 +192,6 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 								placeholder="Ingrese su Correo Electronico"
 								label="Correo Electronico"
 								component={Input}
-								error={errors.email && touched.email ? errors.email : null}
 							/>
 						</div>
 						<div className={styles["form-section"]}>
@@ -194,26 +201,30 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 						</div>
 						<div className={styles["form-rows"]}>
 							<Select
-								options={documentTypeOptions}
+								options={realtorOptions}
 								label="Ejecutivo"
 								required
-								selectedOption={documentType}
-								setSelectedOption={setDocumentType}
-								open={openSelectDocumentType}
-								setOpen={setOpenSelectDocumentType}
-								handleOpenSelect={handleOpenDocumentType}
+								selectedOption={realtor}
+								setSelectedOption={setRealtor}
+								open={openSelectRealtor}
+								setOpen={setOpenSelectRealtor}
+								handleOpenSelect={handleOpenRealtor}
 							/>
-							{/* <Field
-								type="text"
-								name="email"
-								date
-								required
-								label="Fecha y hora*"
-								component={Input}
-								error={errors.email && touched.email ? errors.email : null}
-							/> */}
 						</div>
-						<div className={styles["form-section"]}>
+						<div className={styles["form-rows"]}>
+							<div>
+								<DatePicker
+									selected={orderDate}
+									showTimeSelect
+									onChange={(date:Date) => setOrderDate(date)}
+									customInput={<Input label="Fecha" />}
+								/>
+							</div>
+							<div>
+								<Input label="Hora" value={time} />
+							</div>
+						</div>
+						{/* <div className={styles["form-section"]}>
 							<div className={styles["form-label"]}>
 								<p>Propiedad</p>
 							</div>
@@ -234,19 +245,19 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({setOpenModal, openModal}) =
 								label="Mostrar direccion exacta"
 								component={Checkbox}
 							/>
-						</div>
+						</div> */}
 						<div className={styles["form-footer"]}>
-							<Button type='submit' variant="outline">Atras</Button>
+							<Button type='button' variant="outline" onClick={hanleBack}>Atras</Button>
 							<div className={styles["form-button-group"]}>
 								<Button type='button' variant="outline">Vista Previa</Button>
-								<Button type='submit' variant="tertiary" disabled={!isValid || !dirty}>Generar</Button>
+								<Button type='submit' variant="tertiary">Generar</Button>
 							</div>
 						</div>
 					</Form>
 				)}
 			</Formik>
 			<ToastContainer />
-		</Modal>
+		</>
 	);
 
 };
