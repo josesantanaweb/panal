@@ -9,6 +9,7 @@ import Users from 'pages/Users';
 import Login from 'pages/Login';
 import Customers from 'pages/Customers';
 import Orders from 'pages/Orders';
+import Details from 'pages/Orders/Details';
 import Support from 'pages/Support';
 import SupportList from 'pages/Support/SupportList';
 import Realtors from 'pages/Realtors';
@@ -47,6 +48,7 @@ function App() {
 						<Route path={ROUTES.ORDERS} element={<Orders />} />
 						<Route path={ROUTES.COMPANY} element={<Company />} />
 						<Route path={ROUTES.SUPPORT} element={<Support />} />
+						<Route path={ROUTES.DETAILS} element={<Details />} />
 						<Route path={ROUTES.SUPPORTLIST} element={<SupportList />} />
 						<Route path={ROUTES.REALTORS} element={<Realtors />} />
 					</Route>
