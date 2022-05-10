@@ -1,7 +1,7 @@
 export interface InputProps {
 	onChange?: any;
 	handeleSearch?: any;
-	type?: 'text' | 'email' | 'password';
+	type?: any;
 	disabled?: boolean;
 	search?: boolean;
 	required?: boolean;
@@ -9,7 +9,7 @@ export interface InputProps {
 	id?: string;
 	label?: string;
 	name?: string;
-	value?: string;
+	value?: any;
 	placeholder?: string;
 	field?: any;
 	form?: any;

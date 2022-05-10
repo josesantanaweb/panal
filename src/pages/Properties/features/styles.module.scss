@@ -1,0 +1,8 @@
+.features-container {
+  display: grid;
+  justify-content: flex-start;
+  grid-template-columns: repeat(5, 1fr) ;
+  justify-content: space-between;
+  grid-gap: 2em;
+
+}

@@ -42,14 +42,13 @@
 	margin-bottom: 2rem;
 	grid-gap: 1rem;
 	align-items: center;
-
 	div {
 		margin-bottom: 0.5rem;
 	}
 
 	@media only screen and (min-width: 600px) {
 		display: grid;
-		grid-template-columns: 70px 300px;
+		grid-template-columns: 300px;
 		div {
 			margin-bottom: 0rem;
 		}
