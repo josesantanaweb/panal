@@ -1,8 +1,9 @@
 export interface GenerateOrderProps {
 	hanleBack: () => void;
 	property: any;
-	openModal: boolean;
 	setOpenModal: any;
+	setSendEmail: any;
+	setGeneratedOrder: any;
 }
 
 export interface IValues {

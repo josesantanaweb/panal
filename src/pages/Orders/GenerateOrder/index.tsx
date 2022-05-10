@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,8 +17,10 @@ import Checkbox from "components/Checkbox";
 import { useDebounce } from 'use-debounce';
 
 import styles from "./styles.module.scss";
+import {ISelect} from "interfaces";
 import {GenerateOrderProps} from "./types";
 import CustomersServices from 'services/customersServices';
+import RealtorsServices from 'services/realtorsServices';
 import OrdersServices from 'services/ordersServices';
 
 const documentTypeOptions = [
@@ -38,19 +41,35 @@ const realtorOptions = [
 	},
 ];
 
-const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpenModal, openModal}) => {
+const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpenModal, setSendEmail, setGeneratedOrder}) => {
 	const [documentType, setDocumentType] = useState(documentTypeOptions[0]);
 	const [orderDate, setOrderDate] = useState(new Date());
 	const [search, setSearch] = useState("");
-	const [realtor, setRealtor] = useState(realtorOptions[0]);
 	const [activeSearch, setActiveSearch] = useState(false);
 	const [customer, setCustomer] = useState({});
+	const [realtor, setRealtor] = useState<any>();
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
 	const [openSelectRealtor, setOpenSelectRealtor] = useState<boolean>(false);
 	const debouncedFilter = useDebounce(search, 500);
+	const [realtorOptions, setRealtorsOptions] = useState<ISelect[]>([]);
 	const { data: customers } = useQuery(["customers", debouncedFilter[0]], CustomersServices.getCustomers, { enabled: Boolean(debouncedFilter[0]) });
+	const { data: realtorsData} = useQuery(["realtors", ''], RealtorsServices.getRealtors);
 	const queryClient = useQueryClient();
 	const time = moment(orderDate).format('LT');
+
+	useEffect(() => {
+		if (realtorsData !== undefined) {
+			realtorsOptionsData();
+		}
+	}, [realtorsData]);
+
+	const realtorsOptionsData = () => {
+		const realtorsOptionsData = realtorsData?.data?.map((item: any) => ({label: item.name, value: item.id}));
+		setRealtorsOptions(realtorsOptionsData);
+		if(realtorsOptionsData !== undefined) {
+			setRealtor(realtorsOptionsData[0]);
+		}
+	};
 
 	const { mutate } = useMutation(OrdersServices.generateOrder, {
 		onSuccess: (data) => {
@@ -64,9 +83,8 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpe
 				progress: undefined,
 			});
 			queryClient.invalidateQueries(['orders']);
-			setTimeout(() => {
-				return setOpenModal(false);
-			}, 3000);
+			setSendEmail(true);
+			setGeneratedOrder(false);
 		},
 		onError: (error: any) => {
 			toast.error(error.response.data.message, {
@@ -107,8 +125,6 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpe
 		setCustomer(customer);
 		setActiveSearch(false);
 	};
-
-	console.log(customers);
 
 	return (
 		<>
@@ -249,7 +265,6 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpe
 						<div className={styles["form-footer"]}>
 							<Button type='button' variant="outline" onClick={hanleBack}>Atras</Button>
 							<div className={styles["form-button-group"]}>
-								<Button type='button' variant="outline">Vista Previa</Button>
 								<Button type='submit' variant="tertiary">Generar</Button>
 							</div>
 						</div>

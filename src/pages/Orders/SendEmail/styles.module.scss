@@ -1,0 +1,48 @@
+.sendemail {
+	position: relative;
+}
+
+.sendemail-title {
+	font-size: 16px;
+	color: var(--secondary-text-color);
+	font-weight: 500;
+	margin-bottom: 1rem;
+}
+
+.form-rows {
+	align-items: center;
+	justify-content: space-between;
+	> div {
+		margin-bottom: 1rem;
+	}
+	@media only screen and (min-width: 600px) {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 2rem;
+		margin-bottom: 1rem;
+		> div {
+			margin-bottom: 0rem;
+		}
+	}
+}
+
+.form-single {
+	margin-bottom: 1rem;
+	@media only screen and (min-width: 600px) {
+		margin-bottom: 2rem;
+	}
+}
+
+.form-footer {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	display: grid;
+	justify-content: space-between;
+	grid-gap: 1rem;
+	grid-template-columns: 1fr;
+	@media only screen and (min-width: 600px) {
+		margin-top: 4rem;
+		grid-gap: 0;
+		grid-template-columns: 100px 100px;
+	}
+}

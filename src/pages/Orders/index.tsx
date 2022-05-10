@@ -1,19 +1,21 @@
 import React, {useState} from 'react';
-import {BiCog, BiEdit, BiHomeSmile, BiTrashAlt} from "react-icons/bi";
+import {BiCog, BiEdit, BiHome, BiHomeSmile, BiTrashAlt} from "react-icons/bi";
 import { useQuery } from 'react-query';
+import moment from  'moment';
+import { useNavigate } from 'react-router-dom';
+import 'moment-timezone';
 
 import Button from "components/Button";
 import Select from "components/Select";
 import Input from "components/Input";
 
 import { ISelect } from "interfaces";
-import userAvatar from "../../assets/img/user.jpg";
 import styles from "./styles.module.scss";
 import UsersServices from 'services/usersServices';
+import OrdersServices from 'services/ordersServices';
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import GenerateOrder from './GenerateOrder';
 import SelectProperty from './SelectProperty';
 
 const operationOptions = [
@@ -60,13 +62,14 @@ const Orders = () => {
 	const [commune, setCommune] = useState<ISelect>(communeOptions[0]);
 	const [currency, setCurrency] = useState<ISelect>(currencyOptions[0]);
 	const { data, isLoading, isError } = useQuery('users', UsersServices.getUsers);
-	const [openModalGenerateOrder, setOpenModalGenerateOrder] = useState<boolean>(false);
 	const [openModalSelectProperty, setOpenModalSelectProperty] = useState<boolean>(false);
 	const [openOperation, setOpenOperation] = useState<boolean>(false);
 	const [openProperty, setOpenProperty] = useState<boolean>(false);
 	const [openRegion, setOpenRegion] = useState<boolean>(false);
 	const [openCommune, setOpenCommune] = useState<boolean>(false);
 	const [openCurrency, setOpenCurrency] = useState<boolean>(false);
+	const { data: orders } = useQuery(["orders"], OrdersServices.getOrders);
+	const navigate = useNavigate();
 
 	const handleOpenOperation = () => setOpenOperation(true);
 	const handleOpenProperty = () => setOpenProperty(true);
@@ -75,8 +78,11 @@ const Orders = () => {
 	const handleOpenCurrency = () => setOpenCurrency(true);
 
   	// Handle Generate order
-	const handleGenerateOrder = () => setOpenModalGenerateOrder(true);
 	const handleSelectProperty = () => setOpenModalSelectProperty(true);
+
+	const hanleDetail = () => {
+		navigate("/details");
+	};
 
 	return (
 		<div className={styles.orders}>
@@ -171,7 +177,7 @@ const Orders = () => {
 										<th>Fecha y Hora</th>
 										<th>Cliente</th>
 										<th>Ejecutivo/a</th>
-										<th>Propiedades</th>
+										<th>Codigo de Propiedad</th>
 										<th>Estado</th>
 										<th>Canje</th>
 										<th>Acciones</th>
@@ -217,21 +223,21 @@ const Orders = () => {
 										</tbody>
 										:
 										<tbody className={styles["table-body"]}>
-											{data?.data?.map((user: any, index: number) => (
+											{orders?.data?.map((order: any, index: number) => (
 												<tr key={index}>
 													<td>{index + 1}</td>
-													<td>01-12-2021 15:23</td>
+													<td>{moment(order.dateTimeOfVisits).format('MMMM Do YYYY, h:mm:ss a')}</td>
 													<td>
 														<span className={styles["table-user"]}>
-															{user.name} {user.lastName}
+															{order.customer.name} {order.customer.lastName}
 														</span>
 													</td>
 													<td>
 														<span className={styles["table-user"]}>
-															{user.name} {user.lastName}
+															{order.realtor.name} {order.realtor.lastName}
 														</span>
 													</td>
-													<td>NI231231</td>
+													<td>{order.property.id}</td>
 													<td>
 														<span className={`${styles["table-status"]} ${styles.pending}`}>Pendiente</span>
 													</td>
@@ -242,7 +248,7 @@ const Orders = () => {
 													</td>
 													<td>
 														<div className={styles["table-action"]}>
-															<span className={styles["table-edit"]}><BiEdit/></span>
+															<span className={styles["table-edit"]} onClick={hanleDetail}><BiHome/></span>
 															<span className={styles["table-delete"]}><BiTrashAlt/></span>
 														</div>
 													</td>

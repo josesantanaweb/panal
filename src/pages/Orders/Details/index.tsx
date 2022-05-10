@@ -1,16 +1,22 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { BiLocationPlus } from 'react-icons/bi';
+import { BiLocationPlus, BiArrowBack } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 import IconsDescription from 'components/IconsDescription';
-import BackButton from 'components/BackButton';
 import Input from 'components/Input';
 
 type Props = {};
 
 const Details = (props: Props) => {
+	const navigate = useNavigate();
 	return (
 		<section className={styles['details']}>
-			<BackButton />
+			<div className={styles['back']} onClick={() => navigate(-1)}>
+				<div>
+					<BiArrowBack />
+				</div>
+				<div>Volver al listado</div>
+			</div>
 			<div className={styles['details-message']}>
 				<div className={styles['title']}>
 					<span>¡Hola!</span>

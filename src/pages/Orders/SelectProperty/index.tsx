@@ -11,6 +11,7 @@ import Modal from "components/Modal";
 import Input from "components/Input";
 import Property from "../Property";
 import GenerateOrder from "../GenerateOrder";
+import SendEmail from "../SendEmail";
 
 import styles from "./styles.module.scss";
 import {SelectPropertyProps} from "./types";
@@ -21,6 +22,7 @@ const SelectProperty:React.FC<SelectPropertyProps> = ({setOpenModal, openModal})
 	const [loading, setLoading] = useState(false);
 	const [selected, setSelectd] = useState({});
 	const [generatedOrder, setGeneratedOrder] = useState<boolean>(false);
+	const [sendEmail, setSendEmail] = useState<boolean>(false);
 	const [compareCode, setCompareCode] = useState("");
 	const debouncedFilter = useDebounce(search, 500);
 	const { data } = useQuery(["properties", debouncedFilter[0]], PropertiesServices.getProperties, { enabled: Boolean(debouncedFilter[0]) });
@@ -51,6 +53,7 @@ const SelectProperty:React.FC<SelectPropertyProps> = ({setOpenModal, openModal})
 		<Modal openModal={openModal} setOpenModal={setOpenModal} title="Generar orden de visita">
 			{
 				!generatedOrder &&
+        !sendEmail &&
         <div className={styles['select-property']}>
         	<div className={styles['select-property-top']}>
         		<div className={styles['search-property']}>
@@ -106,7 +109,17 @@ const SelectProperty:React.FC<SelectPropertyProps> = ({setOpenModal, openModal})
         <GenerateOrder
         	hanleBack={() => setGeneratedOrder(false)}
         	property={selected}
-        	openModal={openModal}
+        	setOpenModal={setOpenModal}
+        	setSendEmail={setSendEmail}
+        	setGeneratedOrder={setGeneratedOrder}
+        />
+			}
+			{
+				sendEmail &&
+        <SendEmail
+        	property={selected}
+        	setSendEmail={setSendEmail}
+        	setSearch={setSearch}
         	setOpenModal={setOpenModal}
         />
 			}
