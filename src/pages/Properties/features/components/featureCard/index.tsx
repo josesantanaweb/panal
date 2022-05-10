@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
-import { BiCog, BiEdit, BiHomeSmile, BiTrashAlt } from 'react-icons/bi';
+import { BiEdit,BiDotsVertical, BiHome } from 'react-icons/bi';
 import styles from './styles.module.scss';
 import Button from 'components/Button';
-
+import ModalEdit from '../modal/index';
 type Props = {
 	title: string;
 };
 
 const index = (props: Props) => {
 	let [showModal, setModal] = useState(false);
+	let [showForm, setForm] = useState(false);
+
+	const toggleModal = () => {
+		setForm(!showForm);
+	};
+
 	let Modal = () => {
 		if (showModal) {
 			return (
-				<div className={styles['modal']}>
+				<div
+					onClick={() => setForm((showForm = !showForm))}
+					className={styles['modal']}
+				>
 					<BiEdit size={24} className={styles['head']} />
 					<span>Editar</span>
 				</div>
@@ -21,20 +30,31 @@ const index = (props: Props) => {
 			return <span></span>;
 		}
 	};
+	let ModalForm = () => {
+		if (showForm) {
+			return <ModalEdit toggleModal={toggleModal} />;
+		} else {
+			return <span></span>;
+		}
+	};
+
 	return (
 		<section className={styles['feature']}>
 			<div className={styles['head']}>
-				<BiHomeSmile size={24} />
-				<Button
-					onClick={() => setModal((showModal = !showModal))}
-					type="button"
-					variant="rounded"
-				>
-					<BiEdit size={24} className={styles['head']} />
+				<BiHome size={24} />
+				<div className={styles['button-container']}>
+					<Button
+						onClick={() => setModal((showModal = !showModal))}
+						type="button"
+						variant="rounded"
+					>
+						<BiDotsVertical size={24} className={styles['head']} />
+					</Button>
 					<Modal />
-				</Button>
+				</div>
 			</div>
 			<div className={styles['feature-body']}>{props.title}</div>
+			<ModalForm />
 		</section>
 	);
 };
