@@ -3,7 +3,7 @@ import { getValue } from '../utils/localStorage';
 
 const OrdersServices = {
 	getOrders: async ({ queryKey }: any) => {
-		const response = await api.get(`/visiting-order`, {
+		const response = await api.get(`/visiting-order?limit=100`, {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		});
 		return response.data;
@@ -22,6 +22,12 @@ const OrdersServices = {
 				headers: { Authorization: `Bearer ${getValue('token')}` },
 			}
 		);
+		return response.data;
+	},
+	deleteOrder: async (id: number) => {
+		const response = await api.delete(`/visiting-order/${id}`, {
+			headers: { Authorization: `Bearer ${getValue('token')}` },
+		});
 		return response.data;
 	},
 };

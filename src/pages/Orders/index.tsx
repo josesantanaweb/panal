@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {BiCog, BiEdit, BiHome, BiHomeSmile, BiTrashAlt} from "react-icons/bi";
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import moment from  'moment';
 import { useNavigate } from 'react-router-dom';
 import 'moment-timezone';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Button from "components/Button";
 import Select from "components/Select";
@@ -69,7 +71,34 @@ const Orders = () => {
 	const [openCommune, setOpenCommune] = useState<boolean>(false);
 	const [openCurrency, setOpenCurrency] = useState<boolean>(false);
 	const { data: orders } = useQuery(["orders"], OrdersServices.getOrders);
+	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+
+	const { mutate } = useMutation(OrdersServices.deleteOrder, {
+		onSuccess: (data) => {
+			toast.success("Orden eliminada exitosamente", {
+				position: "top-right",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+			queryClient.invalidateQueries(['orders']);
+		},
+		onError: (error: any) => {
+			toast.error("Ocurrio un error al eliminar la orden", {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	});
 
 	const handleOpenOperation = () => setOpenOperation(true);
 	const handleOpenProperty = () => setOpenProperty(true);
@@ -82,6 +111,11 @@ const Orders = () => {
 
 	const hanleDetail = () => {
 		navigate("/details");
+	};
+
+	// Handle Delete Order
+	const handleDelete = (id: number) => {
+		mutate(id);
 	};
 
 	return (
@@ -249,7 +283,7 @@ const Orders = () => {
 													<td>
 														<div className={styles["table-action"]}>
 															<span className={styles["table-edit"]} onClick={hanleDetail}><BiHome/></span>
-															<span className={styles["table-delete"]}><BiTrashAlt/></span>
+															<span className={styles["table-delete"]} onClick={() => handleDelete(order.id)}><BiTrashAlt/></span>
 														</div>
 													</td>
 												</tr>
@@ -264,6 +298,7 @@ const Orders = () => {
 				openModal={openModalSelectProperty}
 				setOpenModal={setOpenModalSelectProperty}
 			/>
+			<ToastContainer />
 		</div>
 	);
 };

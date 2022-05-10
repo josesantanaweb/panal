@@ -24,6 +24,7 @@ const SelectProperty:React.FC<SelectPropertyProps> = ({setOpenModal, openModal})
 	const [generatedOrder, setGeneratedOrder] = useState<boolean>(false);
 	const [sendEmail, setSendEmail] = useState<boolean>(false);
 	const [compareCode, setCompareCode] = useState("");
+	const [orderId, setOrderId] = useState("1");
 	const debouncedFilter = useDebounce(search, 500);
 	const { data } = useQuery(["properties", debouncedFilter[0]], PropertiesServices.getProperties, { enabled: Boolean(debouncedFilter[0]) });
 	const [properties, setProperties] = useState([]);
@@ -111,6 +112,7 @@ const SelectProperty:React.FC<SelectPropertyProps> = ({setOpenModal, openModal})
         	property={selected}
         	setOpenModal={setOpenModal}
         	setSendEmail={setSendEmail}
+        	setOrderId={setOrderId}
         	setGeneratedOrder={setGeneratedOrder}
         />
 			}
@@ -118,6 +120,7 @@ const SelectProperty:React.FC<SelectPropertyProps> = ({setOpenModal, openModal})
 				sendEmail &&
         <SendEmail
         	property={selected}
+        	orderId={orderId}
         	setSendEmail={setSendEmail}
         	setSearch={setSearch}
         	setOpenModal={setOpenModal}

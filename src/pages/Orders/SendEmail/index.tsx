@@ -14,7 +14,7 @@ import Button from "components/Button";
 import Input from "components/Input";
 import OrdersServices from 'services/ordersServices';
 
-const SendEmail:React.FC<SendEmailProps> = ({setOpenModal, property, setSendEmail, setSearch}) => {
+const SendEmail:React.FC<SendEmailProps> = ({setOpenModal, orderId, setSendEmail, setSearch}) => {
 	const [scheduledDate, setScheduledDate] = useState(new Date());
 	const queryClient = useQueryClient();
 	const time = moment(scheduledDate).format('LT');
@@ -58,14 +58,13 @@ const SendEmail:React.FC<SendEmailProps> = ({setOpenModal, property, setSendEmai
 	};
 
 	const onSubmit = (values: any, {resetForm}: any) => {
-		const orderId = 11;
 		const {
 			toEmail,
 			subject,
 			message,
 		} = values;
 		mutate({
-			orderId,
+			orderId: orderId,
 			scheduledDate: scheduledDate,
 			toEmail: toEmail,
 			subject: subject,

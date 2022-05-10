@@ -4,6 +4,7 @@ export interface GenerateOrderProps {
 	setOpenModal: any;
 	setSendEmail: any;
 	setGeneratedOrder: any;
+	setOrderId: any;
 }
 
 export interface IValues {

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
-import * as Yup from 'yup';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,15 +11,14 @@ import 'moment-timezone';
 import Button from "components/Button";
 import Select from "components/Select";
 import Input from "components/Input";
-import Checkbox from "components/Checkbox";
 import { useDebounce } from 'use-debounce';
 
 import styles from "./styles.module.scss";
 import {ISelect} from "interfaces";
 import {GenerateOrderProps} from "./types";
 import CustomersServices from 'services/customersServices';
-import RealtorsServices from 'services/realtorsServices';
 import OrdersServices from 'services/ordersServices';
+import {getValue} from 'utils/localStorage';
 
 const documentTypeOptions = [
 	{
@@ -34,40 +31,33 @@ const documentTypeOptions = [
 	},
 ];
 
-const realtorOptions = [
-	{
-		label: 'Jhon Doe',
-		value: 1,
-	},
-];
-
-const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpenModal, setSendEmail, setGeneratedOrder}) => {
+const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpenModal, setSendEmail, setGeneratedOrder, setOrderId}) => {
 	const [documentType, setDocumentType] = useState(documentTypeOptions[0]);
 	const [orderDate, setOrderDate] = useState(new Date());
 	const [search, setSearch] = useState("");
 	const [activeSearch, setActiveSearch] = useState(false);
 	const [customer, setCustomer] = useState({});
-	const [realtor, setRealtor] = useState<any>();
+	const [customerData, setCustomerData] = useState<any>();
 	const [openSelectDocumentType, setOpenSelectDocumentType] = useState<boolean>(false);
-	const [openSelectRealtor, setOpenSelectRealtor] = useState<boolean>(false);
+	const [openSelectCustomer, setOpenSelectCustomer] = useState<boolean>(false);
 	const debouncedFilter = useDebounce(search, 500);
-	const [realtorOptions, setRealtorsOptions] = useState<ISelect[]>([]);
+	const [customersOptions, setCustomersOptions] = useState<ISelect[]>([]);
 	const { data: customers } = useQuery(["customers", debouncedFilter[0]], CustomersServices.getCustomers, { enabled: Boolean(debouncedFilter[0]) });
-	const { data: realtorsData} = useQuery(["realtors", ''], RealtorsServices.getRealtors);
+	const { data: customersData } = useQuery(["customersData", ""], CustomersServices.getCustomers);
 	const queryClient = useQueryClient();
 	const time = moment(orderDate).format('LT');
 
 	useEffect(() => {
-		if (realtorsData !== undefined) {
-			realtorsOptionsData();
+		if (customersData !== undefined) {
+			customersOptionsData();
 		}
-	}, [realtorsData]);
+	}, [customersData]);
 
-	const realtorsOptionsData = () => {
-		const realtorsOptionsData = realtorsData?.data?.map((item: any) => ({label: item.name, value: item.id}));
-		setRealtorsOptions(realtorsOptionsData);
-		if(realtorsOptionsData !== undefined) {
-			setRealtor(realtorsOptionsData[0]);
+	const customersOptionsData = () => {
+		const customersOptionsData = customersData?.data?.map((item: any) => ({label: item.name, value: item.id}));
+		setCustomersOptions(customersOptionsData);
+		if(customersOptionsData !== undefined) {
+			setCustomerData(customersOptionsData[0]);
 		}
 	};
 
@@ -85,6 +75,7 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpe
 			queryClient.invalidateQueries(['orders']);
 			setSendEmail(true);
 			setGeneratedOrder(false);
+			setOrderId(data.id);
 		},
 		onError: (error: any) => {
 			toast.error(error.response.data.message, {
@@ -103,13 +94,13 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpe
   	// Handle Open limit select
 	const handleOpenDocumentType = () => setOpenSelectDocumentType(true);
 
-	const handleOpenRealtor = () => setOpenSelectRealtor(true);
+	const handleOpenCustomer = () => setOpenSelectCustomer(true);
 
 	const onSubmit = (values: any, {resetForm}: any) => {
-		const { id } = values;
+		const userId = JSON.parse((getValue('userId')));
 		const data = {
-			customerId: Number(id),
-			realtorId: Number(1),
+			customerId: Number(customerData.value),
+			realtorId: Number(userId),
 			propertyId: Number(property.code),
 			dateTimeOfVisits: orderDate
 		};
@@ -217,14 +208,14 @@ const GenerateOrder:React.FC<GenerateOrderProps> = ({hanleBack, property, setOpe
 						</div>
 						<div className={styles["form-rows"]}>
 							<Select
-								options={realtorOptions}
+								options={customersOptions}
 								label="Ejecutivo"
 								required
-								selectedOption={realtor}
-								setSelectedOption={setRealtor}
-								open={openSelectRealtor}
-								setOpen={setOpenSelectRealtor}
-								handleOpenSelect={handleOpenRealtor}
+								selectedOption={customerData}
+								setSelectedOption={setCustomerData}
+								open={openSelectCustomer}
+								setOpen={setOpenSelectCustomer}
+								handleOpenSelect={handleOpenCustomer}
 							/>
 						</div>
 						<div className={styles["form-rows"]}>
