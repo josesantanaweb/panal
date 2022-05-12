@@ -74,7 +74,7 @@ const Details = (props: Props) => {
 					voluptatibus assumenda eligendi sed?
 				</p>
 				<Signature />
-				<div className={styles['card-price']}>550$</div>
+				<div className={styles['card-price']}>50.000 USD</div>
 			</section>
 			<section className={styles['inputs']}>
 				<div className={styles['input-container']}>

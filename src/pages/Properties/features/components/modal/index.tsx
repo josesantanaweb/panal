@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { BiX } from 'react-icons/bi';
 import Button from 'components/Button';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
 import Checkbox from 'components/Checkbox';
 
 type Props = {
