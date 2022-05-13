@@ -23,6 +23,7 @@ import styles from './styles.module.scss';
 
 import PropertiesServices from 'services/propertiesServices';
 import Features from './features/index';
+import DraftCopy from './DraftCopy/index';
 // Operation Options
 const operationOptions = [
 	{
@@ -207,7 +208,9 @@ const Properties = () => {
 						</div>
 					</div>
 				</TabPanel>
-				<TabPanel>Borradores</TabPanel>
+				<TabPanel>
+					<DraftCopy />
+				</TabPanel>
 				<TabPanel>
 					<Features />
 				</TabPanel>
