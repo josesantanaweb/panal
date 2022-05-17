@@ -18,9 +18,7 @@ const Draft = () => {
 			</div>
 			<div className={styles['draft-content']}>
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi laudantium
-				voluptate quis commodi repudiandae molestias nihil perferendis harum
-				vel. Temporibus sint maxime praesentium sed totam quas odio voluptatum
-				nulla corporis.
+				voluptate quis commodi
 			</div>
 			<div className={styles['draft-actions']}>
 				<div className={styles['cancel']}>
@@ -37,6 +35,13 @@ const Draft = () => {
 const index = (props: Props) => {
 	return (
 		<section className={styles['draft-container']}>
+			<div className={styles['draft-group']}>
+				<div className={styles['draft-day']}>
+					(Borrador guardado) Martes, 15 de marzo de 2022
+				</div>
+				<Draft />
+				<Draft />
+			</div>
 			<div className={styles['draft-group']}>
 				<div className={styles['draft-day']}>
 					(Borrador guardado) Martes, 15 de marzo de 2022
