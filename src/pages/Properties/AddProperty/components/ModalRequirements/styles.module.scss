@@ -1,0 +1,17 @@
+.check-element{
+  display: flex;
+  padding: 0.7em 0;
+  border-bottom: outset 1px var(--border-color);
+  margin: 1.4em 0;
+  font-size: 0.9em;
+}
+.check-label{
+  display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    .check-input{
+      width: 50px;
+      margin: 0 8px;
+    }
+}
+
