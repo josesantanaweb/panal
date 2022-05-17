@@ -3,6 +3,8 @@
 }
 .draft-day{
   color: var(--text-secondary);
+  padding: 1em 0;
+  margin-top: 1em;
 }
 .draft-item{
   color: var(--secondary-text-color);
@@ -16,7 +18,7 @@
   .draft-title{
     display: flex;
     align-items: center;
-    font-size: var(--body-font-size) !important;
+    font-size: var(--normal-font-size) !important;
     font-weight: 500;
     .icon{
 
@@ -30,6 +32,10 @@
   .draft-content{
     color: var(--text-secondary);
     font-size: var(--normal-font-size);
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
   .draft-actions{
     display: flex;
