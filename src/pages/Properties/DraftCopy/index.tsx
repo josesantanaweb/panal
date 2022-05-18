@@ -22,7 +22,7 @@ const Draft = () => {
 			</div>
 			<div className={styles['draft-actions']}>
 				<div className={styles['cancel']}>
-					<Button variant="outline">Canelar</Button>
+					<Button variant="outline">Cancelar</Button>
 				</div>
 				<div className={styles['save']}>
 					<Button variant="primary">Guardar</Button>
