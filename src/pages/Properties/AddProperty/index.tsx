@@ -169,7 +169,6 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 		useState<boolean>(false);
 	const handleSelectProperty = () => {
 		setOpenModalSelectProperty(true);
-		console.log('open');
 	};
 
 	const navigate = useNavigate();

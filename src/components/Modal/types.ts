@@ -3,4 +3,5 @@ export interface ModalProps {
 	openModal: boolean;
 	title: string;
 	size?: string;
+	xl?: boolean;
 }

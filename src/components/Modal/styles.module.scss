@@ -41,6 +41,12 @@
 		width: 30%;
 	}
 }
+.modal-content.modal-xl {
+	width: 100%;
+	@media only screen and (min-width: 600px) {
+		width: 80%;
+	}
+}
 
 .modal-content.is-open {
 	transform: translateX(0);
