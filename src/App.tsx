@@ -15,22 +15,22 @@ import SupportList from 'pages/Support/SupportList';
 import Realtors from 'pages/Realtors';
 import AddProperty from 'pages/Properties/AddProperty';
 
+import PropertyDetail from 'pages/Properties/Details';
+
 import { isAuthenticatedSelector } from 'store/selectors';
-import { ROUTES } from "constants/routes";
+import { ROUTES } from 'constants/routes';
 import Company from 'pages/Company';
 
 const AppLayout = () => {
 	const isAuthenticated = useSelector(isAuthenticatedSelector);
-	return  (
-		isAuthenticated ?  (
-			<Layout>
-				<Outlet />
-			</Layout>
-		)
-			: <Navigate to={ROUTES.LOGIN} />
+	return isAuthenticated ? (
+		<Layout>
+			<Outlet />
+		</Layout>
+	) : (
+		<Navigate to={ROUTES.LOGIN} />
 	);
 };
-
 
 function App() {
 	return (
@@ -38,7 +38,7 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path={ROUTES.LOGIN} element={<Login />} />
-					<Route path="/" element={<AppLayout />} >
+					<Route path="/" element={<AppLayout />}>
 						<Route path="/" element={<Properties />} />
 						<Route path={ROUTES.PROFILE} element={<Profile />} />
 						<Route path={ROUTES.PROPERTIES} element={<Properties />} />
@@ -49,6 +49,7 @@ function App() {
 						<Route path={ROUTES.COMPANY} element={<Company />} />
 						<Route path={ROUTES.SUPPORT} element={<Support />} />
 						<Route path={ROUTES.DETAILS} element={<Details />} />
+						<Route path={ROUTES.PROPERTYDETAILS} element={<PropertyDetail />} />
 						<Route path={ROUTES.SUPPORTLIST} element={<SupportList />} />
 						<Route path={ROUTES.REALTORS} element={<Realtors />} />
 					</Route>
