@@ -12,4 +12,5 @@ export const ROUTES = {
 	SUPPORTLIST: '/support-list',
 	REALTORS: '/realtors',
 	PROPERTYDETAILS: '/property-details',
+	LAW: '/law',
 } as const;

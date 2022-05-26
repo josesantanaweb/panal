@@ -1,0 +1,35 @@
+.details-message {
+	background-color: var(--secondary-bg-color);
+	padding: 2rem;
+	border-radius: 5px;
+  display: grid;
+  grid-template-columns: 4fr 2fr;
+	.title {
+		font-size: var(--biggest-font-size);
+		color: #1c1b1b;
+		font-weight:600;
+    margin-bottom: 1em;
+
+	}
+	p {
+		font-size: var(--normal-font-size);
+		color: var(--text-secondary);
+		padding: 1em 0;
+		line-height: 1.4;
+	}
+  .button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.back {
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: auto 1fr;
+	color: black;
+	margin: 1em 0;
+	font-size: var(--title-font-size);
+	font-weight: 500;
+	cursor: pointer;
+}
