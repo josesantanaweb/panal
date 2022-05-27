@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
+import mapboxgl from 'mapbox-gl';
 
 import Layout from "components/Layout";
 import Profile from "pages/Profile";
@@ -20,6 +21,8 @@ import PropertyDetail from 'pages/Properties/Details';
 import { isAuthenticatedSelector } from 'store/selectors';
 import { ROUTES } from 'constants/routes';
 import Company from 'pages/Company';
+
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyZ2lvdmVyYWhlcm5hbmRlemJpZGF0YSIsImEiOiJjbDMwZHc4cmswMDdqM2NydmIzYWF0cGl4In0.hsYQFPebleAB4j6mRckMzQ';
 
 const AppLayout = () => {
 	const isAuthenticated = useSelector(isAuthenticatedSelector);

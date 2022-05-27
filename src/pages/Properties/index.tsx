@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
 	BiMap,
 	BiHotel,
@@ -104,6 +104,7 @@ const Properties = () => {
 					<Tab>Caracteristicas</Tab>
 				</TabList>
 				<TabPanel>
+
 					<div className={styles['properties-wrapper']}>
 						<div className={styles['properties-top']}>
 							<div>

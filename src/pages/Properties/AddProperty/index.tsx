@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BiArrowBack, BiPlus } from 'react-icons/bi';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { useMutation, useQueryClient, useQuery } from 'react-query';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Map } from 'mapbox-gl';
 
 import Button from 'components/Button';
 import Checkbox from 'components/Checkbox';
@@ -289,6 +290,22 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			});
 		},
 	});
+
+	const mapDiv = useRef<HTMLDivElement>(null);
+	const [mapa, setMapa] = useState<Map>();
+
+	useEffect(() => {
+		if (mapDiv.current) {
+			setMapa(
+				new Map({
+					container: mapDiv.current, // container ID
+					style: 'mapbox://styles/mapbox/streets-v11', // style URL
+					center: [-74.5, 40], // starting position [lng, lat]
+					zoom: 9 // starting zoom
+				})
+			);
+		}
+	}, [mapDiv]);
 
 	useEffect(() => {
 		if (customersData !== undefined) {
@@ -1035,6 +1052,17 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 										/>
 									</div>
 								</div>
+
+								<div className={styles['mapa']}>
+									<div ref={mapDiv}
+										style={{
+											height: '400px',
+											width: '100%',
+											background: 'red'
+										}}
+									/>
+								</div>
+
 								<div className={styles['form-row-3']}>
 									<div>
 										<Field
