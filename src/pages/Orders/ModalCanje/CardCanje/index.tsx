@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import Button from 'components/Button';
-import { BiStar, BiDotsVertical } from 'react-icons/bi';
+import { BiStar, BiDotsVertical, BiLocationPlus } from 'react-icons/bi';
 
 type Props = {};
 
@@ -13,7 +13,10 @@ const index = (props: Props) => {
 			</div>
 			<div className={styles['canje-name']}>
 				<span className={styles['tiltle']}>romario hause</span>
-				<span className={styles['location']}>Santiago de chile</span>
+				<span className={styles['location']}>
+					<BiLocationPlus></BiLocationPlus>
+					Santiago de chile
+				</span>
 				<span>codigo 123</span>
 			</div>
 			<div className={styles['canje-price']}>
@@ -26,6 +29,7 @@ const index = (props: Props) => {
 					<BiStar></BiStar>
 					<BiStar></BiStar>
 					<BiStar></BiStar>
+					<span className={styles['ranking']}>3.5</span>
 				</div>
 			</div>
 			<div className={styles['canje-status']}>

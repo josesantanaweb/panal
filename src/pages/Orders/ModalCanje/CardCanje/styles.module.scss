@@ -10,6 +10,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    .ranking{
+      margin-left: 5px;
+    }
   }
   .canje-action{
     display: flex;
@@ -40,6 +43,7 @@
 .canje-name{
   display: flex;
   flex-direction: column;
+  line-height: 1.5;
   span:first-child{
     font-weight: 600;
   }
@@ -52,8 +56,10 @@
     font-weight: 600;
     }
   }
-  .canje-action{
+  .location{
     display: flex;
-    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
   }
+
 }
