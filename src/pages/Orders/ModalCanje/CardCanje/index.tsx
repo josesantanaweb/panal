@@ -33,7 +33,7 @@ const index = (props: Props) => {
 				</div>
 			</div>
 			<div className={styles['canje-status']}>
-				<Button>Ver Detalles</Button>
+				<Button>Nombre</Button>
 			</div>
 			<div className={styles['canje-action']}>
 				<span>
