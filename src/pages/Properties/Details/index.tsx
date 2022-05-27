@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './styles.module.scss';
 import { BiLocationPlus, BiArrowBack } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import IconsDescription from 'components/IconsDescription';
 import Input from 'components/Input';
+import { url } from 'inspector';
 
 type Props = {};
 
 const Details = (props: Props) => {
+	const location: any = useLocation();
 	const navigate = useNavigate();
+	const [property, setProperty] = useState(location.state.property);
+
 	return (
 		<section className={styles['details']}>
 			<div className={styles['back']} onClick={() => navigate(-1)}>
@@ -32,15 +36,15 @@ const Details = (props: Props) => {
 			</div>
 			<section className={styles['details-card']}>
 				<div className={styles['card-title']}>
-					<span>Romario house</span>
+					<span>{property.title}</span>
 					<span>
 						<span className={styles['location-icon']}>
 							<BiLocationPlus />
 						</span>
-						Santiago de Chile
+						{property.city}
 					</span>
 				</div>
-				<div className={styles['card-img']}>
+				<div className={styles['card-img']} style={{backgroundImage: `url(${property.imgUrl})`}}>
 					<figure></figure>
 				</div>
 				<div className={styles['card-description']}>
@@ -54,7 +58,7 @@ const Details = (props: Props) => {
 					consectetur adipisicing elit.
 				</p>
 				<div className={styles['card-price']}>
-					<span>50.000 USD</span>
+					<span>{property.price} USD</span>
 				</div>
 			</section>
 		</section>

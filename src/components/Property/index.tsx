@@ -16,8 +16,12 @@ const Property: React.FC<PropertyProps> = ({ property }) => {
 			: styles['is-published'],
 	].join(' ');
 
-	const hanleDetail = () => {
-		navigate('/property-details');
+	const hanleDetail = (property: any) => {
+		navigate('/property-details', {
+			state: {
+				property: property,
+			}
+		});
 	};
 
 	return (
@@ -55,7 +59,7 @@ const Property: React.FC<PropertyProps> = ({ property }) => {
 				<h4 className={styles['properties-price']}>$ {property.price}</h4>
 			</div>
 			<p className={styles['properties-meters']}>Sup: total 5000 mt2</p>
-			<Button onClick={hanleDetail} full>
+			<Button onClick={() => hanleDetail(property)} full>
 				Ver Detalles
 			</Button>
 		</div>
