@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { ISelect } from 'interfaces';
+
 import Modal from 'components/Modal';
 import Checkbox from 'components/Checkbox';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
@@ -7,7 +9,7 @@ import Input from 'components/Input';
 import Button from 'components/Button';
 import CardCanje from './CardCanje';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
+import Select from 'components/Select';
 type Props = {
 	openModal: boolean;
 	setOpenModal: any;
@@ -16,6 +18,22 @@ type Props = {
 const index = (props: Props) => {
 	const INITIAL_VALUES = {};
 	const onSubmit = function name(params: any) {};
+	const [openSelect, setOpenSelect] = useState<boolean>(false);
+	const [TypeOptions, setTypeOptions] = useState<ISelect[]>([]);
+	const option: ISelect[] = [
+		{
+			label: 'Agregar a lista',
+			value: 1,
+		},
+		{
+			label: 'Rechazar',
+			value: 1,
+		},
+	];
+
+	// Handle Open  select
+	const handleOpen = () => setOpenSelect(true);
+
 	return (
 		<section className={styles['modal']}>
 			<Modal
@@ -39,6 +57,27 @@ const index = (props: Props) => {
 								>
 									{({ errors, touched, isValid, dirty }) => (
 										<Form>
+											<div className={styles['check-all']}>
+												<Field
+													className={styles['check']}
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+												/>
+												<div className={styles['check-select']}>
+													<Select
+														options={option}
+														label="Acciones"
+														required
+														selectedOption={TypeOptions}
+														setSelectedOption={setTypeOptions}
+														open={openSelect}
+														setOpen={setOpenSelect}
+														handleOpenSelect={handleOpen}
+													/>
+												</div>
+											</div>
+
 											<div className={styles['check-element']}>
 												<div></div>
 												<div className={styles['check-tile']}>
