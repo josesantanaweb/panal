@@ -22,9 +22,9 @@
 .check-all{
   display: grid;
   padding: 0.7em 0;
-  margin: 1.4em 0;
+  margin: 1.4em 0 4em 0;
   font-size: 0.9em;
-  grid-template-columns: 1fr 10fr;
+  grid-template-columns: 2fr 4fr;
 }
 .check-select{
   display: flex;
@@ -50,4 +50,7 @@
   .save , .cancel{
     margin: 0 .5em;
   }
+}
+.check{
+  border: 1px solid black !important;
 }

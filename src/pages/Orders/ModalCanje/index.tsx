@@ -63,6 +63,7 @@ const index = (props: Props) => {
 													name="characteristics.sewer"
 													type="checkbox"
 													component={Checkbox}
+													label="Seleccionar todo"
 												/>
 												<div className={styles['check-select']}>
 													<Select

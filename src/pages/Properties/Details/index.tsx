@@ -46,7 +46,13 @@ const Details = (props: Props) => {
 				<div className={styles['card-description']}>
 					<IconsDescription />
 				</div>
-
+				<p className={styles['card-description-text']}>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+					consequuntur delectus magnam repellat id aut sapiente quia veniam at
+					sint, labore itaque deserunt inventore perspiciatis dolores
+					voluptatibus assumenda eligendi sed? Lorem ipsum dolor sit amet
+					consectetur adipisicing elit.
+				</p>
 				<div className={styles['card-price']}>
 					<span>50.000 USD</span>
 				</div>

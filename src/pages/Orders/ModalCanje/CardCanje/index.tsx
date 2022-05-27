@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import Button from 'components/Button';
 import { BiStar, BiDotsVertical, BiLocationPlus } from 'react-icons/bi';
+import { BsFillStarFill, BsThreeDots } from 'react-icons/bs';
 
 type Props = {};
 
@@ -24,11 +25,11 @@ const index = (props: Props) => {
 			</div>
 			<div className={styles['canje-ranking']}>
 				<span>Jose Perez</span>
-				<div>
-					<BiStar></BiStar>
-					<BiStar></BiStar>
-					<BiStar></BiStar>
-					<BiStar></BiStar>
+				<div className={styles['stars']}>
+					<BsFillStarFill></BsFillStarFill>
+					<BsFillStarFill></BsFillStarFill>
+					<BsFillStarFill></BsFillStarFill>
+					<BsFillStarFill></BsFillStarFill>
 					<span className={styles['ranking']}>3.5</span>
 				</div>
 			</div>
@@ -37,7 +38,7 @@ const index = (props: Props) => {
 			</div>
 			<div className={styles['canje-action']}>
 				<span>
-					<BiDotsVertical></BiDotsVertical>
+					<BsThreeDots></BsThreeDots>
 				</span>
 			</div>
 		</div>
