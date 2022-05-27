@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styles from './styles.module.scss';
 import Input from 'components/Input';
 import Button from 'components/Button';
+import CardCanje from './CardCanje';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 type Props = {
@@ -30,17 +31,66 @@ const index = (props: Props) => {
 								<Tab>Propiedades</Tab>
 								<Tab>listado</Tab>
 							</TabList>
-							<TabPanel>1</TabPanel>
+							<TabPanel>
+								<Formik
+									initialValues={INITIAL_VALUES}
+									// validationSchema={validationSchema.addProperty}
+									onSubmit={onSubmit}
+								>
+									{({ errors, touched, isValid, dirty }) => (
+										<Form>
+											<div className={styles['check-element']}>
+												<div></div>
+												<div className={styles['check-tile']}>
+													<span>Propiedad</span>
+													<span></span>
+													<span></span>
+													<span>Ranking canje</span>
+													<span>status</span>
+													<span></span>
+													<span></span>
+												</div>
+											</div>
+											{/* CHECK ELEMENT */}
+											<div className={styles['check-element']}>
+												<Field
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+												/>
+												<CardCanje></CardCanje>
+											</div>
+											<div className={styles['check-element']}>
+												<Field
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+												/>
+												<CardCanje></CardCanje>
+											</div>
+											<div className={styles['check-element']}>
+												<Field
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+												/>
+												<CardCanje></CardCanje>
+											</div>
+											<div className={styles['check-element']}>
+												<Field
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+												/>
+												<CardCanje></CardCanje>
+											</div>
+										</Form>
+									)}
+								</Formik>
+							</TabPanel>
+
 							<TabPanel>2</TabPanel>
 						</Tabs>
-
-						<Formik
-							initialValues={INITIAL_VALUES}
-							// validationSchema={validationSchema.addProperty}
-							onSubmit={onSubmit}
-						>
-							{({ errors, touched, isValid, dirty }) => <Form></Form>}
-						</Formik>
 					</section>
 				}
 			</Modal>

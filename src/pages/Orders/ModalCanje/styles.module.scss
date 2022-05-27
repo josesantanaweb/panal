@@ -1,13 +1,21 @@
 .modal .modal-content {
   overflow: auto !important;
 }
+
 .check-element{
-  display: flex;
+  display: grid;
   padding: 0.7em 0;
-  border-bottom: outset 1px var(--border-color);
   margin: 1.4em 0;
   font-size: 0.9em;
+  grid-template-columns: 1fr 8fr;
+  .check-tile{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    text-align: center;
+  }
 }
+
 .check-label{
   display: flex;
     flex-wrap: wrap;
@@ -17,6 +25,7 @@
       margin: 0 8px;
     }
 }
+
 .modal-child{
   padding-bottom:5em ;
 }
