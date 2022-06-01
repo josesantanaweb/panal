@@ -11,6 +11,7 @@ import {
 	BiCog,
 	BiStreetView,
 } from "react-icons/bi";
+import { AiOutlineSafetyCertificate } from 'react-icons/ai';
 import { useSelector, useDispatch } from "react-redux";
 
 import logo from "../../assets/img/logo-small.svg";
@@ -121,7 +122,7 @@ const Sidebar = () => {
 								splitLocation[1] === 'customers' ? styles.active : ''
 							}`}
 						>
-							<BiGroup />
+							<AiOutlineSafetyCertificate />
 							<span>Legal</span>
 						</Link>
 					</li>
