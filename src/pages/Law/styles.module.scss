@@ -36,16 +36,30 @@
 
 
 .acordion-item{
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid #0000003b 1px;
+  padding: 1em 0;
+  margin: 1.5em 0;
   .hidden{
     display: none;
   }
-  display: flex;
-  flex-direction: column;
-  margin: 1.5em 0;
   .acordion-head{
     display: flex;
-    font-size: 1.5em;
+    font-size: 1.2em;
+    font-weight: 500;
     margin: .5em 0;
+    align-items: center;
+    .icon , .rotate{
+      padding: 7px;
+      background: lightgrey;
+      border-radius: 50%;
+      font-size: .8em;
+      transition: .3s ease-in ;
+    }
+    .rotate{
+      transform: rotate(90deg);
+    }
     .acordion-title{
       margin:0 10px;
     }
@@ -53,5 +67,7 @@
   .acordion-contenedor{
     padding: 1em;
     background: white;
+    transition: .3s ease-in ;
+
   }
 }
