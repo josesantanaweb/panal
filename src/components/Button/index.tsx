@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ButtonProps } from './types';
 import styles from './styles.module.scss';
-
 const Button: React.FC<ButtonProps> = ({
 	children,
 	variant = 'tertiary',

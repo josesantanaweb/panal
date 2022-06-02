@@ -33,3 +33,25 @@
 	font-weight: 500;
 	cursor: pointer;
 }
+
+
+.acordion-item{
+  .hidden{
+    display: none;
+  }
+  display: flex;
+  flex-direction: column;
+  margin: 1.5em 0;
+  .acordion-head{
+    display: flex;
+    font-size: 1.5em;
+    margin: .5em 0;
+    .acordion-title{
+      margin:0 10px;
+    }
+  }
+  .acordion-contenedor{
+    padding: 1em;
+    background: white;
+  }
+}
