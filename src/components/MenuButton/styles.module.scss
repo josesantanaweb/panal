@@ -1,0 +1,71 @@
+/*=============== User Menu ===============*/
+.user-menu {
+  position: relative;
+  padding: 10px;
+  background: var(--primary-text-color);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  color: black;
+}
+
+.user-dropdown {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.user-dropdown img {
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.user-dropdown p {
+  font-size: var(--normal-font-size);
+  color: black;
+
+}
+
+.user-options {
+  position: absolute;
+  min-width: 100%;
+  z-index: 9999;
+  top: 80%;
+  left: 0;
+  background-color: var(--secondary-bg-color);
+  border-radius: 5px;
+  box-shadow: 0 3px 6px rgba(0,0,0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all .2s;
+}
+
+.user-options-open {
+  top: 100%;
+  opacity: 1;
+  visibility: visible;
+}
+
+.user-options a,
+.user-options li {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: var(--primary-text-color);
+  height: 40px;
+  box-sizing: border-box;
+  font-size: var(--title-font-size);
+  cursor: pointer;
+  &:last-child {
+    border-top: 1px solid var(--border-color);
+  }
+}
+
+.user-options p {
+  margin-left: 1rem;
+  font-size: var(--small-font-size);
+}

@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import Button from 'components/Button';
 import { BiStar, BiDotsVertical, BiLocationPlus } from 'react-icons/bi';
 import { BsFillStarFill, BsThreeDots } from 'react-icons/bs';
-
+import Menu from 'components/MenuButton';
 type Props = {};
 
 const index = (props: Props) => {
@@ -34,7 +34,7 @@ const index = (props: Props) => {
 				</div>
 			</div>
 			<div className={styles['canje-status']}>
-				<Button>Nombre</Button>
+				<Menu title="Nombre"></Menu>
 			</div>
 			<div className={styles['canje-action']}>
 				<span>
