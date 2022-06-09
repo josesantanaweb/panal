@@ -1,0 +1,11 @@
+.logo-site {
+	height: auto;
+	width: 18rem;
+}
+
+@media screen and (max-width: 992px) {
+	.logo-site {
+		height: auto;
+		width: 12rem;
+	}
+}

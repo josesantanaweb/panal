@@ -1,0 +1,28 @@
+.section__ourcustomers {
+	text-align: center;
+	.section__title {
+		margin-bottom: 2.5rem;
+	}
+	h2 {
+		color: var(--gray-dark-text-color);
+		font-size: 2.8rem;
+		font-weight: bold;
+		line-height: 2.5rem;
+	}
+	.content_customers {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-evenly;
+		margin: 1.5rem 0;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.section__ourcustomers {
+		h2 {
+			font-size: 2.2rem;
+		}
+	}
+}

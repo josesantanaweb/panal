@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import {
 	BiCategory,
 	BiBuildings,
@@ -10,15 +10,15 @@ import {
 	BiClipboard,
 	BiCog,
 	BiStreetView,
-} from "react-icons/bi";
+} from 'react-icons/bi';
+import { FaRegHandshake } from 'react-icons/fa';
 import { AiOutlineSafetyCertificate } from 'react-icons/ai';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
-import logo from "../../assets/img/logo-small.svg";
+import logo from '../../assets/img/logo-small.svg';
 import { openSidebarSelector, roleSelector } from 'store/selectors';
-import logoWhite from "../../assets/img/logo-white.svg";
-import styles from "./styles.module.scss";
-
+import logoWhite from '../../assets/img/logo-white.svg';
+import styles from './styles.module.scss';
 
 const Sidebar = () => {
 	// const open = false;
@@ -26,10 +26,10 @@ const Sidebar = () => {
 	const openSidebar = useSelector(openSidebarSelector);
 	const location = useLocation();
 	const { pathname } = location;
-	const splitLocation = pathname.split("/");
+	const splitLocation = pathname.split('/');
 	const sidebarClasses = [
 		styles.sidebar,
-		openSidebar ? styles["is-open"] : "",
+		openSidebar ? styles['is-open'] : '',
 	].join(' ');
 
 	return (
@@ -109,6 +109,22 @@ const Sidebar = () => {
 						>
 							<BiGroup />
 							<span>Clientes</span>
+						</Link>
+					</li>
+
+					<li
+						className={`${styles['sidebar-item']} ${
+							splitLocation[1] === 'clients' ? styles.active : ''
+						}`}
+					>
+						<Link
+							to="/customer-seeks"
+							className={`${styles['sidebar-link']} ${
+								splitLocation[1] === 'customers' ? styles.active : ''
+							}`}
+						>
+							<FaRegHandshake />
+							<span>Cliente Busca</span>
 						</Link>
 					</li>
 					<li

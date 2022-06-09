@@ -1,0 +1,17 @@
+.footer {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: flex-end;
+	width: 100%;
+	padding: 2rem 0;
+	.footer__section {
+		display: flex;
+		flex-direction: column;
+		text-align: end;
+		p {
+			color: var(--gray-light-text-color);
+			font-size: 0.8rem;
+		}
+	}
+}

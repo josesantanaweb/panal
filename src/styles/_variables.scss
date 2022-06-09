@@ -7,12 +7,16 @@
 	--placeholder-color: #aed0e1;
 	--primary-color: #00adc3;
 	--danger-color: #f95d8f;
-	--warning-color: hsl(38deg 89% 59%);;
+	--warning-color: hsl(38deg 89% 59%);
 	--secondary-color: #000d27;
 	--disabled-color: #ddf4ff;
 	--tertiary-color: #00adc3;
 	--button-color: #ffffff;
 	--border-color: rgba(149, 203, 231, 0.4);
+	--gray-dark-text-color: #4f4f4f;
+	--gray-light-text-color: #6e6e6e;
+	--gray-whitesmoke-text-color: #dddddd;
+	--primary-panal-color: #ffbb00;
 
 	/*========== Font and typography ==========*/
 	--body-font: 'Poppins', sans-serif;
@@ -30,7 +34,7 @@
 	--sidebar-collapse-width-expanded: 200px;
 
 	/*========== box shadow==========*/
-  --shadow-card: 2px 3px 13px 2px #0000001a;;
+	--shadow-card: 2px 3px 13px 2px #0000001a;
 	/*========== color text card==========*/
-  --text-secondary: #a5aab4
+	--text-secondary: #a5aab4;
 }

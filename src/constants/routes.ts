@@ -1,4 +1,5 @@
 export const ROUTES = {
+	HOME: '/',
 	LOGIN: '/login',
 	PROFILE: '/profile',
 	PROPERTIES: '/properties',
@@ -13,4 +14,5 @@ export const ROUTES = {
 	REALTORS: '/realtors',
 	PROPERTYDETAILS: '/property-details',
 	LAW: '/law',
+	CUSTOMERSEEKS: '/customer-seeks',
 } as const;

@@ -1,0 +1,15 @@
+.main {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	height: 95vh;
+	width: 70%;
+	margin: 0 auto;
+	margin-top: 10rem;
+}
+
+@media screen and (max-width: 992px) {
+	.main {
+		width: 90%;
+	}
+}
