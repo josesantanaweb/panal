@@ -20,15 +20,24 @@
   }
 }
 .check-all{
-  display: grid;
+  display: flex;
   padding: 0.7em 0;
   margin: 1.4em 0 4em 0;
   font-size: 0.9em;
-  grid-template-columns: 2fr 4fr;
+
 }
 .check-select{
   display: flex;
-  width: 300px;
+  flex: 0 1 40%;
+  margin: 0 2.5em;
+}
+.check-filter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.9em;
+  padding-top: 10px;
+  cursor: pointer;
 }
 .check-label{
   display: flex;

@@ -14,6 +14,7 @@ type Props = {
 	openModal: boolean;
 	setOpenModal: any;
 };
+import { BsFilter } from 'react-icons/bs';
 
 const index = (props: Props) => {
 	const INITIAL_VALUES = {};
@@ -76,6 +77,9 @@ const index = (props: Props) => {
 														setOpen={setOpenSelect}
 														handleOpenSelect={handleOpen}
 													/>
+												</div>
+												<div className={styles['check-filter']}>
+													<BsFilter></BsFilter>
 												</div>
 											</div>
 
