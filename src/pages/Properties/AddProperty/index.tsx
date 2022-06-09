@@ -351,9 +351,6 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			price: Yup.number()
 				.min(100, 'El Precio debe ser minimo 100')
 				.required('Requerido'),
-			commission: Yup.number()
-				.min(10, 'La Comision debe ser minimo 10')
-				.required('Requerido'),
 			ownerLessor: Yup.object().shape({
 				name: Yup.string().required('Requerido'),
 				lastName: Yup.string().required('Requerido'),
@@ -383,7 +380,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 		realtorSellerId: 1,
 		realtorBuyerId: 1,
 		realtorCatcherId: 1,
-		commission: 0,
+		commission: '',
 		ownerLessor: {
 			name: '',
 			lastName: '',
@@ -474,7 +471,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			gym: false,
 			multipurposeRooms: false,
 			studyRoom: '',
-			swimmingPool: '',
+			swimmingPool: false,
 			laundryRoom: false,
 			parkingVisit: false,
 			hasASign: false,
@@ -505,8 +502,6 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			observations,
 		} = values;
 
-		console.log(values);
-
 		// Departamento
 		const department = {
 			operationId,
@@ -515,7 +510,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			realtorSellerId: Number(realtorSaler.value),
 			realtorBuyerId: Number(realtorBuyer.value),
 			realtorCatcherId: Number(realtorCatcher.value),
-			commission: Number(commission),
+			commission: commission,
 			ownerLessor: {
 				name: ownerLessor.name,
 				lastName: ownerLessor.lastName,
@@ -523,7 +518,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 				email: ownerLessor.email,
 				fono: ownerLessor.fono,
 				rolNumber: Number(ownerLessor.rolNumber),
-				propertyTypeId: propertyType.value,
+				propertyTypeId: Number(propertyType.value),
 				customerId: Number(customer.value),
 				privateObservations: ownerLessor.privateObservations,
 				newProperty: ownerLessor.newProperty,
@@ -601,7 +596,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			realtorSellerId: Number(realtorSaler.value),
 			realtorBuyerId: Number(realtorBuyer.value),
 			realtorCatcherId: Number(realtorCatcher.value),
-			commission: Number(commission),
+			commission: commission,
 			ownerLessor: {
 				name: ownerLessor.name,
 				lastName: ownerLessor.lastName,
@@ -625,6 +620,8 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 					cityId: Number(city.value),
 					sector: address.detailedAddress.sector,
 				},
+				// latitude: "lat",
+				// longitude: "long"
 			},
 			characteristics: {
 				numberOfSuites: Number(characteristics.numberOfSuites),
@@ -706,7 +703,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			realtorSellerId: Number(realtorSaler.value),
 			realtorBuyerId: Number(realtorBuyer.value),
 			realtorCatcherId: Number(realtorCatcher.value),
-			commission: Number(commission),
+			commission: commission,
 			ownerLessor: {
 				name: ownerLessor.name,
 				lastName: ownerLessor.lastName,
@@ -757,8 +754,6 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			},
 		};
 
-		console.log(house);
-
 		// mutate(
 		// 	propertyType.value === 1
 		// 		? house
@@ -768,6 +763,8 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 		// );
 
 		mutate(house);
+
+		console.log("se ejecuo");
 
 		// resetForm({ values: ''});
 	};
@@ -858,17 +855,12 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 										handleOpenSelect={() => setOpenSelectRealtorBuyer(true)}
 									/>
 									<Field
-										type="number"
+										type="text"
 										name="commission"
 										placeholder="Comision"
 										required
 										label="Comision"
 										component={Input}
-										error={
-											errors.commission && touched.commission
-												? errors.commission
-												: null
-										}
 									/>
 								</div>
 								<div className={styles['form-row-3']}>
