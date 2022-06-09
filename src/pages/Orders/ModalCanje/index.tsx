@@ -149,7 +149,9 @@ const index = (props: Props) => {
 													component={Checkbox}
 													label="Seleccionar todo"
 												/>
-												<Button>Enviar unidades seleccionadas</Button>
+												<div className={styles['list-button']}>
+													<Button>Enviar unidades seleccionadas</Button>
+												</div>
 											</div>
 
 											<div className={styles['check-element']}>
