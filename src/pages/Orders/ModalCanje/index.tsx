@@ -133,7 +133,74 @@ const index = (props: Props) => {
 								</Formik>
 							</TabPanel>
 
-							<TabPanel>2</TabPanel>
+							<TabPanel>
+								<Formik
+									initialValues={INITIAL_VALUES}
+									// validationSchema={validationSchema.addProperty}
+									onSubmit={onSubmit}
+								>
+									{({ errors, touched, isValid, dirty }) => (
+										<Form>
+											<div className={styles['check-all']}>
+												<Field
+													className={styles['check']}
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+													label="Seleccionar todo"
+												/>
+												<Button>Enviar unidades seleccionadas</Button>
+											</div>
+
+											<div className={styles['check-element']}>
+												<div></div>
+												<div className={styles['check-tile']}>
+													<span>Propiedad</span>
+													<span></span>
+													<span></span>
+													<span>Ranking canje</span>
+													<span>status</span>
+													<span></span>
+													<span></span>
+												</div>
+											</div>
+											{/* CHECK ELEMENT */}
+											<div className={styles['check-element']}>
+												<Field
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+												/>
+												<CardCanje></CardCanje>
+											</div>
+											<div className={styles['check-element']}>
+												<Field
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+												/>
+												<CardCanje></CardCanje>
+											</div>
+											<div className={styles['check-element']}>
+												<Field
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+												/>
+												<CardCanje></CardCanje>
+											</div>
+											<div className={styles['check-element']}>
+												<Field
+													name="characteristics.sewer"
+													type="checkbox"
+													component={Checkbox}
+												/>
+												<CardCanje></CardCanje>
+											</div>
+										</Form>
+									)}
+								</Formik>
+							</TabPanel>
 						</Tabs>
 					</section>
 				}
