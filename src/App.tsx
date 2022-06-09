@@ -40,7 +40,7 @@ const AppLayout = () => {
 			<Outlet />
 		</Layout>
 	) : (
-		<Navigate to={ROUTES.LOGIN} />
+		<Navigate to={ROUTES.HOME} />
 	);
 };
 

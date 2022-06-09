@@ -348,12 +348,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 	// Validataions
 	const validationSchema = {
 		addProperty: Yup.object({
-			price: Yup.number()
-				.min(100, 'El Precio debe ser minimo 100')
-				.required('Requerido'),
-			commission: Yup.number()
-				.min(10, 'La Comision debe ser minimo 10')
-				.required('Requerido'),
+			price: Yup.number().required('Requerido'),
 			ownerLessor: Yup.object().shape({
 				name: Yup.string().required('Requerido'),
 				lastName: Yup.string().required('Requerido'),
@@ -474,7 +469,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			gym: false,
 			multipurposeRooms: false,
 			studyRoom: '',
-			swimmingPool: '',
+			swimmingPool: false,
 			laundryRoom: false,
 			parkingVisit: false,
 			hasASign: false,
@@ -483,7 +478,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			typeofPremises: '',
 			shoppingMall: '',
 			localSeniority: '',
-			isInterior: '',
+			isInterior: false,
 			numberOfParkingCustomers: '',
 			typeOfWater: '',
 		},
@@ -515,7 +510,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			realtorSellerId: Number(realtorSaler.value),
 			realtorBuyerId: Number(realtorBuyer.value),
 			realtorCatcherId: Number(realtorCatcher.value),
-			commission: Number(commission),
+			commission: commission,
 			ownerLessor: {
 				name: ownerLessor.name,
 				lastName: ownerLessor.lastName,
@@ -601,7 +596,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			realtorSellerId: Number(realtorSaler.value),
 			realtorBuyerId: Number(realtorBuyer.value),
 			realtorCatcherId: Number(realtorCatcher.value),
-			commission: Number(commission),
+			commission: commission,
 			ownerLessor: {
 				name: ownerLessor.name,
 				lastName: ownerLessor.lastName,
@@ -706,7 +701,7 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 			realtorSellerId: Number(realtorSaler.value),
 			realtorBuyerId: Number(realtorBuyer.value),
 			realtorCatcherId: Number(realtorCatcher.value),
-			commission: Number(commission),
+			commission: commission,
 			ownerLessor: {
 				name: ownerLessor.name,
 				lastName: ownerLessor.lastName,
@@ -858,17 +853,12 @@ const AddProperty: React.FC<AddPropertyProps> = () => {
 										handleOpenSelect={() => setOpenSelectRealtorBuyer(true)}
 									/>
 									<Field
-										type="number"
+										type="text"
 										name="commission"
 										placeholder="Comision"
 										required
 										label="Comision"
 										component={Input}
-										error={
-											errors.commission && touched.commission
-												? errors.commission
-												: null
-										}
 									/>
 								</div>
 								<div className={styles['form-row-3']}>
