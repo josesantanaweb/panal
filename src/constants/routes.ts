@@ -11,4 +11,6 @@ export const ROUTES = {
 	DETAILS: '/details',
 	SUPPORTLIST: '/support-list',
 	REALTORS: '/realtors',
+	PROPERTYDETAILS: '/property-details',
+	LAW: '/law',
 } as const;

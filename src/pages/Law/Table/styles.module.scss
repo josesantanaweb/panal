@@ -1,0 +1,109 @@
+
+.table-container {
+	width: 100%;
+	overflow-y: auto;
+	overflow: auto;
+}
+
+.table {
+	width: 1000px;
+	@media only screen and (min-width: 600px) {
+		width: 100%;
+	}
+}
+
+.table-head {
+	color: var(--primary-text-color);
+	background-color: var(--primay-bg-color);
+	th {
+		font-size: var(--normal-font-size);
+		padding: 1rem 0;
+		text-align: center;
+		&:first-child {
+			width: 80px;
+		}
+	}
+}
+
+.table-body tr {
+	color: var(--secondary-text-color);
+	border-bottom: 1px solid var(--border-color);
+	height: 60px;
+	td {
+		font-size: var(--normal-font-size);
+		text-align: center;
+		vertical-align: middle;
+	}
+	th {
+		vertical-align: middle;
+	}
+}
+
+.table-detail {
+	font-size: var(--normal-font-size);
+	color: var(--primary-text-color);
+	cursor: pointer;
+}
+
+.table-user {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	img {
+		width: 40px;
+		height: 40px;
+		border-radius: 40px;
+		margin-right: 1rem;
+	}
+}
+
+.table-status {
+	font-size: var(--small-font-size);
+	color: var(--secondary-bg-color);
+	padding: 2px 8px;
+	border-radius: 4px;
+	&.admin {
+		background-color: var(--tertiary-color);
+	}
+}
+
+.table-action {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: 30px 30px;
+	align-items: center;
+	justify-content: center;
+	font-size: var(--icons-font-size);
+	span {
+		cursor: pointer;
+	}
+}
+.table-color-item{
+  background: #2fffcf;
+}
+.table-color-item-warning{
+  background: #ffa344
+}
+
+  .table-color {
+    cursor: pointer;
+    color: grey;
+    font-size: 1em;
+    font-weight: 600;
+    height: 100%;
+    width: 100%;
+  }
+
+.table-edit {
+	color: var(--primary-color);
+}
+
+.table-delete {
+	color: var(--danger-color);
+}
+
+.table-error {
+	display: flex;
+	justify-content: center;
+	color: var(--danger-color);
+}
