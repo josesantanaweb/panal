@@ -4,6 +4,8 @@ import Button from 'components/Button';
 import { BiStar, BiDotsVertical, BiLocationPlus } from 'react-icons/bi';
 import { BsFillStarFill, BsThreeDots } from 'react-icons/bs';
 import Menu from 'components/MenuButton';
+import OptionsMenu from './OptionMenu';
+
 type Props = {};
 
 const index = (props: Props) => {
@@ -38,7 +40,7 @@ const index = (props: Props) => {
 			</div>
 			<div className={styles['canje-action']}>
 				<span>
-					<BsThreeDots></BsThreeDots>
+					<OptionsMenu />
 				</span>
 			</div>
 		</div>
