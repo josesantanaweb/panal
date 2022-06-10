@@ -4,4 +4,5 @@ export interface ModalProps {
 	title: string;
 	size?: string;
 	xl?: boolean;
+	card?: boolean;
 }

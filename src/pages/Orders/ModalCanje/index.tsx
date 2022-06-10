@@ -10,11 +10,11 @@ import Button from 'components/Button';
 import CardCanje from './CardCanje';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Select from 'components/Select';
+import ModalFilter from './ModalFilter';
 type Props = {
 	openModal: boolean;
 	setOpenModal: any;
 };
-import { BsFilter } from 'react-icons/bs';
 
 const index = (props: Props) => {
 	const INITIAL_VALUES = {};
@@ -78,9 +78,7 @@ const index = (props: Props) => {
 														handleOpenSelect={handleOpen}
 													/>
 												</div>
-												<div className={styles['check-filter']}>
-													<BsFilter></BsFilter>
-												</div>
+												<ModalFilter></ModalFilter>
 											</div>
 
 											<div className={styles['check-element']}>

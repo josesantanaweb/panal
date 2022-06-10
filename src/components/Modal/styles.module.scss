@@ -19,7 +19,11 @@
 	opacity: 1;
 	visibility: visible;
 }
-
+.modal-content.modal-card{
+  height: 60%;
+  margin: auto;
+  min-width: 50%;
+}
 .modal-content {
 	background-color: var(--secondary-bg-color);
 	height: 100%;

@@ -1,0 +1,32 @@
+.check-filter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.9em;
+  padding-top: 10px;
+  cursor: pointer;
+}
+.filters-separate{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
+  .column{
+    display: flex;
+    flex-direction: column;
+    div{
+      margin:  1em 0
+    }
+    .double{
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+.modal-actions{
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+  div{
+    margin: 2em .5em;
+  }
+}

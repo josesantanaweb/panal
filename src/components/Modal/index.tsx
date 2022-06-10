@@ -11,6 +11,7 @@ const Modal: React.FC<ModalProps> = ({
 	title,
 	xl,
 	size,
+	card,
 }) => {
 	const modalClasses = [styles.modal, openModal ? styles['is-open'] : ''].join(
 		' '
@@ -20,6 +21,7 @@ const Modal: React.FC<ModalProps> = ({
 		styles['modal-content'],
 		size === 'large' ? styles['modal-large'] : '',
 		xl === true ? styles['modal-xl'] : '',
+		card === true ? styles['modal-card'] : '',
 		openModal ? styles['is-open'] : '',
 	].join(' ');
 
