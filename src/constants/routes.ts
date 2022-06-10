@@ -15,4 +15,5 @@ export const ROUTES = {
 	PROPERTYDETAILS: '/property-details',
 	LAW: '/law',
 	CUSTOMERSEEKS: '/customer-seeks',
+	MESSAGES: '/messages',
 } as const;
