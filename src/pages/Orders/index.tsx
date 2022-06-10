@@ -134,8 +134,7 @@ const Orders = () => {
 				<div>
 					<h2 className={styles['orders-title']}>Listado de Ordenes</h2>
 					<p className={styles['users-subtitle']}>
-						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum,
-						voluptatum?
+            Esta pantalla es para la creación, eliminación y listado de Ordenes de visita
 					</p>
 				</div>
 				<Button onClick={handleSelectProperty}>Generar Orden</Button>

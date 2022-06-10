@@ -97,7 +97,7 @@ const Users = () => {
 			<div className={styles["users-top"]}>
 				<div>
 					<h2 className={styles["users-title"]}>Usuarios</h2>
-					<p className={styles["users-subtitle"]}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, voluptatum?</p>
+					<p className={styles["users-subtitle"]}>Esta pantalla es para la creación, edición, eliminación y listado de Usuarios</p>
 				</div>
 				<Button onClick={handleAddUsers}>Agregar Usuario</Button>
 			</div>

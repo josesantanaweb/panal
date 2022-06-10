@@ -25,6 +25,7 @@ import AddProperty from 'pages/Properties/AddProperty';
 import Law from 'pages/Law';
 import PropertyDetail from 'pages/Properties/Details';
 import CustomerSeeks from 'pages/CustomerSeeks';
+import Messages from 'pages/Messages';
 
 import { isAuthenticatedSelector } from 'store/selectors';
 import { ROUTES } from 'constants/routes';
@@ -67,6 +68,7 @@ function App() {
 						<Route path={ROUTES.REALTORS} element={<Realtors />} />
 						<Route path={ROUTES.LAW} element={<Law />} />
 						<Route path={ROUTES.CUSTOMERSEEKS} element={<CustomerSeeks />} />
+						<Route path={ROUTES.MESSAGES} element={<Messages />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

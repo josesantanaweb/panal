@@ -100,7 +100,7 @@ const Realtors = () => {
 			<div className={styles["realtors-top"]}>
 				<div>
 					<h2 className={styles["realtors-title"]}>Agentes</h2>
-					<p className={styles["users-subtitle"]}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, voluptatum?</p>
+					<p className={styles["users-subtitle"]}>Esta pantalla es para la creación, edición, eliminación y listado de Agentes</p>
 				</div>
 				<Button onClick={handleAddRealtors}>Agregar Agente</Button>
 			</div>

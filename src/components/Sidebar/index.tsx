@@ -10,6 +10,7 @@ import {
 	BiClipboard,
 	BiCog,
 	BiStreetView,
+	BiMessage,
 } from 'react-icons/bi';
 import { FaRegHandshake } from 'react-icons/fa';
 import { AiOutlineSafetyCertificate } from 'react-icons/ai';
@@ -114,13 +115,13 @@ const Sidebar = () => {
 
 					<li
 						className={`${styles['sidebar-item']} ${
-							splitLocation[1] === 'clients' ? styles.active : ''
+							splitLocation[1] === 'customer-seeks' ? styles.active : ''
 						}`}
 					>
 						<Link
 							to="/customer-seeks"
 							className={`${styles['sidebar-link']} ${
-								splitLocation[1] === 'customers' ? styles.active : ''
+								splitLocation[1] === 'customer-seeks' ? styles.active : ''
 							}`}
 						>
 							<FaRegHandshake />
@@ -129,13 +130,13 @@ const Sidebar = () => {
 					</li>
 					<li
 						className={`${styles['sidebar-item']} ${
-							splitLocation[1] === 'clients' ? styles.active : ''
+							splitLocation[1] === 'law' ? styles.active : ''
 						}`}
 					>
 						<Link
 							to="/law"
 							className={`${styles['sidebar-link']} ${
-								splitLocation[1] === 'customers' ? styles.active : ''
+								splitLocation[1] === 'law' ? styles.active : ''
 							}`}
 						>
 							<AiOutlineSafetyCertificate />
@@ -175,6 +176,21 @@ const Sidebar = () => {
 							</Link>
 						</li>
 					)}
+					<li
+						className={`${styles['sidebar-item']} ${
+							splitLocation[1] === 'users' ? styles.active : ''
+						}`}
+					>
+						<Link
+							to="/messages"
+							className={`${styles['sidebar-link']} ${
+								splitLocation[1] === 'messages' ? styles.active : ''
+							}`}
+						>
+							<BiMessage />
+							<span>Mensajes</span>
+						</Link>
+					</li>
 				</ul>
 			</div>
 		</aside>
