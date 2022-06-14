@@ -1,0 +1,93 @@
+.binnacle-user {
+	display: flex;
+	align-items: center;
+}
+
+.binnacle-avatar {
+	display: flex;
+	justify-content: center;
+	border-radius: 30px;
+	background-color: $primary-color;
+	width: 30px;
+	height: 30px;
+	align-items: center;
+	color: white;
+}
+
+.binnacle-info {
+	margin-left: 1rem;
+}
+
+.binnacle-info p {
+	color: $text-color;
+	font-size: $normal-font-size;
+	margin-bottom: 0.2rem;
+	font-weight: 500;
+}
+
+.binnacle-info span {
+	color: $text-color;
+	font-size: $small-font-size;
+}
+
+.binnacle-property {
+	position: relative;
+	padding-left: 40px;
+	margin-top: 50px;
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 20px;
+		width: 1px;
+		height: 100%;
+		background-color: $primary-color;
+	}
+}
+
+.binnacle-item {
+	margin-bottom: 1rem;
+	padding-top: 1rem;
+}
+
+.binnacle-item > div {
+	position: relative;
+}
+
+.binnacle-item p {
+	color: $text-color-primary;
+	font-size: $normal-font-size;
+	font-weight: 500;
+	margin-bottom: 1rem;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	span {
+		color: $title-color;
+		font-weight: 400;
+		display: inline-block;
+		font-size: $normal-font-size;
+		margin-top: 0;
+		margin-left: 1rem;
+	}
+}
+
+.binnacle-mark {
+	width: 15px;
+	height: 15px;
+	border-radius: 15px;
+	background-color: $primary-color;
+	position: absolute;
+	left: -27px;
+}
+
+.binnacle-property li {
+	font-size: $normal-font-size;
+	color: $title-color;
+	display: block;
+	margin-bottom: 0.5rem;
+	list-style: none;
+	b {
+		font-weight: 600;
+	}
+}

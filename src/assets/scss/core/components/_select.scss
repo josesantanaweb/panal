@@ -1,0 +1,59 @@
+.select-container {
+	position: relative;
+}
+
+.select {
+	position: relative;
+	display: block;
+	width: 100%;
+	line-height: 1.25rem;
+	background-color: $input-bg-color;
+	background-clip: padding-box;
+	outline: none;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	color: $input-color;
+}
+
+.select-header {
+	border: 1px solid $input-border-color;
+	border-radius: 4px;
+	font-size: $input-font-size;
+	font-weight: 400;
+	padding: $input-padding-vertical $input-padding-horizontal;
+	display: flex;
+	justify-content: space-between;
+	max-height: 40px;
+	align-items: center;
+}
+
+.select-header p {
+	max-width: 200px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.select-header span {
+	font-size: $large-font-size;
+}
+
+.select-content {
+	position: absolute;
+	top: 100%;
+	border: 1px solid $input-border-color;
+	border-radius: 4px;
+	font-size: $input-font-size;
+	font-weight: 400;
+	width: 100%;
+	z-index: 1000;
+	background-color: $input-bg-color;
+}
+
+.select-item {
+	padding: $input-padding-vertical $input-padding-horizontal;
+	width: 100%;
+	cursor: pointer;
+	&:hover {
+		background-color: darken($input-bg-color, 2%);
+	}
+}

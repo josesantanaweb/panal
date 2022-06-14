@@ -1,23 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import "./styles/index.scss";
-import { store } from "store";
-import { Provider } from "react-redux";
-
-const queryClient = new QueryClient();
+import 'react-toastify/dist/ReactToastify.css';
+import './assets/scss/main.scss';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from 'context/AuthContext';
+import { UsersProvider } from 'context/UsersContext';
+import { RealtorsProvider } from 'context/RealtorsContext';
+import { CustomersProvider } from 'context/CustomersContext';
+import { PropertiesProvider } from 'context/PropertiesContext';
+import { OrdersProvider } from 'context/OrdersContext';
+import { SharedProvider } from 'context/SharedContext';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
-			<QueryClientProvider client={queryClient}>
-				<ReactQueryDevtools initialIsOpen={false} />
-				<App />
-			</QueryClientProvider>
-		</Provider>
+		<BrowserRouter>
+			<AuthProvider>
+				<SharedProvider>
+					<UsersProvider>
+						<PropertiesProvider>
+							<OrdersProvider>
+								<CustomersProvider>
+									<RealtorsProvider>
+										<App />
+									</RealtorsProvider>
+								</CustomersProvider>
+							</OrdersProvider>
+						</PropertiesProvider>
+					</UsersProvider>
+				</SharedProvider>
+			</AuthProvider>
+		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById('root')
 );

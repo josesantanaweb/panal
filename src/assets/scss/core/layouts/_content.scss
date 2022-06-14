@@ -1,0 +1,41 @@
+.content {
+	padding: 32px 22px;
+}
+
+.content-body {
+	flex-grow: 1;
+}
+
+.content-head {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-content: space-between;
+	align-items: center;
+	background: white;
+	padding: 2rem;
+	border-radius: 10px;
+	margin-bottom: 2rem;
+}
+
+.content-description h3 {
+	color: $title-color;
+	font-size: $medium-font-size;
+	font-weight: 500;
+	margin-bottom: 1rem;
+}
+
+.content-description p {
+	color: $text-color;
+	font-size: $normal-font-size;
+	line-height: 1.5;
+}
+
+.content-toggle {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.content-filter {
+	margin-bottom: 1rem;
+}

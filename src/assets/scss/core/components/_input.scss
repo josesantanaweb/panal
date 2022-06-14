@@ -1,0 +1,56 @@
+.input {
+	display: block;
+	width: 100%;
+	padding: $input-padding-vertical $input-padding-horizontal;
+	font-size: $input-font-size;
+	font-weight: 400;
+	font-family: $body-font-family;
+	line-height: 1.25rem;
+	color: $input-color;
+	background-color: $input-bg-color;
+	background-clip: padding-box;
+	border: 1px solid $input-border-color;
+	border-radius: 4px;
+	outline: none;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.input::placeholder {
+	color: $input-placeholder-color;
+	opacity: 1;
+}
+
+.input-container {
+	position: relative;
+}
+
+.input-disabled {
+	background-color: $input-disabled-bg-color;
+	cursor: not-allowed;
+}
+
+.input-error {
+	border-color: $input-error-border-color;
+	color: $input-error-color;
+}
+
+.input-group {
+	margin-bottom: 1.5rem;
+}
+
+.label {
+	font-size: $label-font-size;
+	margin-bottom: 0.5rem;
+	display: block;
+	color: $label-color;
+	font-weight: 500;
+}
+
+.label-error {
+	color: $input-error-color;
+}
+
+.input-message {
+	color: $input-error-color;
+	font-size: $small-font-size;
+}

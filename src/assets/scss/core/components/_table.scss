@@ -1,0 +1,101 @@
+.table-list {
+	display: table;
+	width: 100%;
+	font-size: $normal-font-size;
+	color: $text-color;
+	border-collapse: separate;
+	border-spacing: 0 8px;
+}
+
+.table-item {
+	transition: background-color 0.3s, box-shadow 0.3s;
+	display: table-row;
+	&:not(.table-head):hover {
+		box-shadow: $box-shadown;
+	}
+}
+
+.table-head .table-col {
+	padding: 1rem 0.5rem;
+}
+
+.table-col {
+	padding: 1rem 0.5rem;
+	background: white;
+	border: none;
+	position: relative;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.table-col:first-child {
+	border-radius: 4px 0 0 4px;
+	padding-left: 1.5rem;
+}
+
+.table-col:last-child {
+	border-radius: 0 4px 4px 0;
+	padding-right: 1.5rem;
+}
+
+.table-text {
+	display: block;
+	font-size: $normal-font-size;
+	color: $text-color;
+}
+
+.table-user {
+	display: flex;
+	align-items: center;
+}
+
+.table-user-avatar {
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: $normal-font-size;
+	font-weight: 500;
+	letter-spacing: 0.06em;
+	flex-shrink: 0;
+	position: relative;
+	background-color: $primary-color;
+}
+
+.table-user-info {
+	margin-left: 1rem;
+	color: $text-color;
+}
+
+.table-lead {
+	font-weight: 500;
+	color: $text-color-primary;
+	display: block;
+	line-height: 1.4;
+}
+
+.table-icon {
+	font-size: $icon-font-size;
+	cursor: pointer;
+	padding: 0 0.3rem;
+	height: 24px;
+	display: inline-block;
+	color: $warning-color;
+}
+
+.table-edit-icon {
+	color: $warning-color;
+}
+
+.table-delete-icon {
+	color: $danger-color;
+}
+
+@media (min-width: 576px) {
+	.table-col-md {
+		display: table-cell !important;
+	}
+}

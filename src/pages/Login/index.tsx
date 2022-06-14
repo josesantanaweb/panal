@@ -1,117 +1,76 @@
-import React from "react";
-import { Formik, Field, Form } from 'formik';
-import * as Yup from 'yup';
-import { useMutation } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { Field, Form, Formik } from 'formik';
 import { Navigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
-import Button from "components/Button";
-import Input from "components/Input";
-
-import styles from "./styles.module.scss";
-import { IValues } from './types';
-import { isAuthenticatedSelector } from 'store/selectors';
-import { setAuthenticated, setRole, setUsername } from 'store/features/authSlice';
-import logo from "../../assets/img/logo-small.svg";
-import AuthServices from 'services/authServices';
-import { saveValue } from "utils/localStorage";
+import { Input, Button } from 'components';
+import logo from 'assets/images/logo.svg';
+import AuthServices from 'services/authService';
+import { toastError } from 'utils/libs/toast';
+import { validationSchema } from './validations';
+import { initialValues } from './initialValues';
+import useAuth from 'hooks/useAuth';
 
 const Login = () => {
-	const isAuthenticated = useSelector(isAuthenticatedSelector);
-	const dispatch = useDispatch();
-	const { mutate, isLoading } = useMutation(AuthServices.login, {
-		onSuccess: (data) => {
-			dispatch(setAuthenticated(true));
-			saveValue('token', data.access_token);
-			saveValue('userId', data.id);
-			saveValue('role', data.rol);
-			saveValue('username', `${data.name} ${data.lastName}`);
-			dispatch(setRole(data.rol));
-			dispatch(setUsername(`${data.name} ${data.lastName}`));
-		},
-		onError: () => {
-			toast.error(`${"Credenciales Invalidas"}`, {
-				position: "top-right",
-				autoClose: 3000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: false,
-				draggable: true,
-				progress: undefined,
-			});
+	const { login, user }: any = useAuth();
+
+	const onSubmit = async (values: any) => {
+		try {
+			const response = await AuthServices.login(values);
+			login(response.data);
+		} catch (error) {
+			toastError('Credenciales Invalidas');
 		}
-	});
-
-	// Validataions
-	const validationSchema = {
-		login : Yup.object({
-			email: Yup.string().email("Email Invalid").required("Requirido"),
-			password: Yup.string().required("Requirido").min(5).max(25),
-		})
 	};
 
-	// Initial values
-	const INITIAL_VALUES = {
-		email: '',
-		password: '',
-	};
-
-	const onSubmit = (values: IValues) => {
-		mutate(values);
-	};
-
-	if (isAuthenticated)
-		return <Navigate to="/" />;
+	if (user) return <Navigate to="/" />;
 
 	return (
-		<div className={styles.login}>
-			<div className={styles["login-welcome"]}>
-				<h3>Bienvenido a Panal</h3>
-				<p> Aliquam sodales pharetra diam vitae sagittis. </p>
-			</div>
-			<div className={styles["login-container"]}>
+		<div className="login">
+			<div className="login-picture"></div>
+			<section className="login-content">
 				<Formik
-					initialValues={INITIAL_VALUES}
+					initialValues={initialValues}
 					validationSchema={validationSchema.login}
-					onSubmit={onSubmit}
-				>
-					{({ errors, touched, isValid, dirty}) => (
-						<Form className={styles["login-form"]}>
-							<div className={styles["login-header"]}>
-								<img src={logo} alt="logo"/>
-								<h3>Login</h3>
+					onSubmit={onSubmit}>
+					{({ errors, touched, isValid, dirty }) => (
+						<Form className="login-form">
+							<div className="login-logo">
+								<img src={logo} alt="" />
 							</div>
-							<div className={styles["login-row"]}>
+							<h4 className="login-title">Login</h4>
+							<div className="input-group">
 								<Field
 									type="email"
 									name="email"
+									label="Email"
 									placeholder="Ingrese su Email"
-									required
 									component={Input}
 									error={errors.email && touched.email ? errors.email : null}
 								/>
 							</div>
-							<div className={styles["login-row"]}>
+							<div className="input-group">
 								<Field
 									type="password"
 									name="password"
-									placeholder="Ingrese su Password"
-									required
+									label="Contraseña"
+									placeholder="Ingrese su Contraseña"
 									component={Input}
-									error={errors.password && touched.password ? errors.password : null}
+									error={
+										errors.password && touched.password ? errors.password : null
+									}
 								/>
 							</div>
-							<p className={styles["login-recover"]}>Olvidaste tu contraseña?</p>
-							<div className={styles["login-row"]}>
-								<Button type='submit'>Login</Button>
+							<div className="mt-4">
+								<Button block disabled={!isValid || !dirty}>
+									Guardar
+								</Button>
 							</div>
 						</Form>
 					)}
 				</Formik>
-			</div>
-			<ToastContainer />
+				<ToastContainer />
+			</section>
 		</div>
 	);
 };

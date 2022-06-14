@@ -5,24 +5,24 @@
 		"node": true
 	},
 	"parser": "@typescript-eslint/parser",
-	"extends": [
-		"plugin:react/recommended",
-		"prettier"
-	],
+	"extends": ["plugin:react/recommended", "prettier"],
 	"parserOptions": {
-	  "ecmaVersion": 2018,
-	  "sourceType": "module"
+		"ecmaVersion": 2018,
+		"sourceType": "module",
+		"ecmaFeatures": {}
 	},
 	"plugins": ["react"],
 	"rules": {
 		"eol-last": [2, "always"],
 		"semi": [2, "always"],
 		"indent": [2, "tab"],
-		"no-tabs": 0
+		"no-tabs": 0,
+		"quotes": [1, "single"],
+		"no-console": 1
 	},
 	"settings": {
 		"react": {
-		  "version": "detect" // para detectar la versión de reactjs
+			"version": "detect" // para detectar la versión de reactjs
 		}
 	}
 }

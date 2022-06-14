@@ -1,0 +1,42 @@
+.checkbox {
+	position: relative;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.checkbox input {
+	display: none;
+}
+
+.checkbox img {
+	margin-left: 1rem;
+}
+
+.checkbox-toggle {
+	width: 20px;
+	height: 20px;
+	border: 1px solid $input-border-color;
+	border-radius: 2px;
+	position: relative;
+	transition: all 0.2s;
+	&:after {
+		content: '';
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: 14px;
+		height: 14px;
+		background-color: transparent;
+	}
+}
+
+.checkbox-toggle.is-active:after {
+	background-color: $primary-color;
+}
+
+.checkbox p {
+	font-size: $normal-font-size;
+	color: $input-color;
+	margin-left: 1rem;
+}

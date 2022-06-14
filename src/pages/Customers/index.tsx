@@ -1,202 +1,147 @@
-import React, {useState} from 'react';
-import {BiEdit, BiListUl, BiTrashAlt} from "react-icons/bi";
-import { useMutation, useQueryClient, useQuery } from 'react-query';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { BiPencil, BiTrash, BiSpreadsheet } from 'react-icons/bi';
+import { ToastContainer } from 'react-toastify';
+import { Preloader, Badge, Search } from 'components';
+import Content from 'layout/Content';
+import ContentHead from 'layout/ContentHead';
+import AddCustomers from './Add';
+import EditCustomers from './Edit';
+import Bitacora from './Bitacora';
+import { toastError, toastSuccess } from 'utils/libs/toast';
+import { findFirstLetter } from 'utils';
+import CustomersServices from 'services/customersService';
+import useCustomers from 'hooks/useCustomers';
+import useShared from 'hooks/useShared';
 
-import Button from "components/Button";
-import Select from "components/Select";
-import Input from "components/Input";
-import AddCustomers from "./components/AddCustomers";
-import EditCustomers from "./components/EditCustomers";
+const Customers: React.FC = () => {
+	const [modalAdd, setModalAdd] = useState(false);
+	const [modalEdit, setModalEdit] = useState(false);
+	const [modalBitacora, setModalBitacora] = useState(false);
+	const [editData, setEditData] = useState({});
+	const [history, setHistory] = useState([]);
 
-import styles from "./styles.module.scss";
-import CustomersServices from 'services/customersServices';
-import Binnacle from './components/Binnacle';
-import { roleSelector } from 'store/selectors';
+	const { customers, loading, getCustomers }:any = useCustomers();
+	const { getDocuments }:any = useShared();
 
-const skeleton = [0,1,2,3];
+	useEffect(() => {
+		getCustomers();
+	}, []);
 
-const Customers = () => {
-	const role = useSelector(roleSelector);
-	const [clientId, setClientId] = useState<number>(0);
-	const [openModalAddCustomer, setOpenModalAddCustomer] = useState<boolean>(false);
-	const [openModalEditCustomer, setOpenModalEditCustomer] = useState<boolean>(false);
-	const [openModalBinnacle, setOpenModalBinnacle] = useState<boolean>(false);
-	const { data, isLoading, isError } = useQuery(["customers", ''], CustomersServices.getCustomers);
-	const queryClient = useQueryClient();
-	const { mutate } = useMutation(CustomersServices.deleteCustomer, {
-		onSuccess: (data) => {
-			toast.success("Cliente eliminado exitosamente", {
-				position: "top-right",
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: false,
-				draggable: true,
-				progress: undefined,
-			});
-			queryClient.invalidateQueries(['customers']);
-		},
-		onError: (error: any) => {
-			toast.error("Ocurrio un error al eliminar al cliente", {
-				position: "top-right",
-				autoClose: 3000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: false,
-				draggable: true,
-				progress: undefined,
-			});
-		}
-	});
+	useEffect(() => {
+		getDocuments();
+	}, []);
 
-	// Handle Add Customers
-	const handleAddCustomers = () => setOpenModalAddCustomer(true);
-
-	// Handle Add Customers
-	const handleBinnacle = () => setOpenModalBinnacle(true);
-
-	// Handle Edit Customers
-	const handleEditCustomers = (id: number) => {
-		setClientId(id);
-		setOpenModalEditCustomer(true);
+	const onEdit = async (item: any) => {
+		setEditData(item);
+		setModalEdit(true);
 	};
 
-	// Handle Delete Customers
-	const handleDelete = (id: number) => {
-		mutate(id);
+	const onDelete = async (id: number) => {
+		try {
+			await CustomersServices.deleteCustomer(id);
+			toastSuccess('Cliente Eliminado Exitosamente');
+			getCustomers();
+		} catch (error) {
+			toastError('Error al Eliminar Cliente');
+		}
+	};
+
+	if (loading) return <Preloader />;
+
+	const searchCustomer =  async (e: any) => {
+		getCustomers(e.target.value);
+	};
+
+	const onBitacora =  async (id: number) => {
+		const response = await CustomersServices.getCustomerHistory(id);
+		setHistory(response.data.data);
+		setModalBitacora(true);
 	};
 
 	return (
-		<div className={styles.customers}>
-			<div className={styles["customers-top"]}>
-				<div>
-					<h2 className={styles["customers-title"]}>Clientes</h2>
-					<p className={styles["users-subtitle"]}>Esta pantalla es para la creación, edición, eliminación y listado de Clientes</p>
-				</div>
-				<Button onClick={handleAddCustomers}>Agregar Cliente</Button>
-			</div>
-			<div className={styles["customers-filter"]}>
-				<div>
-					<Input placeholder="Buscar..." search/>
-				</div>
-			</div>
-			<div className={styles.content}>
-				{
-					isError
-						?
-						<div className={styles["table-error"]}>Hubo un error!</div>
-						:
-						<div className={styles["table-container"]}>
-							<table className={styles.table}>
-								<thead>
-									<tr className={styles["table-head"]}>
-										<th>#</th>
-										<th>Cliente</th>
-										<th>Ejecutivo</th>
-										<th>Estado</th>
-										<th>Tipo</th>
-										<th>Bitacora</th>
-										{
-											role === "REALTOR ADMIN" &&
-										  <th>Acciones</th>
-										}
-									</tr>
-								</thead>
-								{
-									isLoading
-										?
-										<tbody className={styles["table-body"]}>
-											<SkeletonTheme
-												baseColor="#E8F6FC"
-												highlightColor="#DDF4FF"
-												borderRadius={2}
-											>
-												{skeleton.map((item: any, index: number) => (
-													<tr key={index}>
-														<td>
-															<Skeleton width="30px" height="20px" />
-														</td>
-														<td style={{width: '300px'}}>
-															<span className={styles["table-user"]}>
-																<Skeleton width="100px" height="20px" />
-															</span>
-														</td>
-														<td style={{width: '300px'}}>
-															<span className={styles["table-user"]}>
-																<Skeleton width="100px" height="20px" />
-															</span>
-														</td>
-														<td>
-															<Skeleton width="100px" height="20px" />
-														</td>
-														<td style={{width: '200px'}}>
-															<Skeleton width="200px" height="20px" />
-														</td>
-														<td>
-															<Skeleton width="100px" height="20px" />
-														</td>
-														<td>
-															<Skeleton width="100px" height="20px" />
-														</td>
-													</tr>
-												))}
-											</SkeletonTheme>
-										</tbody>
-										:
-										<tbody className={styles["table-body"]}>
-											{data?.data?.map((client: any, index: number) => (
-												<tr key={index}>
-													<td>{index + 1}</td>
-													<td>
-														{client.name} {client.lastName}
-													</td>
-													<td>
-														{client.createdByRealtor.name} {client.createdByRealtor.lastName}
-													</td>
-													<td>
-														<span className={`${styles["table-status"]} ${styles.admin}`}>{client.status.name}</span>
-													</td>
-													<td>Casa</td>
-													<td>
-														<span className={styles["table-bitacora"]} onClick={handleBinnacle}><BiListUl/></span>
-													</td>
-													{
-														role === "REALTOR ADMIN" &&
-                            <td>
-                            	<div className={styles["table-action"]}>
-                            		<span className={styles["table-edit"]} onClick={() => handleEditCustomers(client.id)}><BiEdit/></span>
-                            		<span className={styles["table-delete"]} onClick={() => handleDelete(client.id)}><BiTrashAlt/></span>
-                            	</div>
-                            </td>
-													}
-												</tr>
-											))}
-										</tbody>
-								}
-							</table>
+		<React.Fragment>
+			<Content>
+				<ContentHead
+					title="Lista de Clientes"
+					onClick={() => setModalAdd(true)}
+				/>
+				<div className="row mb-4">
+					<div className="col-md-2">
+						<div className="search-customer">
+							<Search
+								placeholder="Buscar Cliente"
+								onChange={searchCustomer}
+							/>
 						</div>
-				}
-			</div>
-			<AddCustomers
-				openModal={openModalAddCustomer}
-				setOpenModal={setOpenModalAddCustomer}
-			/>
-			<EditCustomers
-				clientId={clientId}
-				openModal={openModalEditCustomer}
-				setOpenModal={setOpenModalEditCustomer}
-			/>
-			<Binnacle
-				openModal={openModalBinnacle}
-				setOpenModal={setOpenModalBinnacle}
-			/>
+					</div>
+				</div>
+				<div className="table-list mb-3">
+					<div className="table-item table-head">
+						<div className="table-col">
+							<span className="table-text">Cliente</span>
+						</div>
+						<div className="table-col table-col-md">
+							<span className="table-text">Ejecutivo</span>
+						</div>
+						<div className="table-col">
+							<span className="table-text">Telefono</span>
+						</div>
+						<div className="table-col">
+							<span className="table-text">Bitacora</span>
+						</div>
+						<div className="table-col">
+							<span className="table-text">Estado</span>
+						</div>
+						<div className="table-col"></div>
+					</div>
+					{
+						customers.length
+							? customers.map((item: any, index: number) => (
+								<div className="table-item" key={index}>
+									<div className="table-col">
+										<a className="table-user">
+											<div className="table-user-avatar">
+												<span>{findFirstLetter(item.name)}</span>
+											</div>
+											<div className="table-user-info">
+												<span className="table-lead">{item.name} {item.lastName}</span>
+												<span>{item.email}</span>
+											</div>
+										</a>
+									</div>
+									<div className="table-col table-col-mb">
+										<span className="table-text">{item.createdByRealtor?.name} {item.createdByRealtor?.lastName}</span>
+									</div>
+									<div className="table-col">
+										<span className="table-text">{item.phone || '+584454548'}</span>
+									</div>
+									<div className="table-col">
+										<span onClick={() => onBitacora(item.id)} style={{'cursor': 'pointer'}}>
+											<BiSpreadsheet size={24} />
+										</span>
+									</div>
+									<div className="table-col">
+										<Badge variant="success"  label="Activo"/>
+									</div>
+									<div className="table-col table-col-mb">
+										<span className="table-icon table-edit-icon" onClick={() => onEdit(item)}>
+											<BiPencil size={24} />
+										</span>
+										<span className="table-icon table-delete-icon" onClick={() => onDelete(item.id)}>
+											<BiTrash size={24} />
+										</span>
+									</div>
+								</div>
+							))
+							: null
+					}
+				</div>
+			</Content>
+			<AddCustomers modal={modalAdd} setModal={setModalAdd}/>
+			<EditCustomers modal={modalEdit} setModal={setModalEdit} editData={editData}/>
+			<Bitacora modal={modalBitacora} setModal={setModalBitacora} history={history}/>
 			<ToastContainer />
-		</div>
+		</React.Fragment>
 	);
 };
 

@@ -1,40 +1,72 @@
-import React, { useState } from 'react';
-import { BiMap } from "react-icons/bi";
+import React, {useState} from 'react';
+import classNames from 'classnames';
+import { BiDetail, BiDotsHorizontalRounded, BiEdit, BiMap, BiSend, BiStar, BiTrash } from 'react-icons/bi';
 
-import styles from "../SelectProperty/styles.module.scss";
-import {PropertyProps} from "./types";
+export interface PropertyProps {
+	property: any;
+  handleProperty: any;
+  code: string;
+  canje?: boolean;
+}
 
-const Property:React.FC<PropertyProps> = ({property, handleSelectProperty, compareCode}) => {
 
-	const itemClasses = [
-		styles['select-property-item'],
-		compareCode === property.code && styles['is-active']
-	].join(' ');
+const Property:React.FC<PropertyProps> = ({property, handleProperty, code, canje}) => {
+	const [openAction, setOpenAction] = useState(false);
+
+	const classes = classNames({
+		'list-property': true,
+		'is-active': code === property.code
+	});
 
 	return (
-		<div className={itemClasses} onClick={handleSelectProperty}>
-			<div className={styles['property-info']}>
-				<img src={property.imgUrl} alt="property" />
-				<div>
-					<h4 className={styles["property-title"]}>{property.title}</h4>
-					<div className={styles["property-direction"]}>
-						<BiMap/>
-						<p>{property.city}</p>
-					</div>
-					<div className={styles["property-code"]}>
-						<p>{property.code}</p>
-					</div>
+		<div className={classes} onClick={handleProperty}>
+			<div className="list-property-thumb">
+				<img src={property.imgUrl} alt="casa" />
+			</div>
+			<div className="list-property-content">
+				<h4 className="list-property-title">{property.title}</h4>
+				<div className="list-property-city">
+					<BiMap size={18}/>
+					<p>{property.city}</p>
 				</div>
 			</div>
-			<div className={styles["property-price"]}>
-				<p>{property.price} USD</p>
-			</div>
-			<div className={styles["property-status"]}>
-				<p>Activo</p>
+
+			<h4 className="list-property-price">$ {property.price}</h4>
+			<div className="list-property-toggle" onClick={() => setOpenAction(!openAction)}>
+				<BiDotsHorizontalRounded />
+				{
+					openAction &&
+          <div className="list-property-action">
+          	<li>
+          		<BiDetail size={18}/>
+          		<span>Ver Propiedad</span>
+          	</li>
+          	{
+          		canje &&
+              <>
+              	<li>
+              		<BiSend size={18}/>
+              		<span>Enviar</span>
+              	</li>
+              	<li>
+              		<BiEdit size={18}/>
+              		<span>Editar</span>
+              	</li>
+              	<li>
+              		<BiStar size={18}/>
+              		<span>Evaluar</span>
+              	</li>
+              	<li>
+              		<BiTrash  size={18}/>
+              		<span>Borrar</span>
+              	</li>
+              </>
+          	}
+          </div>
+				}
 			</div>
 		</div>
 	);
-
 };
 
 export default Property;

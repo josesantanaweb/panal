@@ -1,0 +1,29 @@
+/*!
+ * Theme Name: Default
+ * Package : DashLite
+ * Author: Softnio
+ * Author URI: http://themeforest.net/user/softnio
+ * Version	 :	1.0.0
+ * Updated	 :	07.23.2020
+**/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import 'variables';
+@import './vendor/reset';
+@import './vendor/boostrap-utilities';
+@import './vendor/boostrap-grid';
+@import './core/layouts/layouts';
+@import './core/components/components';
+@import './pages/pages';
+
+body {
+	font-family: $body-font-family;
+	font-size: $body-font-size;
+	background-color: $body-bg-color;
+}
+
+.wrap {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}

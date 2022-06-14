@@ -1,0 +1,102 @@
+// Colores base
+$white: #ffffff;
+$black: #000000;
+
+// Escala de grises
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+// Colores
+$primary-color: #04cde7;
+$secondary-color: #101924;
+$success-color: #11d3bc;
+$info-color: #0d6efd;
+$warning-color: #ffc107;
+$danger-color: #f67280;
+$light-color: #fafafa;
+$dark-color: #2f3c48;
+
+// Body
+$body-font-family: 'Poppins', sans-serif;
+$body-font-size: 1rem;
+$body-font-weight: 400;
+$body-line-height: 1.5;
+$body-color: #85adc3;
+$body-bg-color: #f5f6fa;
+
+// Border
+$border-color: #e5e9f2;
+
+// Box Shadown
+$box-shadown: 0px 1px 3px 0px rgba(0, 0, 0, 5%);
+
+// Text
+$text-color: #5fb0d9;
+$title-color: #364a63;
+$text-color-primary: $primary-color;
+$text-color-secondary: $secondary-color;
+
+// Font Size
+$small-font-size: 0.75rem;
+$normal-font-size: 0.875rem;
+$base-font-size: 1rem;
+$medium-font-size: 1.2rem;
+$large-font-size: 1.5rem;
+$xlarge-font-size: 2rem;
+
+// Icons
+$icon-font-size: 1.2rem;
+
+// Sidebar
+$sidebar-bg-color: $secondary-color;
+$sidebar-border-color: lighten($secondary-color, 20%);
+$sidebar-box-shadown: $box-shadown;
+$sidebar-width: 250px;
+$sidebar-conpact-width: 74px;
+$sidebar-header-height: 65px;
+$sidebar-z-index: 1021;
+
+// Heeader
+$header-bg-color: #ffffff;
+$header-border-color: #e5e9f2;
+$header-box-shadown: $box-shadown;
+$header-height: 65px;
+$header-z-index: 1010;
+
+// Input
+$input-bg-color: #ffffff;
+$input-color: $text-color;
+$input-placeholder-color: lighten($text-color, 20%);
+$input-border-color: #ace2fd;
+$input-padding-horizontal: 1rem;
+$input-padding-vertical: 0.57rem;
+$input-font-size: $normal-font-size;
+$label-font-size: $small-font-size;
+$label-color: #364a63;
+$input-disabled-bg-color: $gray-100;
+$input-error-border-color: $danger-color;
+$input-error-color: $danger-color;
+
+// Button
+$button-bg-color: transparent;
+$button-color: $text-color;
+$button-border-color: transparent;
+$button-font-size: $normal-font-size;
+$button-padding-horizontal: 1.5rem;
+$button-padding-vertical: 0.57rem;
+$button-primary-bg-color: $primary-color;
+$button-primary-border-color: darken($primary-color, 2%);
+$button-primary-color: #ffffff;
+$button-disabled-bg-color: lighten($primary-color, 30%);
+$button-disabled-border-color: lighten($primary-color, 20%);
+
+// Modal
+$modal-mask-bg-color: rgba(0, 0, 0, 0.5);
+$modal-bg-color: #ffffff;

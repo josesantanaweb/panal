@@ -1,42 +1,53 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { BiX } from 'react-icons/bi';
+import classNames from 'classnames';
+import { useOnClickOutside } from 'usehooks-ts';
 
-import styles from "./styles.module.scss";
-import {ModalProps} from "./types";
+interface ModalProps {
+	setModal: any;
+	modal: boolean;
+	title: string;
+  size?: string
+}
 
 const Modal: React.FC<ModalProps> = ({
-	openModal,
-	setOpenModal,
+	modal,
+	setModal,
 	children,
 	title,
-	xl,
-	size,
+	size
 }) => {
-	const modalClasses = [styles.modal, openModal ? styles['is-open'] : ''].join(
-		' '
-	);
+	const ref = useRef(null);
 
-	const modalContentClasses = [
-		styles['modal-content'],
-		size === 'large' ? styles['modal-large'] : '',
-		xl === true ? styles['modal-xl'] : '',
-		openModal ? styles['is-open'] : '',
-	].join(' ');
+	const modalMaskClasses = classNames({
+		'modal-mask': true,
+		'modal-open': modal,
+	});
 
-	const handleClose = () => setOpenModal(false);
+	const modalClasses = classNames({
+		modal: true,
+		'modal-lg': size === 'lg',
+		'modal-open': modal,
+	});
+
+	// Close modal
+	const handleClose = () => setModal(false);
+
+	// Close modal wheen click outside
+	const handleClickOutside = () => setModal(false);
+
+	useOnClickOutside(ref, handleClickOutside);
 
 	return (
-		<div className={styles.add}>
-			<div className={modalClasses}>
-				<div className={modalContentClasses}>
-					<div className={styles['modal-header']}>
-						<h3>{title}</h3>
-						<span onClick={handleClose}>
-							<BiX />
-						</span>
-					</div>
-					{children}
+		<div className={modalMaskClasses}>
+			<div className={modalClasses} ref={ref}>
+				<div className="modal-header">
+					<h3 className="modal-title">{title}</h3>
+					<span className="modal-close" onClick={handleClose}>
+						<BiX />
+					</span>
 				</div>
+				{children}
 			</div>
 		</div>
 	);

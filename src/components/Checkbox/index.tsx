@@ -1,24 +1,37 @@
 import React from 'react';
+import classNames from 'classnames';
 
-import styles from "./styles.module.scss";
-import {CheckboxProps} from "./types";
+export interface CheckboxProps {
+	className?: string;
+	label?: string;
+	value?: string;
+	placeholder?: string;
+	field?: any;
+	disabled?: boolean;
+	imagen?: string;
+}
 
-const Checkbox: React.FC<CheckboxProps> = ({label, name, value,	field, form, imagen, ...props}) => {
-	const checkboxClasses = [
-		styles["checkbox-toggle"],
-		field?.value ? styles["is-active"] : ""
-	].join(' ');
+const Checkbox: React.FC<CheckboxProps> = ({
+	field,
+	label,
+	disabled,
+	value,
+	imagen,
+}) => {
+
+	const toggleClasses = classNames({
+		'checkbox-toggle': true,
+		'is-active': field?.value,
+	});
 
 	return (
-		<label className={styles.checkbox}>
-			<span className={checkboxClasses}></span>
+		<label className="checkbox">
+			<span className={toggleClasses}></span>
 			<input
+				{...field}
 				type="checkbox"
 				checked={value}
-				value={value}
-				name={name}
-				{...field}
-				{...props}
+				disabled={disabled}
 			/>
 			{
 				!label

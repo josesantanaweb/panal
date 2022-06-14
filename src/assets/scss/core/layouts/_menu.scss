@@ -1,0 +1,64 @@
+.menu-heading {
+	padding: 0.25rem 24px 0.5rem;
+	color: $text-color;
+	font-size: $small-font-size;
+	line-height: 1.2;
+	letter-spacing: 0.2em;
+	color: $text-color;
+	text-transform: uppercase;
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+.menu-item {
+	padding: 0px 12px;
+	&:hover {
+		background: lighten($secondary-color, 5%);
+	}
+}
+
+.menu-link {
+	padding: 0.625rem 28px 0.625rem 12px;
+	color: white;
+	font-weight: 400;
+	font-size: $normal-font-size;
+	letter-spacing: 0.01em;
+	text-transform: none;
+	line-height: 1.25rem;
+	border-radius: 6px;
+	vertical-align: middle;
+	display: flex;
+	position: relative;
+	align-items: center;
+	transition: color 0.3s, background-color 0.3s;
+}
+
+.menu-icon {
+	font-weight: normal;
+	letter-spacing: normal;
+	width: 36px;
+	line-height: 1;
+	flex-grow: 0;
+	flex-shrink: 0;
+	color: white;
+	font-size: $icon-font-size;
+}
+
+.menu-text {
+	flex-grow: 1;
+	display: inline-block;
+	font-size: $base-font-size;
+}
+
+.menu-badge {
+	display: block;
+	border-radius: 3px;
+	padding: 0 0.4rem;
+	font-size: $small-font-size;
+	color: white;
+	background: $primary-color;
+	position: absolute;
+	top: 50%;
+	right: 4px;
+	transform: translateY(-50%);
+}

@@ -1,57 +1,51 @@
-import React, {useRef} from 'react';
+import React, {useState} from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
-import useOnClickOutside from 'hooks/useOnClickOutside';
 
-import styles from './styles.module.scss';
+interface Select {
+	label: string;
+	value: string | number;
+}
 
-import { SelectProps } from "./types";
+interface SelectProps {
+	label: string;
+	options: any;
+	setSelected: any;
+	selected: Select;
+}
 
-const Select: React.FC<SelectProps> = (
-	{
-		options,
-		selectedOption,
-		setSelectedOption,
-		open,
-		setOpen,
-		handleOpenSelect,
-		label,
-		required
-	}) => {
-	const ref = useRef(null);
-	const handleClickOutside = () => setOpen(false);
+const RSelect: React.FC<SelectProps> = ({ label, options, setSelected, selected }) => {
+	const [isActive, setIsActive] = useState(false);
 
-	useOnClickOutside(ref, handleClickOutside);
-
-	const handleSelectedOption = (option: any) => (event: any) => {
-		setSelectedOption(option);
-		setOpen(false);
+	const onSelected = (item: any) => {
+		setSelected(item);
+		setIsActive(false);
 	};
 
 	return (
-		<div className={styles.select} ref={ref}>
-			{label &&
-				<label className={styles["select-label"]}>
-					{label}<span>{required && '*'}</span>
-				</label>
-			}
-			<div className={styles["select-container"]} ref={ref}>
-				<div onClick={handleOpenSelect} className={styles["select-option"]}>
-					<span>{selectedOption?.label}</span>
-					{ open ? <BiChevronUp/> : <BiChevronDown/>}
+		<div className="select-container">
+			{label && <label className="label">{label}</label>}
+			<div className="select">
+				<div className="select-header" onClick={() => setIsActive(!isActive)}>
+					<p>{selected?.label}</p>
+					<span>
+						{isActive ? <BiChevronUp /> : <BiChevronDown />}
+					</span>
 				</div>
 				{
-					open &&
-          <ul className={styles["select-items"]}>
-          	{options
-          		.map((selectedOption, index) => (
-          			<li key={index} onClick={handleSelectedOption(selectedOption)}>{selectedOption.label}</li>
+					isActive &&
+          <div className="select-content">
+          	{
+          		options.map((item: any, index: number) => (
+          			<div className="select-item" key={index} onClick={() => onSelected(item)}>
+          				{item?.label}
+          			</div>
           		))
           	}
-          </ul>
+          </div>
 				}
 			</div>
 		</div>
 	);
 };
 
-export default Select;
+export default RSelect;

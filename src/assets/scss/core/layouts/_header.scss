@@ -1,0 +1,80 @@
+.header-fixed {
+	position: fixed;
+	top: 0;
+	left: $sidebar-width;
+	right: 0;
+	min-width: 320px;
+	transition: left 450ms ease;
+}
+
+.header {
+	background: $header-bg-color;
+	border-bottom: 1px solid $header-border-color;
+	box-shadow: $box-shadown;
+	z-index: $header-z-index;
+	padding: 0 22px;
+	height: $header-height;
+	display: flex;
+	align-items: center;
+}
+
+.header-wrap {
+	position: relative;
+	display: flex;
+	align-items: center;
+	margin: 0 -0.25rem;
+	width: 100%;
+}
+
+.header-wrap > * {
+	padding: 0 0.25rem;
+}
+
+.header-search {
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+	flex: 1;
+}
+
+.header-search-icon {
+	font-size: $icon-font-size;
+	color: $text-color;
+}
+
+.header-search .input {
+	background-color: transparent;
+	border: none;
+	padding-top: 0;
+	padding-bottom: 0;
+	outline: none;
+	&:focus {
+		box-shadow: none;
+		outline: none;
+	}
+}
+
+.header-tools {
+	margin-left: auto;
+	padding-top: 14px;
+	padding-bottom: 14px;
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.header-nav {
+	display: flex;
+	align-items: center;
+	margin: 0 -10px;
+}
+
+.header-fixed + .content {
+	margin-top: $header-height;
+	position: relative;
+}
+
+.header-dropdown {
+	position: relative;
+	cursor: pointer;
+}

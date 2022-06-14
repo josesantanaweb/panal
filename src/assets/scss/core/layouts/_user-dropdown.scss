@@ -1,0 +1,60 @@
+.user-toggle {
+	display: flex;
+	align-items: center;
+}
+
+.user-dropdown {
+	position: absolute;
+	will-change: transform;
+	top: 100%;
+	left: 0px;
+	transform: translate3d(-120px, 12px, 0px);
+	border-top: 3px solid $primary-color;
+	background-color: white;
+	box-shadow: $box-shadown;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+.user-dropdown > div {
+	padding: 1rem 1.5rem;
+	display: flex;
+	align-items: center;
+	background-color: $body-bg-color;
+}
+
+.user-info {
+	font-size: $small-font-size;
+	color: $text-color;
+}
+
+.user-info h6 {
+	color: $title-color;
+	margin-bottom: 0.5rem;
+}
+
+.user-options {
+	padding: 0 1.5rem;
+	border-top: 1px solid $border-color;
+	min-width: 240px;
+}
+
+.user-options div {
+	align-items: center;
+	color: $title-color;
+	display: flex;
+	font-size: $normal-font-size;
+	font-weight: 500;
+	line-height: 1.4rem;
+	padding: 0.575rem 0;
+	position: relative;
+	cursor: pointer;
+	&:hover {
+		color: $text-color-primary;
+	}
+}
+
+.user-options span {
+	font-size: $small-font-size;
+	margin-left: 0.5rem;
+}

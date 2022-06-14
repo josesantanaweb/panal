@@ -1,0 +1,86 @@
+.modal-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: $modal-mask-bg-color;
+	z-index: 1050;
+	display: flex;
+	justify-content: flex-end;
+	transition: all 0.2s;
+	opacity: 0;
+	visibility: hidden;
+}
+
+.modal-mask.modal-open {
+	opacity: 1;
+	visibility: visible;
+}
+
+.modal {
+	background-color: $modal-bg-color;
+	padding: 2rem;
+	transform: translateX(50%);
+	transition: all 0.2s;
+	opacity: 0;
+	width: 30%;
+	visibility: hidden;
+}
+
+.modal.modal-mf {
+	width: 35%;
+}
+
+.modal.modal-lg {
+	width: 40%;
+}
+
+.modal.modal-open {
+	transform: translateX(0);
+	opacity: 1;
+	visibility: visible;
+}
+
+.modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: $title-color;
+	font-size: $medium-font-size;
+	margin-bottom: 2rem;
+}
+
+.modal-title {
+	font-weight: 500;
+	font-size: $medium-font-size;
+}
+
+.modal-close {
+	cursor: pointer;
+	color: $text-color;
+	font-size: $large-font-size;
+}
+
+.modal-scroll {
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: calc(100vh - 150px);
+	padding-right: 1rem;
+}
+
+.modal-scroll::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+	padding-left: 1rem;
+}
+
+.modal-scroll::-webkit-scrollbar {
+	background: #e0f4ff;
+	padding-left: 1rem;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb {
+	border-radius: 20px;
+	background-color: #c2e1f2;
+}

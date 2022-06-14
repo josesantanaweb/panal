@@ -1,0 +1,36 @@
+.button {
+	background-color: $button-bg-color;
+	border: 1px solid $button-border-color;
+	border-radius: 4px;
+	color: $button-color;
+	display: inline-block;
+	font-family: DM Sans, sans-serif;
+	font-size: $button-font-size;
+	font-weight: 400;
+	line-height: 1.25rem;
+	padding: $button-padding-vertical $button-padding-horizontal;
+	text-align: center;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+		border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.button-primary {
+	background-color: $button-primary-bg-color;
+	border-color: $button-primary-border-color;
+	color: $button-primary-color;
+}
+
+.button-disabled {
+	background-color: $button-disabled-bg-color;
+	border-color: $button-disabled-border-color;
+	cursor: not-allowed;
+}
+
+.button-block {
+	width: 100%;
+}

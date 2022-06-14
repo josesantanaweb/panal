@@ -1,0 +1,27 @@
+.tabs {
+	position: relative;
+}
+
+.tabs-head {
+	padding: 2rem;
+	background: white;
+	border-radius: 10px;
+	margin-bottom: 2rem;
+}
+
+.tabs-nav {
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid $border-color;
+}
+
+.tabs-nav li {
+	list-style: none;
+	padding: 1rem;
+	cursor: pointer;
+}
+
+.tabs-nav li.is-active {
+	border-bottom: 2px solid $primary-color;
+	color: $text-color-primary;
+}

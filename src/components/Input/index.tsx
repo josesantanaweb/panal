@@ -1,70 +1,46 @@
-import React from "react";
-import { BiSearch } from "react-icons/bi";
+import React from 'react';
+import classNames from 'classnames';
 
-import { InputProps } from "./types";
-import styles from "./styles.module.scss";
+export interface InputProps {
+	className?: string;
+	label?: string;
+	placeholder?: string;
+	field?: any;
+	disabled?: boolean;
+	error?: boolean;
+  value?: any
+  readOnly?: any
+}
 
-const Input:React.FC<InputProps> = (
-	{
-		type="text",
-		onChange,
-		handeleSearch,
-		disabled,
-		search,
-		id,
-		label,
-		required,
-		name,
-		value,
-		placeholder,
-		field,
-		form,
-		error,
-		textarea,
-		...props
-	}) => {
+const Input: React.FC<InputProps> = ({
+	field,
+	label,
+	disabled,
+	className,
+	placeholder,
+	error,
+	...props
+}) => {
+	const classes = classNames({
+		input: true,
+		'input-disabled': disabled,
+		'input-error': error,
+		[`${className}`]: className,
+	});
 
-	const inputClasses = [
-		styles.input,
-		disabled ? styles["input-disabled"] : "",
-	].join(' ');
+	const labelClasses = classNames({
+		label: true,
+		'label-error': error,
+		[`${className}`]: className,
+	});
+
 	return (
-		<div className={inputClasses}>
-			{label && <label htmlFor={id}>{label} {required && <span>*</span>}</label>}
-			{
-				search &&
-			  <span className={styles["icon-search"]} onClick={handeleSearch}><BiSearch/></span>
-			}
-			{
-				textarea ?
-					<textarea
-						id={id}
-						name={name}
-						value={value}
-						disabled={disabled}
-						placeholder={placeholder}
-						onChange={onChange}
-						cols={30}
-						rows={10}
-						{...field}
-						{...props}
-					/>
-					:
-					<input
-						id={id}
-						type={type}
-						name={name}
-						value={value}
-						disabled={disabled}
-						placeholder={placeholder}
-						onChange={onChange}
-						{...field}
-						{...props}
-					/>
-			}
+		<div className="input-container">
+			{label && <label className={labelClasses}>{label}</label>}
+			<input {...field} {...props} disabled={disabled} className={classes} placeholder={placeholder}/>
 			{
 				error &&
-				<span className={styles["input-error"]}>{error}</span>
+        <span className="input-message">{error}</span>
 			}
 		</div>
 	);
