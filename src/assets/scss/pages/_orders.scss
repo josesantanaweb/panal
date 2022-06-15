@@ -1,7 +1,7 @@
 .list-property {
 	display: grid;
 	align-items: center;
-	grid-template-columns: 120px 1fr 100px 120px;
+	grid-template-columns: 120px 170px 170px 120px 70px;
 	background-color: white;
 	border: 1px solid #e5e9f2;
 	padding: 1rem;
@@ -92,6 +92,24 @@
 
 .list-property-action span {
 	margin-left: 1rem;
+}
+
+.list-property-ranking h4 {
+	color: $text-color-primary;
+	font-size: $normal-font-size;
+	margin-bottom: 0.5rem;
+}
+
+.list-property-ranking p {
+	color: $text-color;
+	font-size: $small-font-size;
+}
+
+.list-property-star {
+	color: $warning-color;
+	display: flex;
+	align-items: center;
+	margin-bottom: 0.5rem;
 }
 
 .search-customer {

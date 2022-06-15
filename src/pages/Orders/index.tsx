@@ -96,7 +96,7 @@ const Orders = () => {
 										<Badge variant="success"  label="Activo"/>
 									</div>
 									<div className="table-col">
-										<span onClick={() => setModalCanje(true)}>
+										<span onClick={() => setModalCanje(true)} style={{cursor: 'pointer'}}>
 											<BiHomeSmile size={24} />
 										</span>
 									</div>

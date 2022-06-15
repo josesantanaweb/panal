@@ -30,7 +30,17 @@ const Property:React.FC<PropertyProps> = ({property, handleProperty, code, canje
 					<p>{property.city}</p>
 				</div>
 			</div>
-
+			<div className="list-property-ranking">
+				<h4>Jose Santana</h4>
+				<div className="list-property-star">
+					<BiStar size={18}/>
+					<BiStar size={18}/>
+					<BiStar size={18}/>
+					<BiStar size={18}/>
+					<BiStar size={18}/>
+				</div>
+				<p>20 Calificaciones</p>
+			</div>
 			<h4 className="list-property-price">$ {property.price}</h4>
 			<div className="list-property-toggle" onClick={() => setOpenAction(!openAction)}>
 				<BiDotsHorizontalRounded />
