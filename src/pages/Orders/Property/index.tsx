@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import classNames from 'classnames';
 import { BiDetail, BiDotsHorizontalRounded, BiEdit, BiMap, BiSend, BiStar, BiTrash } from 'react-icons/bi';
+import { FaStar } from 'react-icons/fa';
 
 export interface PropertyProps {
 	property: any;
@@ -33,11 +34,11 @@ const Property:React.FC<PropertyProps> = ({property, handleProperty, code, canje
 			<div className="list-property-ranking">
 				<h4>Jose Santana</h4>
 				<div className="list-property-star">
-					<BiStar size={18}/>
-					<BiStar size={18}/>
-					<BiStar size={18}/>
-					<BiStar size={18}/>
-					<BiStar size={18}/>
+					<FaStar size={18}/>
+					<FaStar size={18}/>
+					<FaStar size={18}/>
+					<FaStar size={18}/>
+					<FaStar size={18}/>
 				</div>
 				<p>20 Calificaciones</p>
 			</div>
