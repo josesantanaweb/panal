@@ -1,7 +1,7 @@
 .list-property {
 	display: grid;
 	align-items: center;
-	grid-template-columns: 120px 170px 170px 120px 70px;
+	grid-template-columns: 120px 200px 180px 120px 70px;
 	background-color: white;
 	border: 1px solid #e5e9f2;
 	padding: 1rem;
@@ -59,6 +59,7 @@
 	font-size: $medium-font-size;
 	color: $text-color-primary;
 	font-weight: 500;
+	text-align: center;
 }
 
 .list-property-toggle {
@@ -92,6 +93,13 @@
 
 .list-property-action span {
 	margin-left: 1rem;
+}
+
+.list-property-ranking {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
 
 .list-property-ranking h4 {
