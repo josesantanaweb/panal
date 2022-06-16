@@ -1,3 +1,5 @@
+$secondary-gray-dark-color: #474849;
+
 .section__portals {
 	margin: 4rem 0;
 	text-align: center;
@@ -6,7 +8,7 @@
 		margin-bottom: 0rem;
 	}
 	h2 {
-		color: var(--gray-dark-text-color);
+		color: $secondary-gray-dark-color;
 		font-size: 2.8rem;
 		font-weight: bold;
 		line-height: 2.5rem;

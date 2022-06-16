@@ -1,3 +1,8 @@
+$text-white-color: #ffffff;
+$text-primary-color: #ffc107;
+$secondary-gray-dark-color: #474849;
+$secondary-gray-light-color: #7c7c7c;
+
 .section__info {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -8,7 +13,7 @@
 	place-items: center;
 	margin: 7.5rem 0;
 	h2 {
-		color: var(--gray-dark-text-color);
+		color: $secondary-gray-dark-color;
 		font-size: 2.8rem;
 		font-weight: bold;
 		line-height: 3.4rem;
@@ -16,7 +21,7 @@
 	}
 	p {
 		font-size: 1.4rem;
-		color: var(--gray-light-text-color);
+		color: $secondary-gray-light-color;
 		font-weight: 500;
 		line-height: 2.2rem;
 	}

@@ -7,10 +7,10 @@ const Info = () => {
 		<section className={styles['section__info']}>
 			<div className={styles['content-info']}>
 				<img
-					src="https://res.cloudinary.com/panal/image/upload/v1654530715/Media-panal/Dise%C3%B1o_sin_t%C3%ADtulo_4_1_o1jkw0.png"
+					src="https://res.cloudinary.com/panal/image/upload/v1655389711/Media-panal/Dise%C3%B1o_sin_t%C3%ADtulo_5_1_flppyd.png"
 					alt="img-panal-info"
 					className={styles['img-info']}
-					style={{ width: 'auto', margin: '1.2rem 0' }}
+					style={{ width: '32rem' }}
 				/>
 			</div>
 			<div>

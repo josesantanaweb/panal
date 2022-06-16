@@ -1,3 +1,6 @@
+$secondary-gray-dark-color: #474849;
+$secondary-gray-light-color: #7c7c7c;
+
 .section__contact {
 	display: flex;
 	flex-direction: column;
@@ -7,13 +10,13 @@
 	background-color: var(--secondary-bg-color);
 	margin: 3rem 0;
 	h2 {
-		color: var(--gray-dark-text-color);
+		color: $secondary-gray-dark-color;
 		font-size: 2.8rem;
 		font-weight: bold;
 		line-height: 3.4rem;
 	}
 	p {
-		color: var(--text-secondary);
+		color: $secondary-gray-light-color;
 		font-size: 1.3rem;
 		font-weight: 500;
 		line-height: 2rem;
@@ -35,13 +38,13 @@
 	align-items: center;
 	margin: 2.5rem;
 	span {
-		color: var(--text-secondary);
+		color: $secondary-gray-light-color;
 		margin-right: 2rem;
 		font-weight: 500;
 		font-size: 1.7rem;
 	}
 	h5 {
-		color: var(--secondary-text-color);
+		color: $secondary-gray-dark-color;
 		font-size: 1.2rem;
 		font-weight: bold;
 		line-height: 1.5rem;
@@ -55,7 +58,7 @@
 		}
 		p {
 			font-size: 1.2rem;
-			color: rgb(102, 102, 102);
+			color: $secondary-gray-light-color;
 		}
 		.content__contact {
 			display: flex;
