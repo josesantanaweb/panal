@@ -29,8 +29,8 @@ const Bitacora:React.FC<BitacoraProps> = ({modal, setModal, history}) => {
 							<span>{findFirstLetter('Jose')}</span>
 						</div>
 						<div className="binnacle-info">
-							<p>Jonh Doe</p>
-							<span>jonh@gmail.com</span>
+							<p>{history[0]?.name} {history[0]?.lastName}</p>
+							<span>{history[0]?.email}</span>
 						</div>
 					</div>
 				</div>
@@ -43,20 +43,23 @@ const Bitacora:React.FC<BitacoraProps> = ({modal, setModal, history}) => {
                 	<div className="binnacle-item" key={index}>
                 		<div>
                 			<i className="binnacle-mark"></i>
-                			<p>{item.customer.name} {item.customer.lastName}
+                			<p>Asunto
                 				<span>
-                					{moment(item.entryDate).format(
+                					{moment(item.createdAt).format(
                 						'MMMM Do YYYY, h:mm:ss a'
                 					)}
                 				</span>
                 			</p>
                 		</div>
-                		<li><b>Emisión de orden de visita</b> n° 12.412</li>
+                		{
+                			item.property &&
+                      <li><b>Emisión de orden de visita</b> n° 12.412</li>
+                		}
                 		<li><b>Enviada a:</b> Juanito.perez@gmail.com</li>
                 		<li><b>Asunto: </b>{item.action}</li>
                 		{
-                			item.customer?.visits[0]?.property?.address?.address &&
-                      <li><b>Dirección Propiedad:</b> {item.customer?.visits[0]?.property?.address?.address}</li>
+                			item.property &&
+                      <li><b>Dirección Propiedad:</b> {item.property?.address}</li>
                 		}
                 	</div>
                 ))
