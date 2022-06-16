@@ -44,8 +44,25 @@ const Services = () => {
 								<li
 									className={styles['honeycomb-cell']}
 									key={item.id}
-									onClick={() => hanleShowItem(item.id)}
-								>
+									onClick={() => hanleShowItem(item.id)}>
+									<div className={styles['honeycomb-cell__content']}>
+										<span>
+											<i>{item.icon}</i>
+											<p>{item.iconText}</p>
+										</span>
+										<div className={styles['honeycomb-cell__title']}>
+											{item.iconText}
+										</div>
+									</div>
+								</li>
+							))}
+						</ul>
+						<ul className={styles['honeycomb']} lang="es">
+							{dataServices.map((item) => (
+								<li
+									className={styles['honeycomb-cell']}
+									key={item.id}
+									onClick={() => hanleShowItem(item.id)}>
 									<div className={styles['honeycomb-cell__content']}>
 										<span>
 											<i>{item.icon}</i>
