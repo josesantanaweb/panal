@@ -13,7 +13,7 @@ import OrdersServices from 'services/ordersService';
 import Selection from './Selection';
 import Generate from './Generate';
 import SendEmail from './SendEmail';
-import Detail from '../Properties/Detail';
+import Detail from './Detail';
 import Canje from './Canje';
 
 const Orders = () => {
@@ -43,9 +43,9 @@ const Orders = () => {
 
 	if (loading) return <Preloader />;
 
-	const handleDetail = () => {
+	const handleDetail = (order: any) => {
 		setModalDetail(true);
-		setProperty(property);
+		setProperty(order.property);
 	};
 
 	return (
@@ -108,7 +108,7 @@ const Orders = () => {
 										</span>
 									</div>
 									<div className="table-col table-col-mb">
-										<span className="table-icon table-success-icon" onClick={handleDetail}>
+										<span className="table-icon table-success-icon" onClick={() => handleDetail(item)}>
 											<BiSpreadsheet size={24} />
 										</span>
 										<span className="table-icon table-delete-icon" onClick={() => onDelete(item.id)}>
@@ -152,7 +152,7 @@ const Orders = () => {
 				}
 			</Modal>
 			<Canje modalCanje={modalCanje} setModalCanje={setModalCanje}/>
-			<Detail modal={modalDetail} setModal={setModalDetail}/>
+			<Detail modal={modalDetail} setModal={setModalDetail} property={property}/>
 			<ToastContainer />
 		</React.Fragment>
 	);
