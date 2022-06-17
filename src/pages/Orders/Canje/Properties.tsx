@@ -1,26 +1,34 @@
 import React, {useEffect, useState} from 'react';
 import useProperties from 'hooks/useProperties';
+import useOrdes from 'hooks/useOrders';
 import { Button } from 'components';
 import Property from '../Property';
 
 const Properties = () => {
 	const { properties, getProperties }:any = useProperties();
+	const { setCanje, canje }:any = useOrdes();
 	const [code, setCode] = useState('');
+	const [property, setProperty] = useState();
 
 	useEffect(() => {
 		getProperties();
 	}, []);
 
 	const handleProperty = (property: any) => {
-		console.log(property);
 		setCode(property.code);
+		setProperty(property);
+	};
+
+	const addProperty = () => {
+		let arr = [...canje, property];
+		setCanje(arr);
 	};
 
 	return (
 		<>
 			<div className="row mb-4">
 				<div className="offset-md-8 col-md-4">
-					<Button block disabled={code === ''}>
+					<Button block disabled={code === ''} onClick={addProperty}>
             Agregar a la lista
 					</Button>
 				</div>
