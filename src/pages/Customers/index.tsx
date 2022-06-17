@@ -78,19 +78,22 @@ const Customers: React.FC = () => {
 				<div className="table-list mb-3">
 					<div className="table-item table-head">
 						<div className="table-col">
-							<span className="table-text">Cliente</span>
-						</div>
-						<div className="table-col table-col-md">
-							<span className="table-text">Ejecutivo</span>
+							<span className="table-text">Direccion Propiedad</span>
 						</div>
 						<div className="table-col">
-							<span className="table-text">Telefono</span>
+							<span className="table-text">Cliente Propietario</span>
 						</div>
-						<div className="table-col">
-							<span className="table-text">Bitacora</span>
-						</div>
-						<div className="table-col">
+						<div className="table-col center">
 							<span className="table-text">Estado</span>
+						</div>
+						<div className="table-col center">
+							<span className="table-text">Tipo de Operacion</span>
+						</div>
+						<div className="table-col center">
+							<span className="table-text">Oportunidad de canje</span>
+						</div>
+						<div className="table-col center">
+							<span className="table-text">Bitacora</span>
 						</div>
 						<div className="table-col"></div>
 					</div>
@@ -98,6 +101,9 @@ const Customers: React.FC = () => {
 						customers.length
 							? customers.map((item: any, index: number) => (
 								<div className="table-item" key={index}>
+									<div className="table-col">
+										<span className="table-text">{item.address}</span>
+									</div>
 									<div className="table-col">
 										<a className="table-user">
 											<div className="table-user-avatar">
@@ -109,19 +115,19 @@ const Customers: React.FC = () => {
 											</div>
 										</a>
 									</div>
-									<div className="table-col table-col-mb">
-										<span className="table-text">{item.createdByRealtor?.name} {item.createdByRealtor?.lastName}</span>
+									<div className="table-col center">
+										<Badge variant="success"  label="Activo"/>
 									</div>
-									<div className="table-col">
-										<span className="table-text">{item.phone || '+584454548'}</span>
+									<div className="table-col center">
+										<Badge variant="danger"  label="Arriendo"/>
 									</div>
-									<div className="table-col">
+									<div className="table-col center">
+										<span className="table-text">22</span>
+									</div>
+									<div className="table-col center">
 										<span onClick={() => onBitacora(item.id)} style={{'cursor': 'pointer'}}>
 											<BiSpreadsheet size={24} />
 										</span>
-									</div>
-									<div className="table-col">
-										<Badge variant="success"  label="Activo"/>
 									</div>
 									<div className="table-col table-col-mb">
 										<span className="table-icon table-edit-icon" onClick={() => onEdit(item)}>

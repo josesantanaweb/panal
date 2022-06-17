@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import useProperties from 'hooks/useProperties';
 import useOrdes from 'hooks/useOrders';
 import { Button } from 'components';
+import { toastSuccess } from 'utils/libs/toast';
 import Property from '../Property';
 
 const Properties = () => {
@@ -22,6 +23,7 @@ const Properties = () => {
 	const addProperty = () => {
 		let arr = [...canje, property];
 		setCanje(arr);
+		toastSuccess('Propiedad Agregada a canje');
 	};
 
 	return (

@@ -28,6 +28,10 @@
 	vertical-align: middle;
 }
 
+.table-col.center {
+	text-align: center;
+}
+
 .table-col:first-child {
 	border-radius: 4px 0 0 4px;
 	padding-left: 1.5rem;
@@ -92,6 +96,10 @@
 
 .table-delete-icon {
 	color: $danger-color;
+}
+
+.table-success-icon {
+	color: $success-color;
 }
 
 @media (min-width: 576px) {

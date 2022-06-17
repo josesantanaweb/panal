@@ -17,8 +17,8 @@
 	border: 1px solid lighten($primary-color, 40%);
 }
 
-.badge-error {
-	background-color: lighten($danger-color, 50%);
+.badge-danger {
+	background-color: lighten($danger-color, 25%);
 	color: $danger-color;
-	border: 1px solid lighten($danger-color, 40%);
+	border: 1px solid lighten($danger-color, 20%);
 }
