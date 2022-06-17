@@ -1,12 +1,16 @@
+$text-white-color: #ffffff;
+$text-gray-color: #f3f3f3;
+$text-primary-color: #ffc107;
+
 .header {
 	display: flex;
 	justify-content: space-between;
-	height: 95vh;
+	height: 100vh;
 	width: 70%;
 	margin: 0 auto;
 	flex-direction: column;
 	h1 {
-		color: var(--secondary-bg-color);
+		color: $text-white-color;
 		font-size: 2.8rem;
 		font-weight: 600;
 		text-shadow: 4px 4px 5px rgba(23, 23, 23, 0.451);
@@ -14,7 +18,7 @@
 		margin-bottom: 2rem;
 	}
 	p {
-		color: var(--secondary-bg-color);
+		color: $text-gray-color;
 		font-size: 1.2rem;
 		font-weight: 500;
 		text-shadow: 4px 4px 5px rgba(23, 23, 23, 0.451);
@@ -26,7 +30,7 @@
 	margin-top: 2rem;
 	.btn-action {
 		background-color: var(--primary-color);
-		color: var(--secondary-bg-color);
+		color: $text-white-color;
 		text-decoration: none;
 		font-size: 0.8rem;
 		font-weight: bold;

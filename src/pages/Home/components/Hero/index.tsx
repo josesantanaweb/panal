@@ -26,6 +26,7 @@ const Hero = () => {
 					className={styles['img-hero']}
 					src="https://res.cloudinary.com/panal/image/upload/v1654527813/Media-panal/Dise%C3%B1o_sin_t%C3%ADtulo_1_rvm4or.png"
 					alt="hero-img"
+					style={{ zIndex: '2' }}
 				/>
 			</section>
 		</div>

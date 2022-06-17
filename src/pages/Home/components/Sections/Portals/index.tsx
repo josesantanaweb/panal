@@ -15,7 +15,7 @@ const Portals = () => {
 		slidesToShow: 5,
 		slidesToScroll: 1,
 		autoplay: true,
-		speed: 2500,
+		speed: 2700,
 		autoplaySpeed: 1000,
 		cssEase: 'linear',
 		responsive: [
@@ -39,7 +39,7 @@ const Portals = () => {
 			{
 				breakpoint: 480,
 				settings: {
-					slidesToShow: 1,
+					slidesToShow: 2,
 					slidesToScroll: 1,
 				},
 			},
