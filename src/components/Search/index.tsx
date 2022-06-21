@@ -4,9 +4,10 @@ import { BiSearch } from 'react-icons/bi';
 export interface SearchProps {
   placeholder: string;
 	onChange: any;
+  iconSeach?: boolean
 }
 
-const Search:React.FC<SearchProps> = ({onChange, placeholder}) => {
+const Search:React.FC<SearchProps> = ({onChange, placeholder, iconSeach}) => {
 	return (
 		<div className="search">
 			<input
@@ -15,9 +16,12 @@ const Search:React.FC<SearchProps> = ({onChange, placeholder}) => {
 				placeholder={placeholder}
 				onChange={onChange}
 			/>
-			<span>
-				<BiSearch />
-			</span>
+			{
+				iconSeach &&
+        <span>
+        	<BiSearch />
+        </span>
+			}
 		</div>
 	);
 };

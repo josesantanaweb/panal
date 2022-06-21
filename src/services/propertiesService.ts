@@ -2,8 +2,8 @@ import api from 'config/api';
 import { getValue } from 'utils';
 
 const PropertiesServices = {
-	getProperties: (name: string) =>
-		api.get(`properties?titleOrId=${name || ''}`, {
+	getProperties: (query?: string) =>
+		api.get(`properties?${query}`, {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		}),
 	getProperty: async (id: number) =>

@@ -20,6 +20,14 @@ export const SharedProvider = ({children}: props) => {
 	const [customerSelected, setCustomerSelected] = useState<any>();
 	const [realtors, setRealtors] = useState([]);
 	const [realtorSelected, setRealtorSelected] = useState<any>();
+	const [portals, setPortals] = useState([]);
+
+	const getPortals = async () => {
+		SharedServices.getPortals().then((response) => {
+			const data = response.data?.data;
+			setPortals(data);
+		}).catch();
+	};
 
 	const getDocuments = async () => {
 		SharedServices.getDocuments().then((response) => {
@@ -93,6 +101,9 @@ export const SharedProvider = ({children}: props) => {
 			realtorSelected,
 			setRealtorSelected,
 			getRealtors,
+			getPortals,
+			setPortals,
+			portals
 		}),
 		[
 			documents,
@@ -107,6 +118,8 @@ export const SharedProvider = ({children}: props) => {
 			realtors,
 			realtorSelected,
 			setRealtorSelected,
+			portals,
+			setPortals
 		]
 	);
 

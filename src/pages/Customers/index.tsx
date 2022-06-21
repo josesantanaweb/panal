@@ -69,6 +69,7 @@ const Customers: React.FC = () => {
 					<div className="col-md-2">
 						<div className="search-customer">
 							<Search
+								iconSeach
 								placeholder="Buscar Cliente"
 								onChange={searchCustomer}
 							/>

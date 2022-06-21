@@ -12,8 +12,8 @@ export const PropertiesProvider = ({children}: props) => {
 	const [property, setProperty] = useState<any>({});
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const getProperties = async (search: string) => {
-		PropertiesServices.getProperties(search).then((response) => {
+	const getProperties = async (query: string) => {
+		PropertiesServices.getProperties(query).then((response) => {
 			setProperties(response.data.data);
 			setLoading(false);
 		}).catch((err) => setLoading(false));

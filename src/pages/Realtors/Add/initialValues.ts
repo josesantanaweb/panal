@@ -8,4 +8,5 @@ export const initialValues = {
 	whatsappPhone: '',
 	address: null,
 	externalPortals: null,
+	portalsArray: [],
 };

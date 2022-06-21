@@ -18,6 +18,12 @@ const SharedServices = {
 				Authorization: `Bearer ${getValue('token')}`,
 			},
 		}),
+	getPortals: async () =>
+		api.get('external-portals', {
+			headers: {
+				Authorization: `Bearer ${getValue('token')}`,
+			},
+		}),
 };
 
 export default SharedServices;
