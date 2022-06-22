@@ -13,7 +13,7 @@ const SharedServices = {
 			},
 		}),
 	getStates: async () =>
-		api.get('states', {
+		api.get('states?countryId=1&limit=100', {
 			headers: {
 				Authorization: `Bearer ${getValue('token')}`,
 			},

@@ -1,22 +1,50 @@
 import React, {useState, useEffect} from 'react';
 import Content from 'layout/Content';
-import { Button, Preloader, Search } from 'components';
+import { Button, Preloader, Search, Select } from 'components';
 import ContentHead from 'layout/ContentHead';
 import Property from './Property';
 import Detail from './Detail';
 import useProperties from 'hooks/useProperties';
+import useShared from 'hooks/useShared';
 
 const Properties = () => {
 	const [tab, setTab] = useState(1);
 	const [title, setTitle] = useState('');
 	const [bathrooms, setBathrooms] = useState('');
 	const [bedrooms, setBedrooms] = useState('');
-	const { properties, getProperties, loading, setProperty }:any = useProperties();
+	const [minPrice, setMinPrice] = useState('');
+	const [maxPrice, setMaxPrice] = useState('');
+	const {
+		properties,
+		getProperties,
+		loading,
+		setProperty,
+		setOperationId,
+		operationId,
+		operationType,
+		propertyType,
+		propertyId,
+		setPropertyId,
+		currencyId,
+		setCurrencyId,
+		currencyType,
+	}:any = useProperties();
+	const {
+		stateForFilter,
+		stateForFilterSelected,
+		setStateForFilterSelected,
+		getStates,
+	}:any = useShared();
 	const [modalDetail, setModalDetail] = useState(false);
+	const region = stateForFilterSelected?.value !== 0 ? stateForFilterSelected?.value : '';
 
 	useEffect(() => {
-		getProperties(`titleOrId=${title}&bathrooms=${bathrooms}&bedrooms=${bedrooms}`);
-	}, [title, bathrooms, bedrooms]);
+		getStates();
+	}, []);
+
+	useEffect(() => {
+		getProperties(`titleOrId=${title}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&operationId=${operationId.value}&typeId=${propertyId.value}&region=${region}&currencyId=${currencyId.value}&minPrice=${minPrice || 0}&maxPrice=${maxPrice || 1000000}`);
+	}, [title, bathrooms, bedrooms, operationId, propertyId, stateForFilterSelected, currencyId, minPrice, maxPrice]);
 
 	if (loading) return <Preloader />;
 
@@ -30,6 +58,10 @@ const Properties = () => {
 	const searchBathrooms =  async (e: any) => setBathrooms(e.target.value);
 
 	const searchBedrooms =  async (e: any) => setBedrooms(e.target.value);
+
+	const searchMinPrice =  async (e: any) => setMinPrice(e.target.value);
+
+	const searchMaxPrice =  async (e: any) => setMaxPrice(e.target.value);
 
 	return (
 		<React.Fragment>
@@ -62,7 +94,76 @@ const Properties = () => {
 							<div className="row mb-4">
 								<div className="col-md-3">
 									<div className="search-customer">
+										<Select
+											label="Tipo Operacion"
+											options={operationType}
+											setSelected={setOperationId}
+											selected={operationId}
+										/>
+									</div>
+								</div>
+								<div className="col-md-3">
+									<div className="search-customer">
+										<Select
+											label="Tipo de Propiedad"
+											options={propertyType}
+											setSelected={setPropertyId}
+											selected={propertyId}
+										/>
+									</div>
+								</div>
+								<div className="col-md-3">
+									<div className="search-customer">
+										<Select
+											label="Region"
+											options={stateForFilter}
+											setSelected={setStateForFilterSelected}
+											selected={stateForFilterSelected}
+										/>
+									</div>
+								</div>
+								<div className="col-md-3">
+									<div className="search-customer">
 										<Search
+											label="Comuna"
+											placeholder="Comuna"
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="row mb-4">
+								<div className="col-md-3">
+									<div className="search-customer">
+										<Select
+                    	label="Tipo de Moneda"
+											options={currencyType}
+											setSelected={setCurrencyId}
+											selected={currencyId}
+										/>
+									</div>
+								</div>
+								<div className="col-md">
+									<div className="search-customer">
+										<Search
+                    	label="Precio Minimo"
+											placeholder="Precio Minimo"
+											onChange={searchMinPrice}
+										/>
+									</div>
+								</div>
+								<div className="col-md">
+									<div className="search-customer">
+										<Search
+                    	label="Precio Maximo"
+											placeholder="Precio Maximo"
+											onChange={searchMaxPrice}
+										/>
+									</div>
+								</div>
+								<div className="col-md-3">
+									<div className="search-customer">
+										<Search
+                    	label="Cantidad de Baños"
 											placeholder="Baños"
 											onChange={searchBathrooms}
 										/>
@@ -71,6 +172,7 @@ const Properties = () => {
 								<div className="col-md-3">
 									<div className="search-customer">
 										<Search
+                    	label="Cantidad de Habitaciones"
 											placeholder="Habitaciones"
 											onChange={searchBedrooms}
 										/>

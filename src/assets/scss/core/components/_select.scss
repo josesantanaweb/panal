@@ -45,8 +45,26 @@
 	font-size: $input-font-size;
 	font-weight: 400;
 	width: 100%;
+	max-height: 500px;
+	overflow-y: scroll;
 	z-index: 1000;
 	background-color: $input-bg-color;
+}
+
+.select-content::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+	padding-left: 1rem;
+}
+
+.select-content::-webkit-scrollbar {
+	background: #e0f4ff;
+	padding-left: 1rem;
+}
+
+.select-content::-webkit-scrollbar-thumb {
+	border-radius: 20px;
+	background-color: #c2e1f2;
 }
 
 .select-item {

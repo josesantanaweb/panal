@@ -7,7 +7,7 @@ interface Select {
 }
 
 interface SelectProps {
-	label: string;
+	label?: string;
 	options: any;
 	setSelected: any;
 	selected: Select;
