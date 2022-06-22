@@ -10,9 +10,16 @@ const FilterContext = createContext({});
 
 export const FilterProvider = ({children}: props) => {
 	const [operationType, setOperationType] = useState<any>([]);
-	const [state, setState] = useState<any>([]);
 	const [operationTypeSelected, setOperationTypeSelected] = useState<any>();
+
+	const [propertyType, setPropertyType] = useState<any>([]);
+	const [propertyTypeSelected, setPropertyTypeSelected] = useState<any>();
+
+	const [state, setState] = useState<any>([]);
 	const [stateSelected, setStateSelected] = useState<any>();
+
+	const [currency, setCurrency] = useState<any>([]);
+	const [currencySelected, setCurrencySelected] = useState<any>();
 
 	const getOperationType = async () => {
 		PropertiesServices.getSelectProperty().then((response) => {
@@ -21,6 +28,28 @@ export const FilterProvider = ({children}: props) => {
 			setOperationType(appendValue);
 			if (response !== undefined) {
 				setOperationTypeSelected(appendValue[0]);
+			}
+		}).catch();
+	};
+
+	const getPropertyType = async () => {
+		PropertiesServices.getSelectProperty().then((response) => {
+			const data = response.data?.propertyTypes?.map((item: any) => ({label: item.name, value: item.id}));
+			const appendValue = [{label: 'Ninguna', value: 0}, ...data, ];
+			setPropertyType(appendValue);
+			if (response !== undefined) {
+				setPropertyTypeSelected(appendValue[0]);
+			}
+		}).catch();
+	};
+
+	const getCurrency = async () => {
+		PropertiesServices.getSelectProperty().then((response) => {
+			const data = response.data?.currencyTypes?.map((item: any) => ({label: item.name, value: item.id}));
+			const appendValue = [{label: 'Ninguna', value: 0}, ...data, ];
+			setCurrency(appendValue);
+			if (response !== undefined) {
+				setCurrencySelected(appendValue[0]);
 			}
 		}).catch();
 	};
@@ -44,10 +73,20 @@ export const FilterProvider = ({children}: props) => {
 			setOperationTypeSelected,
 			getOperationType,
 
+			propertyType,
+			propertyTypeSelected,
+			setPropertyTypeSelected,
+			getPropertyType,
+
 			state,
 			stateSelected,
 			setStateSelected,
-			getStates
+			getStates,
+
+			currency,
+			currencySelected,
+			setCurrencySelected,
+			getCurrency
 		}}>
 			{children}
 		</FilterContext.Provider>

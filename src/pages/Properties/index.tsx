@@ -22,12 +22,6 @@ const Properties = () => {
 		getProperties,
 		loading,
 		setProperty,
-		propertyType,
-		propertyId,
-		setPropertyId,
-		currencyId,
-		setCurrencyId,
-		currencyType,
 	}:any = useProperties();
 	const {
 		operationType,
@@ -35,17 +29,33 @@ const Properties = () => {
 		setOperationTypeSelected,
 		getOperationType,
 
+		propertyType,
+		propertyTypeSelected,
+		setPropertyTypeSelected,
+		getPropertyType,
+
 		stateSelected,
 		setStateSelected,
 		state,
-		getStates
+		getStates,
+
+		currencySelected,
+		setCurrencySelected,
+		currency,
+		getCurrency
 	}:any = useFilter();
 	const [modalDetail, setModalDetail] = useState(false);
 	const region = stateSelected?.value !== 0 ? stateSelected?.value : '';
 	const operationId = operationTypeSelected?.value !== 0 ? operationTypeSelected?.value : '';
+	const currencyId = currencySelected?.value !== 0 ? currencySelected?.value : '';
+	const typeId = propertyTypeSelected?.value !== 0 ? propertyTypeSelected?.value : '';
 
 	useEffect(() => {
 		getOperationType();
+	}, []);
+
+	useEffect(() => {
+		getPropertyType();
 	}, []);
 
 	useEffect(() => {
@@ -53,8 +63,12 @@ const Properties = () => {
 	}, []);
 
 	useEffect(() => {
-		getProperties(`titleOrId=${title}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&operationId=${operationId}&typeId=${propertyId?.value}&region=${region}&currencyId=${currencyId?.value}&minPrice=${minPrice || 0}&maxPrice=${maxPrice || 1000000}`);
-	}, [title, bathrooms, bedrooms, operationTypeSelected, propertyId, stateSelected, currencyId, minPrice, maxPrice]);
+		getCurrency();
+	}, []);
+
+	useEffect(() => {
+		getProperties(`titleOrId=${title}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&operationId=${operationId}&typeId=${typeId}&region=${region}&currencyId=${currencyId}&minPrice=${minPrice || 0}&maxPrice=${maxPrice || 1000000}`);
+	}, [title, bathrooms, bedrooms, operationTypeSelected, propertyTypeSelected, stateSelected, currencyId, minPrice, maxPrice]);
 
 	if (loading) return <Preloader />;
 
@@ -123,8 +137,8 @@ const Properties = () => {
 									<Select
 										label="Tipo de Propiedad"
 										options={propertyType}
-										setSelected={setPropertyId}
-										selected={propertyId}
+										setSelected={setPropertyTypeSelected}
+										selected={propertyTypeSelected}
 									/>
 								</div>
 								<div className="col-md-3">
@@ -145,10 +159,10 @@ const Properties = () => {
 							<div className="row mb-4">
 								<div className="col-md-3">
 									<Select
-                    	label="Tipo de Moneda"
-										options={currencyType}
-										setSelected={setCurrencyId}
-										selected={currencyId}
+										label="Tipo de Moneda"
+										options={currency}
+										setSelected={setCurrencySelected}
+										selected={currencySelected}
 									/>
 								</div>
 								<div className="col-md">

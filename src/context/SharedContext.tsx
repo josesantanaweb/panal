@@ -16,9 +16,7 @@ export const SharedProvider = ({children}: props) => {
 	const [countries, setCountries] = useState([]);
 	const [countrySelected, setCountrySelected] = useState<any>();
 	const [states, setStates] = useState([]);
-	const [stateForFilter, setStateForFilter] = useState<any>([]);
 	const [stateSelected, setStateSelected] = useState<any>();
-	const [stateForFilterSelected, setStateForFilterSelected] = useState<any>();
 	const [customers, setCustomers] = useState([]);
 	const [customerSelected, setCustomerSelected] = useState<any>();
 	const [realtors, setRealtors] = useState([]);
@@ -56,11 +54,8 @@ export const SharedProvider = ({children}: props) => {
 		SharedServices.getStates().then((response) => {
 			const data = response.data?.data.map((item: any) => ({label: item.name, value: item.id}));
 			setStates(data);
-			const appendValue = [{label: 'Ninguna', value: 0}, ...data, ];
-			setStateForFilter(appendValue);
 			if (response !== undefined) {
 				setStateSelected(data[0]);
-				setStateForFilterSelected(appendValue[0]);
 			}
 		}).catch();
 	};
@@ -98,12 +93,6 @@ export const SharedProvider = ({children}: props) => {
 			states,
 			stateSelected,
 			setStateSelected,
-
-			stateForFilter,
-			setStateForFilter,
-			stateForFilterSelected,
-			setStateForFilterSelected,
-
 			getStates,
 			customers,
 			customerSelected,
@@ -122,8 +111,6 @@ export const SharedProvider = ({children}: props) => {
 			countries,
 			states,
 			stateSelected,
-			stateForFilter,
-			stateForFilterSelected,
 			documentSelected,
 			countrySelected,
 			customers,
