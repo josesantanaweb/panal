@@ -12,6 +12,7 @@ import { PropertiesProvider } from 'context/PropertiesContext';
 import { FormPropertyProvider } from 'context/FormPropertyContext';
 import { OrdersProvider } from 'context/OrdersContext';
 import { SharedProvider } from 'context/SharedContext';
+import { FilterProvider } from 'context/FilterContext';
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -20,15 +21,17 @@ ReactDOM.render(
 				<SharedProvider>
 					<UsersProvider>
 						<PropertiesProvider>
-							<FormPropertyProvider>
-								<OrdersProvider>
-									<CustomersProvider>
-										<RealtorsProvider>
-											<App />
-										</RealtorsProvider>
-									</CustomersProvider>
-								</OrdersProvider>
-							</FormPropertyProvider>
+							<FilterProvider>
+								<FormPropertyProvider>
+									<OrdersProvider>
+										<CustomersProvider>
+											<RealtorsProvider>
+												<App />
+											</RealtorsProvider>
+										</CustomersProvider>
+									</OrdersProvider>
+								</FormPropertyProvider>
+							</FilterProvider>
 						</PropertiesProvider>
 					</UsersProvider>
 				</SharedProvider>

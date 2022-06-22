@@ -22,6 +22,10 @@ const PropertiesServices = {
 		api.delete(`properties/${id}`, {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		}),
+	getSelectProperty: async () =>
+		api.get('properties/new-property', {
+			headers: { Authorization: `Bearer ${getValue('token')}` },
+		}),
 };
 
 export default PropertiesServices;

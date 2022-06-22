@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import Content from 'layout/Content';
+import { ToastContainer } from 'react-toastify';
 import { Button, Preloader, Search, Select } from 'components';
 import ContentHead from 'layout/ContentHead';
 import Property from './Property';
 import Detail from './Detail';
+import { toastError, toastSuccess } from 'utils/libs/toast';
 import useProperties from 'hooks/useProperties';
-import useShared from 'hooks/useShared';
+import useFilter from 'hooks/useFilter';
+import PropertiesServices from 'services/propertiesService';
 
 const Properties = () => {
 	const [tab, setTab] = useState(1);
@@ -19,9 +22,6 @@ const Properties = () => {
 		getProperties,
 		loading,
 		setProperty,
-		setOperationId,
-		operationId,
-		operationType,
 		propertyType,
 		propertyId,
 		setPropertyId,
@@ -30,27 +30,48 @@ const Properties = () => {
 		currencyType,
 	}:any = useProperties();
 	const {
-		stateForFilter,
-		stateForFilterSelected,
-		setStateForFilterSelected,
-		getStates,
-	}:any = useShared();
+		operationType,
+		operationTypeSelected,
+		setOperationTypeSelected,
+		getOperationType,
+
+		stateSelected,
+		setStateSelected,
+		state,
+		getStates
+	}:any = useFilter();
 	const [modalDetail, setModalDetail] = useState(false);
-	const region = stateForFilterSelected?.value !== 0 ? stateForFilterSelected?.value : '';
+	const region = stateSelected?.value !== 0 ? stateSelected?.value : '';
+	const operationId = operationTypeSelected?.value !== 0 ? operationTypeSelected?.value : '';
+
+	useEffect(() => {
+		getOperationType();
+	}, []);
 
 	useEffect(() => {
 		getStates();
 	}, []);
 
 	useEffect(() => {
-		getProperties(`titleOrId=${title}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&operationId=${operationId.value}&typeId=${propertyId.value}&region=${region}&currencyId=${currencyId.value}&minPrice=${minPrice || 0}&maxPrice=${maxPrice || 1000000}`);
-	}, [title, bathrooms, bedrooms, operationId, propertyId, stateForFilterSelected, currencyId, minPrice, maxPrice]);
+		getProperties(`titleOrId=${title}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&operationId=${operationId}&typeId=${propertyId?.value}&region=${region}&currencyId=${currencyId?.value}&minPrice=${minPrice || 0}&maxPrice=${maxPrice || 1000000}`);
+	}, [title, bathrooms, bedrooms, operationTypeSelected, propertyId, stateSelected, currencyId, minPrice, maxPrice]);
 
 	if (loading) return <Preloader />;
 
 	const handleDetail = (property: any) => {
 		setModalDetail(true);
 		setProperty(property);
+	};
+
+
+	const onDelete = async (id: number) => {
+		try {
+			await PropertiesServices.deleteProperty(id);
+			toastSuccess('Cliente Eliminado Exitosamente');
+			getProperties();
+		} catch (error) {
+			toastError('Error al Eliminar Cliente');
+		}
 	};
 
 	const searchTiitle =  async (e: any) => setTitle(e.target.value);
@@ -94,8 +115,8 @@ const Properties = () => {
 									<Select
 										label="Tipo de Operacion"
 										options={operationType}
-										setSelected={setOperationId}
-										selected={operationId}
+										setSelected={setOperationTypeSelected}
+										selected={operationTypeSelected}
 									/>
 								</div>
 								<div className="col-md-3">
@@ -109,9 +130,9 @@ const Properties = () => {
 								<div className="col-md-3">
 									<Select
 										label="Region"
-										options={stateForFilter}
-										setSelected={setStateForFilterSelected}
-										selected={stateForFilterSelected}
+										options={state}
+										setSelected={setStateSelected}
+										selected={stateSelected}
 									/>
 								</div>
 								<div className="col-md-3">
@@ -164,7 +185,12 @@ const Properties = () => {
 									{
 										properties.length
 											? properties.map((property: any, index: number) => (
-												<Property key={index} property={property} setModalDetail={() => handleDetail(property)}/>
+												<Property
+													key={index}
+													property={property}
+													setModalDetail={() => handleDetail(property)}
+													onDelete={() => onDelete(property.code)}
+												/>
 											))
 											: null
 									}
@@ -178,6 +204,7 @@ const Properties = () => {
 				</div>
 				<Detail modal={modalDetail} setModal={setModalDetail}/>
 			</Content>
+			<ToastContainer />
 		</React.Fragment>
 	);
 };

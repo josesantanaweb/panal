@@ -9,10 +9,6 @@ const PropertiesContext = createContext({});
 
 const operationTypeForFilter = [
 	{
-		label: 'Todos',
-		value: '',
-	},
-	{
 		label: 'Venta',
 		value: 1,
 	},
@@ -43,10 +39,6 @@ const operationType = [
 
 const propertyType = [
 	{
-		label: 'Todos',
-		value: '',
-	},
-	{
 		label: 'Casa',
 		value: 1,
 	},
@@ -61,10 +53,6 @@ const propertyType = [
 ];
 
 const currencyType = [
-	{
-		label: 'Todos',
-		value: '',
-	},
 	{
 		label: 'Peso Chileno',
 		value: 1,

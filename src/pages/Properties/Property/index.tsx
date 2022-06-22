@@ -7,9 +7,10 @@ import casa from 'assets/images/casa.jpg';
 export interface PropertyProps {
 	property?: any
 	setModalDetail?: any
+	onDelete?: any
 }
 
-const Property:React.FC<PropertyProps> = ({ property, setModalDetail }) => {
+const Property:React.FC<PropertyProps> = ({ property, setModalDetail, onDelete }) => {
 	const ref = useRef(null);
 	const [openAction, setOpenAction] = useState(false);
 
@@ -48,7 +49,7 @@ const Property:React.FC<PropertyProps> = ({ property, setModalDetail }) => {
 								<BiFile size={18}/>
 								<span>Bitacora</span>
 							</li>
-							<li>
+							<li onClick={onDelete}>
 								<BiTrash size={18}/>
 								<span>Dar de baja</span>
 							</li>
