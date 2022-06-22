@@ -9,6 +9,7 @@ import { UsersProvider } from 'context/UsersContext';
 import { RealtorsProvider } from 'context/RealtorsContext';
 import { CustomersProvider } from 'context/CustomersContext';
 import { PropertiesProvider } from 'context/PropertiesContext';
+import { FormPropertyProvider } from 'context/FormPropertyContext';
 import { OrdersProvider } from 'context/OrdersContext';
 import { SharedProvider } from 'context/SharedContext';
 
@@ -19,13 +20,15 @@ ReactDOM.render(
 				<SharedProvider>
 					<UsersProvider>
 						<PropertiesProvider>
-							<OrdersProvider>
-								<CustomersProvider>
-									<RealtorsProvider>
-										<App />
-									</RealtorsProvider>
-								</CustomersProvider>
-							</OrdersProvider>
+							<FormPropertyProvider>
+								<OrdersProvider>
+									<CustomersProvider>
+										<RealtorsProvider>
+											<App />
+										</RealtorsProvider>
+									</CustomersProvider>
+								</OrdersProvider>
+							</FormPropertyProvider>
 						</PropertiesProvider>
 					</UsersProvider>
 				</SharedProvider>

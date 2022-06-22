@@ -6,6 +6,7 @@ import Users from 'pages/Users';
 import Realtors from 'pages/Realtors';
 import Customers from 'pages/Customers';
 import Properties from 'pages/Properties';
+import AddProperty from 'pages/Properties/Add';
 import Orders from 'pages/Orders';
 import Home from 'pages/Home';
 
@@ -20,6 +21,7 @@ const App = () => {
 				<Route path="realtors" element={<Realtors />} />
 				<Route path="customers" element={<Customers />} />
 				<Route path="properties" element={<Properties />} />
+				<Route path="add-property" element={<AddProperty />} />
 				<Route path="orders" element={<Orders />} />
 			</Route>
 		</Routes>

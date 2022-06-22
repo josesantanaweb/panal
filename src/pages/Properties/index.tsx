@@ -78,105 +78,85 @@ const Properties = () => {
 						<div className="tabs-item" hidden={tab != 1}>
 							<ContentHead
 								title="Lista de Propiedades"
-								// onClick={() => console.log('Agregar Propiedad')}
+								onClick={() => console.log('Agregar Propiedad')}
 							/>
 							<div className="row mb-4">
 								<div className="col-md-3">
-									<div className="search-customer">
-										<Search
-											iconSeach
-											placeholder="Buscar Propiedades"
-											onChange={searchTiitle}
-										/>
-									</div>
+									<Search
+										iconSeach
+										placeholder="Buscar Propiedades"
+										onChange={searchTiitle}
+									/>
 								</div>
 							</div>
 							<div className="row mb-4">
 								<div className="col-md-3">
-									<div className="search-customer">
-										<Select
-											label="Tipo Operacion"
-											options={operationType}
-											setSelected={setOperationId}
-											selected={operationId}
-										/>
-									</div>
+									<Select
+										label="Tipo de Operacion"
+										options={operationType}
+										setSelected={setOperationId}
+										selected={operationId}
+									/>
 								</div>
 								<div className="col-md-3">
-									<div className="search-customer">
-										<Select
-											label="Tipo de Propiedad"
-											options={propertyType}
-											setSelected={setPropertyId}
-											selected={propertyId}
-										/>
-									</div>
+									<Select
+										label="Tipo de Propiedad"
+										options={propertyType}
+										setSelected={setPropertyId}
+										selected={propertyId}
+									/>
 								</div>
 								<div className="col-md-3">
-									<div className="search-customer">
-										<Select
-											label="Region"
-											options={stateForFilter}
-											setSelected={setStateForFilterSelected}
-											selected={stateForFilterSelected}
-										/>
-									</div>
+									<Select
+										label="Region"
+										options={stateForFilter}
+										setSelected={setStateForFilterSelected}
+										selected={stateForFilterSelected}
+									/>
 								</div>
 								<div className="col-md-3">
-									<div className="search-customer">
-										<Search
-											label="Comuna"
-											placeholder="Comuna"
-										/>
-									</div>
+									<Search
+										label="Comuna"
+										placeholder="Comuna"
+									/>
 								</div>
 							</div>
 							<div className="row mb-4">
 								<div className="col-md-3">
-									<div className="search-customer">
-										<Select
+									<Select
                     	label="Tipo de Moneda"
-											options={currencyType}
-											setSelected={setCurrencyId}
-											selected={currencyId}
-										/>
-									</div>
+										options={currencyType}
+										setSelected={setCurrencyId}
+										selected={currencyId}
+									/>
 								</div>
 								<div className="col-md">
-									<div className="search-customer">
-										<Search
+									<Search
                     	label="Precio Minimo"
-											placeholder="Precio Minimo"
-											onChange={searchMinPrice}
-										/>
-									</div>
+										placeholder="Precio Minimo"
+										onChange={searchMinPrice}
+									/>
 								</div>
 								<div className="col-md">
-									<div className="search-customer">
-										<Search
+									<Search
                     	label="Precio Maximo"
-											placeholder="Precio Maximo"
-											onChange={searchMaxPrice}
-										/>
-									</div>
+										placeholder="Precio Maximo"
+										onChange={searchMaxPrice}
+									/>
 								</div>
 								<div className="col-md-3">
-									<div className="search-customer">
-										<Search
+									<Search
                     	label="Cantidad de Baños"
-											placeholder="Baños"
-											onChange={searchBathrooms}
-										/>
-									</div>
+										placeholder="Baños"
+										onChange={searchBathrooms}
+									/>
 								</div>
 								<div className="col-md-3">
-									<div className="search-customer">
-										<Search
+									<Search
                     	label="Cantidad de Habitaciones"
-											placeholder="Habitaciones"
-											onChange={searchBedrooms}
-										/>
-									</div>
+										placeholder="Habitaciones"
+										onChange={searchBedrooms}
+									/>
 								</div>
 							</div>
 							<div className="properties">

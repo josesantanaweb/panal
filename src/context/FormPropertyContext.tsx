@@ -5,26 +5,7 @@ interface props {
   children: JSX.Element | JSX.Element[]
 }
 
-const PropertiesContext = createContext({});
-
-const operationTypeForFilter = [
-	{
-		label: 'Todos',
-		value: '',
-	},
-	{
-		label: 'Venta',
-		value: 1,
-	},
-	{
-		label: 'Arriendo',
-		value: 2,
-	},
-	{
-		label: 'Arriendo Temporal',
-		value: 3,
-	},
-];
+const FormPropertyContext = createContext({});
 
 const operationType = [
 	{
@@ -62,10 +43,6 @@ const propertyType = [
 
 const currencyType = [
 	{
-		label: 'Todos',
-		value: '',
-	},
-	{
 		label: 'Peso Chileno',
 		value: 1,
 	},
@@ -75,12 +52,11 @@ const currencyType = [
 	},
 ];
 
-export const PropertiesProvider = ({children}: props) => {
+export const FormPropertyProvider = ({children}: props) => {
 	const [properties, setProperties] = useState<any>([]);
 	const [property, setProperty] = useState<any>({});
 	const [loading, setLoading] = useState<boolean>(true);
 	const [operationId, setOperationId] = useState<any>(operationType[0]);
-	const [operationIdForFilter, setOperationIdForFilter] = useState<any>(operationTypeForFilter[0]);
 	const [propertyId, setPropertyId] = useState<any>(propertyType[0]);
 	const [currencyId, setCurrencyId] = useState<any>(currencyType[0]);
 
@@ -93,7 +69,7 @@ export const PropertiesProvider = ({children}: props) => {
 
 	return (
 		// eslint-disable-next-line react/react-in-jsx-scope
-		<PropertiesContext.Provider value={{
+		<FormPropertyContext.Provider value={{
 			properties,
 			setProperties,
 			getProperties,
@@ -102,9 +78,6 @@ export const PropertiesProvider = ({children}: props) => {
 			setProperty,
 			operationType,
 			operationId,
-			operationTypeForFilter,
-			operationIdForFilter,
-			setOperationIdForFilter,
 			currencyId,
 			setCurrencyId,
 			currencyType,
@@ -114,9 +87,9 @@ export const PropertiesProvider = ({children}: props) => {
 			setPropertyId,
 		}}>
 			{children}
-		</PropertiesContext.Provider>
+		</FormPropertyContext.Provider>
 	);
 };
 
 
-export default PropertiesContext;
+export default FormPropertyContext;
