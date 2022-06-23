@@ -2,8 +2,8 @@ import api from 'config/api';
 import { getValue } from 'utils';
 
 const OrdersServices = {
-	getOrders: () =>
-		api.get('visiting-order', {
+	getOrders: (query?: string) =>
+		api.get(`visiting-order?${query}`, {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		}),
 	getOrder: async (id: number) =>
