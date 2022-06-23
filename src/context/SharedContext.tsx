@@ -19,8 +19,13 @@ export const SharedProvider = ({children}: props) => {
 	const [stateSelected, setStateSelected] = useState<any>();
 	const [customers, setCustomers] = useState([]);
 	const [customerSelected, setCustomerSelected] = useState<any>();
+
 	const [realtors, setRealtors] = useState([]);
 	const [realtorSelected, setRealtorSelected] = useState<any>();
+	const [realtorSalerSelected, setRealtorSalerSelected] = useState<any>();
+	const [realtorBuyerSelected, setRealtorBuyerSelected] = useState<any>();
+	const [realtorCatcherSelected, setRealtorCatcherSelected] = useState<any>();
+
 	const [portals, setPortals] = useState([]);
 
 	const getPortals = async () => {
@@ -76,6 +81,9 @@ export const SharedProvider = ({children}: props) => {
 			setRealtors(data);
 			if (response !== undefined) {
 				setRealtorSelected(data[0]);
+				setRealtorSalerSelected(data[0]);
+				setRealtorBuyerSelected(data[0]);
+				setRealtorCatcherSelected(data[0]);
 			}
 		}).catch();
 	};
@@ -98,10 +106,18 @@ export const SharedProvider = ({children}: props) => {
 			customerSelected,
 			setCustomerSelected,
 			getCustomers,
+
 			realtors,
 			realtorSelected,
 			setRealtorSelected,
+			realtorSalerSelected,
+			setRealtorSalerSelected,
+			realtorBuyerSelected,
+			setRealtorBuyerSelected,
+			realtorCatcherSelected,
+			setRealtorCatcherSelected,
 			getRealtors,
+
 			getPortals,
 			setPortals,
 			portals
@@ -116,9 +132,17 @@ export const SharedProvider = ({children}: props) => {
 			customers,
 			customerSelected,
 			setCustomerSelected,
+
 			realtors,
 			realtorSelected,
 			setRealtorSelected,
+			realtorSalerSelected,
+			setRealtorSalerSelected,
+			realtorBuyerSelected,
+			setRealtorBuyerSelected,
+			realtorCatcherSelected,
+			setRealtorCatcherSelected,
+
 			portals,
 			setPortals
 		]

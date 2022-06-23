@@ -1,3 +1,42 @@
 export const initialValues = {
 	price: 100,
+	commission: 100,
+	ownerLessor: {
+		name: '',
+		lastName: '',
+		rut: '',
+		email: '',
+		fono: '',
+		rolNumber: 0,
+		newProperty: false,
+		usedProperty: false,
+		privateObservations: '',
+		customerId: 1,
+	},
+	address: {
+		detailedAddress: {
+			commune: '',
+			number: 0,
+			cityId: '',
+			sector: 'values.address.detailedAddress.sector',
+		},
+		latitude: '',
+		longitude: '',
+	},
+	characteristics: {
+		numberOfSuites: 0,
+		bedrooms: 0,
+		serviceBedroom: 0,
+		totalBedrooms: 0,
+		bathrooms: 0,
+		totalBathrooms: 0,
+		landArea: '',
+		constructedSurface: '',
+		numberOfCoveredParkingSpaces: 0,
+		numberOfUncoveredParkingSpaces: 0,
+	},
+	observations: {
+		publicTitle: '',
+		description: '',
+	},
 };

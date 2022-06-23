@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Content from 'layout/Content';
 import { ToastContainer } from 'react-toastify';
 import { Button, Preloader, Search, Select } from 'components';
@@ -8,21 +9,26 @@ import Detail from './Detail';
 import { toastError, toastSuccess } from 'utils/libs/toast';
 import useProperties from 'hooks/useProperties';
 import useFilter from 'hooks/useFilter';
+import useShared from 'hooks/useShared';
 import PropertiesServices from 'services/propertiesService';
 
 const Properties = () => {
+	const navigate = useNavigate();
 	const [tab, setTab] = useState(1);
 	const [title, setTitle] = useState('');
 	const [bathrooms, setBathrooms] = useState('');
 	const [bedrooms, setBedrooms] = useState('');
 	const [minPrice, setMinPrice] = useState('');
 	const [maxPrice, setMaxPrice] = useState('');
+	const [modalDetail, setModalDetail] = useState(false);
+
 	const {
 		properties,
 		getProperties,
 		loading,
 		setProperty,
 	}:any = useProperties();
+
 	const {
 		operationType,
 		operationTypeSelected,
@@ -37,14 +43,14 @@ const Properties = () => {
 		stateSelected,
 		setStateSelected,
 		state,
-		getStates,
-
+		getStates: getStatesForFilter,
 		currencySelected,
 		setCurrencySelected,
 		currency,
 		getCurrency
 	}:any = useFilter();
-	const [modalDetail, setModalDetail] = useState(false);
+	const { getCountries, getStates }:any = useShared();
+
 	const region = stateSelected?.value !== 0 ? stateSelected?.value : '';
 	const operationId = operationTypeSelected?.value !== 0 ? operationTypeSelected?.value : '';
 	const currencyId = currencySelected?.value !== 0 ? currencySelected?.value : '';
@@ -55,7 +61,15 @@ const Properties = () => {
 	}, []);
 
 	useEffect(() => {
+		getCountries();
+	}, []);
+
+	useEffect(() => {
 		getPropertyType();
+	}, []);
+
+	useEffect(() => {
+		getStatesForFilter();
 	}, []);
 
 	useEffect(() => {
@@ -113,7 +127,7 @@ const Properties = () => {
 						<div className="tabs-item" hidden={tab != 1}>
 							<ContentHead
 								title="Lista de Propiedades"
-								onClick={() => console.log('Agregar Propiedad')}
+								onClick={() => navigate('/add-property')}
 							/>
 							<div className="row mb-4">
 								<div className="col-md-3">
