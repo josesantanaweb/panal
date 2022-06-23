@@ -5,12 +5,12 @@ import CustomersServices from 'services/customersService';
 import RealtorsServices from 'services/realtorsService';
 
 interface props {
-  children: JSX.Element | JSX.Element[]
+	children: JSX.Element | JSX.Element[];
 }
 
 const SharedContext = createContext({});
 
-export const SharedProvider = ({children}: props) => {
+export const SharedProvider = ({ children }: props) => {
 	const [documents, setDocuments] = useState<any>([]);
 	const [documentSelected, setDocumentSelected] = useState<any>();
 	const [countries, setCountries] = useState([]);
@@ -29,63 +29,92 @@ export const SharedProvider = ({children}: props) => {
 	const [portals, setPortals] = useState([]);
 
 	const getPortals = async () => {
-		SharedServices.getPortals().then((response) => {
-			const data = response.data?.data;
-			setPortals(data);
-		}).catch();
+		SharedServices.getPortals()
+			.then((response) => {
+				const data = response.data?.data;
+				setPortals(data);
+			})
+			.catch();
 	};
 
 	const getDocuments = async () => {
-		SharedServices.getDocuments().then((response) => {
-			const data = response.data?.data.map((item: any) => ({label: item.name, value: item.id}));
-			setDocuments(data);
-			if (response !== undefined) {
-				setDocumentSelected(data[0]);
-			}
-		}).catch();
+		SharedServices.getDocuments()
+			.then((response) => {
+				const data = response.data?.data.map((item: any) => ({
+					label: item.name,
+					value: item.id
+				}));
+				setDocuments(data);
+				if (response !== undefined) {
+					setDocumentSelected(data[0]);
+				}
+			})
+			.catch();
 	};
 
 	const getCountries = async () => {
-		SharedServices.getCountries().then((response) => {
-			const data = response.data?.data.map((item: any) => ({label: item.name, value: item.id}));
-			setCountries(data);
-			if (response !== undefined) {
-				setCountrySelected(data[0]);
-			}
-		}).catch();
+		SharedServices.getCountries()
+			.then((response) => {
+				const data = response.data?.data.map((item: any) => ({
+					label: item.name,
+					value: item.id
+				}));
+				setCountries(data);
+				if (response !== undefined) {
+					setCountrySelected(data[0]);
+				}
+			})
+			.catch();
 	};
 
 	const getStates = async () => {
-		SharedServices.getStates().then((response) => {
-			const data = response.data?.data.map((item: any) => ({label: item.name, value: item.id}));
-			setStates(data);
-			if (response !== undefined) {
-				setStateSelected(data[0]);
-			}
-		}).catch();
+		SharedServices.getStates()
+			.then((response) => {
+				const data = response.data?.data.map((item: any) => ({
+					label: item.name,
+					value: item.id,
+					latitude: item.latitude,
+					longitude: item.longitude
+				}));
+				setStates(data);
+				if (response !== undefined) {
+					setStateSelected(data[0]);
+				}
+			})
+			.catch();
 	};
 
 	const getCustomers = async () => {
-		CustomersServices.getCustomers().then((response) => {
-			const data = response.data?.data.map((item: any) => ({label: item.name, value: item.id}));
-			setCustomers(data);
-			if (response !== undefined) {
-				setCustomerSelected(data[0]);
-			}
-		}).catch();
+		CustomersServices.getCustomers()
+			.then((response) => {
+				const data = response.data?.data.map((item: any) => ({
+					label: item.name,
+					value: item.id
+				}));
+				setCustomers(data);
+				if (response !== undefined) {
+					setCustomerSelected(data[0]);
+				}
+			})
+			.catch();
 	};
 
 	const getRealtors = async () => {
-		RealtorsServices.getRealtors().then((response) => {
-			const data = response.data?.data.map((item: any) => ({label: item.name, value: item.id}));
-			setRealtors(data);
-			if (response !== undefined) {
-				setRealtorSelected(data[0]);
-				setRealtorSalerSelected(data[0]);
-				setRealtorBuyerSelected(data[0]);
-				setRealtorCatcherSelected(data[0]);
-			}
-		}).catch();
+		RealtorsServices.getRealtors()
+			.then((response) => {
+				const data = response.data?.data.map((item: any) => ({
+					label: item.name,
+					value: item.id
+				}));
+				setRealtors(data);
+				if (response !== undefined) {
+					setRealtorSelected(data[0]);
+					setRealtorSalerSelected(data[0]);
+					setRealtorBuyerSelected(data[0]);
+					setRealtorCatcherSelected(data[0]);
+				}
+			})
+			.catch();
 	};
 
 	const value = useMemo(
@@ -150,11 +179,8 @@ export const SharedProvider = ({children}: props) => {
 
 	return (
 		// eslint-disable-next-line react/react-in-jsx-scope
-		<SharedContext.Provider value={value}>
-			{children}
-		</SharedContext.Provider>
+		<SharedContext.Provider value={value}>{children}</SharedContext.Provider>
 	);
 };
-
 
 export default SharedContext;

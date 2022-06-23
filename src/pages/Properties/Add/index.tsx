@@ -51,7 +51,9 @@ const AddProperty = () => {
 		countries,
 		stateSelected,
 		setStateSelected,
-		states
+		states,
+		getCountries,
+		getStates
 	}: any = useShared();
 
 	// Mapa
@@ -67,6 +69,14 @@ const AddProperty = () => {
 			);
 		}
 	}, [mapDiv]);
+
+	useEffect(() => {
+		getCountries();
+	}, []);
+
+	useEffect(() => {
+		getStates();
+	}, []);
 
 	useEffect(() => {
 		getRealtors();
@@ -425,6 +435,9 @@ const AddProperty = () => {
 												type="text"
 												name="address.latitude"
 												label="Latitud"
+												value={
+													(values.address.latitude = stateSelected.latitude)
+												}
 												component={Input}
 											/>
 										</div>
@@ -433,6 +446,9 @@ const AddProperty = () => {
 												type="text"
 												name="address.longitude"
 												label="Longitud"
+												value={
+													(values.address.longitude = stateSelected.longitude)
+												}
 												component={Input}
 											/>
 										</div>
