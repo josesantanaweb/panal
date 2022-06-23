@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import 'react-toastify/dist/ReactToastify.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import './assets/scss/main.scss';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from 'context/AuthContext';

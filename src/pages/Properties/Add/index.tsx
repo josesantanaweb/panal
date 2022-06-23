@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input, Modal, Select, Checkbox, Textarea } from 'components';
+import { Map } from 'mapbox-gl';
 import { Field, Form, Formik } from 'formik';
 import { ToastContainer } from 'react-toastify';
 import { validationSchema } from './validations';
@@ -11,10 +12,13 @@ import Characteristics from './Characteristics';
 import Upload from './Upload';
 import PropertiesServices from 'services/propertiesService';
 
-
 const AddProperty = () => {
 	const [upload, setUpload] = useState<boolean>(false);
 	const [propertyId, setPropertyId] = useState<number>();
+
+	// Mapa
+	const mapDiv = useRef<HTMLDivElement>(null);
+	const [mapa, setMapa] = useState<Map>();
 
 	const {
 		operationType,
@@ -30,8 +34,8 @@ const AddProperty = () => {
 		propertyType,
 		propertyTypeSelected,
 		setPropertyTypeSelected,
-		getPropertyType,
-	}:any = useFormProperty();
+		getPropertyType
+	}: any = useFormProperty();
 
 	const {
 		realtors,
@@ -47,8 +51,22 @@ const AddProperty = () => {
 		countries,
 		stateSelected,
 		setStateSelected,
-		states,
-	}:any = useShared();
+		states
+	}: any = useShared();
+
+	// Mapa
+	useEffect(() => {
+		if (mapDiv.current) {
+			setMapa(
+				new Map({
+					container: mapDiv.current, // container ID
+					style: 'mapbox://styles/mapbox/streets-v11', // style URL
+					center: [-74.5, 40], // starting position [lng, lat]
+					zoom: 9 // starting zoom
+				})
+			);
+		}
+	}, [mapDiv]);
 
 	useEffect(() => {
 		getRealtors();
@@ -77,12 +95,12 @@ const AddProperty = () => {
 			ownerLessor: {
 				...values.ownerLessor,
 				propertyTypeId: propertyTypeSelected.value,
-				customerId: 1,
+				customerId: 1
 			},
 			address: {
 				countryId: countrySelected.value,
 				stateId: stateSelected.value,
-				...values.address,
+				...values.address
 			},
 			characteristics: {
 				numberOfSuites: values.characteristics.numberOfSuites,
@@ -93,8 +111,10 @@ const AddProperty = () => {
 				totalBathrooms: values.characteristics.totalBathrooms,
 				landArea: values.characteristics.landArea,
 				constructedSurface: values.characteristics.constructedSurface,
-				numberOfCoveredParkingSpaces: values.characteristics.numberOfCoveredParkingSpaces,
-				numberOfUncoveredParkingSpaces: values.characteristics.numberOfUncoveredParkingSpaces,
+				numberOfCoveredParkingSpaces:
+					values.characteristics.numberOfCoveredParkingSpaces,
+				numberOfUncoveredParkingSpaces:
+					values.characteristics.numberOfUncoveredParkingSpaces
 			},
 			observations: {
 				...values.observations
@@ -158,10 +178,8 @@ const AddProperty = () => {
 												}
 											/>
 										</div>
-										<div className="col-md-3" style={{'marginTop': '20px'}}>
-											<Button block>
-                        Agregar requisitos de arriendo
-											</Button>
+										<div className="col-md-3" style={{ marginTop: '20px' }}>
+											<Button block>Agregar requisitos de arriendo</Button>
 										</div>
 									</div>
 									<div className="row mb-4">
@@ -194,7 +212,9 @@ const AddProperty = () => {
 												placeholder="Ingrese Comision"
 												component={Input}
 												error={
-													errors.commission && touched.commission ? errors.commission : null
+													errors.commission && touched.commission
+														? errors.commission
+														: null
 												}
 											/>
 										</div>
@@ -221,7 +241,9 @@ const AddProperty = () => {
 												placeholder="Ingrese Nombre"
 												component={Input}
 												error={
-													errors.ownerLessor?.name && touched.ownerLessor?.name ? errors.ownerLessor?.name : null
+													errors.ownerLessor?.name && touched.ownerLessor?.name
+														? errors.ownerLessor?.name
+														: null
 												}
 											/>
 										</div>
@@ -233,7 +255,10 @@ const AddProperty = () => {
 												placeholder="Ingrese Apellido"
 												component={Input}
 												error={
-													errors.ownerLessor?.lastName && touched.ownerLessor?.lastName ? errors.ownerLessor?.lastName : null
+													errors.ownerLessor?.lastName &&
+													touched.ownerLessor?.lastName
+														? errors.ownerLessor?.lastName
+														: null
 												}
 											/>
 										</div>
@@ -245,7 +270,9 @@ const AddProperty = () => {
 												placeholder="Ingrese Rut"
 												component={Input}
 												error={
-													errors.ownerLessor?.rut && touched.ownerLessor?.rut ? errors.ownerLessor?.rut : null
+													errors.ownerLessor?.rut && touched.ownerLessor?.rut
+														? errors.ownerLessor?.rut
+														: null
 												}
 											/>
 										</div>
@@ -257,7 +284,10 @@ const AddProperty = () => {
 												placeholder="Ingrese Email"
 												component={Input}
 												error={
-													errors.ownerLessor?.email && touched.ownerLessor?.email ? errors.ownerLessor?.email : null
+													errors.ownerLessor?.email &&
+													touched.ownerLessor?.email
+														? errors.ownerLessor?.email
+														: null
 												}
 											/>
 										</div>
@@ -410,6 +440,20 @@ const AddProperty = () => {
 
 									<div className="row mb-4">
 										<div className="col-md-12">
+											<div className="mapa">
+												<div
+													ref={mapDiv}
+													style={{
+														height: '400px',
+														width: '100%'
+													}}
+												/>
+											</div>
+										</div>
+									</div>
+
+									<div className="row mb-4">
+										<div className="col-md-12">
 											<h4>Caracteristicas</h4>
 										</div>
 									</div>
@@ -435,7 +479,10 @@ const AddProperty = () => {
 												placeholder="Ingrese Titulo"
 												component={Input}
 												error={
-													errors.observations?.publicTitle && touched.observations?.publicTitle ? errors.observations?.publicTitle : null
+													errors.observations?.publicTitle &&
+													touched.observations?.publicTitle
+														? errors.observations?.publicTitle
+														: null
 												}
 											/>
 										</div>
@@ -449,7 +496,10 @@ const AddProperty = () => {
 												placeholder="Ingrese Descripcion"
 												component={Textarea}
 												error={
-													errors.observations?.description && touched.observations?.description ? errors.observations?.description : null
+													errors.observations?.description &&
+													touched.observations?.description
+														? errors.observations?.description
+														: null
 												}
 											/>
 										</div>
@@ -458,18 +508,16 @@ const AddProperty = () => {
 									<div className="row">
 										<div className="col-md-3">
 											<Button block disabled={!isValid || !dirty}>
-                        Guardar
+												Guardar
 											</Button>
 										</div>
 									</div>
 								</Form>
 							)}
 						</Formik>
-					) :
-						(
-							<Upload propertyId={propertyId}/>
-						)
-					}
+					) : (
+						<Upload propertyId={propertyId} />
+					)}
 				</div>
 			</div>
 			<ToastContainer />
