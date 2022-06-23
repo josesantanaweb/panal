@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input, Modal, Select, Checkbox, Textarea } from 'components';
-import { Map } from 'mapbox-gl';
+import { Map, LngLatLike, Marker } from 'mapbox-gl';
 import { Field, Form, Formik } from 'formik';
 import { ToastContainer } from 'react-toastify';
 import { validationSchema } from './validations';
@@ -19,6 +19,7 @@ const AddProperty = () => {
 	// Mapa
 	const mapDiv = useRef<HTMLDivElement>(null);
 	const [mapa, setMapa] = useState<Map>();
+	const [centerMap, setCenterMap] = useState<LngLatLike>([-74.5, 40]);
 
 	const {
 		operationType,
@@ -58,13 +59,33 @@ const AddProperty = () => {
 
 	// Mapa
 	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(
+			({ coords }) => {
+				setCenterMap([stateSelected?.longitude, stateSelected?.latitude]);
+			},
+			() => {
+				toastError('No se puede acceder a la ubicacion');
+			}
+		);
+	}, [stateSelected]);
+
+	useEffect(() => {
+		mapa?.flyTo({
+			center: centerMap
+		});
+		if (mapa) {
+			new Marker({ color: '#04cde7' }).setLngLat(centerMap).addTo(mapa);
+		}
+	}, [centerMap]);
+
+	useEffect(() => {
 		if (mapDiv.current) {
 			setMapa(
 				new Map({
-					container: mapDiv.current, // container ID
-					style: 'mapbox://styles/mapbox/streets-v11', // style URL
-					center: [-74.5, 40], // starting position [lng, lat]
-					zoom: 9 // starting zoom
+					container: mapDiv.current,
+					style: 'mapbox://styles/mapbox/streets-v11',
+					center: centerMap,
+					zoom: 9
 				})
 			);
 		}
@@ -436,7 +457,7 @@ const AddProperty = () => {
 												name="address.latitude"
 												label="Latitud"
 												value={
-													(values.address.latitude = stateSelected.latitude)
+													(values.address.latitude = stateSelected?.latitude)
 												}
 												component={Input}
 											/>
@@ -447,7 +468,7 @@ const AddProperty = () => {
 												name="address.longitude"
 												label="Longitud"
 												value={
-													(values.address.longitude = stateSelected.longitude)
+													(values.address.longitude = stateSelected?.longitude)
 												}
 												component={Input}
 											/>
