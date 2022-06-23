@@ -14,6 +14,10 @@ const PropertiesServices = {
 		api.post('properties', data, {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		}),
+	uploadImages: async (data: any, id: number) =>
+		api.post(`properties/${id}/images`, data, {
+			headers: { Authorization: `Bearer ${getValue('token')}` },
+		}),
 	editProperty: async (id: number, data: any) =>
 		api.patch(`properties/${id}`, data, {
 			headers: { Authorization: `Bearer ${getValue('token')}` },

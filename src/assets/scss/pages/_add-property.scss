@@ -12,3 +12,33 @@
 	font-weight: 500;
 	margin-bottom: 1rem;
 }
+
+.add-property-upload-imagen {
+	width: 100%;
+	border-radius: 10px;
+	height: 200px;
+	border: 2px dashed $border-color;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-bottom: 2rem;
+	span {
+		margin-top: 1rem;
+	}
+
+	input {
+		display: none;
+	}
+}
+
+.add-property-upload-list {
+	display: grid;
+	grid-template-columns: repeat(5, 100px);
+	grid-gap: 1rem;
+	img {
+		height: 100px;
+		width: 100%;
+		border-radius: 10px;
+	}
+}
