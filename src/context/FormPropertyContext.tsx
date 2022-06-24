@@ -21,19 +21,15 @@ export const FormPropertyProvider = ({ children }: props) => {
 	const [currency, setCurrency] = useState<any>([]);
 	const [currencySelected, setCurrencySelected] = useState<any>();
 
-	const [bedroomFloors, setBedroomFloors] = useState([]);
+	const [floors, setFloors] = useState([]);
 	const [bedroomFloorsSelected, setBedroomFloorsSelected] = useState<any>();
 
-	const [bathroomFloor, setBathroomFloor] = useState([]);
 	const [bathroomFloorSelected, setBathroomFloorSelected] = useState<any>();
 
-	const [kitchenFloor, setKitchenFloor] = useState([]);
 	const [kitchenFloorSelected, setKitchenFloorSelected] = useState<any>();
 
-	const [livingRoomFloor, setLivingRoomFloor] = useState([]);
 	const [livingRoomFloorSelected, setLivingRoomFloorSelected] = useState<any>();
 
-	const [entranceHallFloor, setEntranceHallFloor] = useState([]);
 	const [entranceHallFloorSelected, setEntranceHallFloorSelected] =
 		useState<any>();
 
@@ -91,75 +87,19 @@ export const FormPropertyProvider = ({ children }: props) => {
 			.catch();
 	};
 
-	const getBedroomFloors = async () => {
+	const getFloors = async () => {
 		PropertiesServices.getSelectHouse()
 			.then((response) => {
 				const data = response.data?.bedroomFloors.map((item: any) => ({
 					label: item.value,
 					value: item.value
 				}));
-				setBedroomFloors(data);
+				setFloors(data);
 				if (response !== undefined) {
 					setBedroomFloorsSelected(data[0]);
-				}
-			})
-			.catch();
-	};
-
-	const getBathroomFloor = async () => {
-		PropertiesServices.getSelectHouse()
-			.then((response) => {
-				const data = response.data?.bathroomFloor.map((item: any) => ({
-					label: item.value,
-					value: item.value
-				}));
-				setBathroomFloor(data);
-				if (response !== undefined) {
 					setBathroomFloorSelected(data[0]);
-				}
-			})
-			.catch();
-	};
-
-	const getKitchenFloor = async () => {
-		PropertiesServices.getSelectHouse()
-			.then((response) => {
-				const data = response.data?.kitchenFloor.map((item: any) => ({
-					label: item.value,
-					value: item.value
-				}));
-				setKitchenFloor(data);
-				if (response !== undefined) {
 					setKitchenFloorSelected(data[0]);
-				}
-			})
-			.catch();
-	};
-
-	const getLivingRoomFloor = async () => {
-		PropertiesServices.getSelectHouse()
-			.then((response) => {
-				const data = response.data?.livingRoomFloor.map((item: any) => ({
-					label: item.value,
-					value: item.value
-				}));
-				setLivingRoomFloor(data);
-				if (response !== undefined) {
 					setLivingRoomFloorSelected(data[0]);
-				}
-			})
-			.catch();
-	};
-
-	const getEntranceHallFloor = async () => {
-		PropertiesServices.getSelectHouse()
-			.then((response) => {
-				const data = response.data?.entranceHallFloor.map((item: any) => ({
-					label: item.value,
-					value: item.value
-				}));
-				setEntranceHallFloor(data);
-				if (response !== undefined) {
 					setEntranceHallFloorSelected(data[0]);
 				}
 			})
@@ -192,30 +132,22 @@ export const FormPropertyProvider = ({ children }: props) => {
 				setPropertyTypeSelected,
 				getPropertyType,
 
-				bedroomFloors,
+				floors,
 				bedroomFloorsSelected,
 				setBedroomFloorsSelected,
-				getBedroomFloors,
+				getFloors,
 
-				bathroomFloor,
 				bathroomFloorSelected,
 				setBathroomFloorSelected,
-				getBathroomFloor,
 
-				kitchenFloor,
 				kitchenFloorSelected,
 				setKitchenFloorSelected,
-				getKitchenFloor,
 
-				livingRoomFloor,
 				livingRoomFloorSelected,
 				setLivingRoomFloorSelected,
-				getLivingRoomFloor,
 
-				entranceHallFloor,
 				entranceHallFloorSelected,
-				setEntranceHallFloorSelected,
-				getEntranceHallFloor
+				setEntranceHallFloorSelected
 			}}>
 			{children}
 		</FormPropertyContext.Provider>

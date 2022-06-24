@@ -5,50 +5,26 @@ import useFormProperty from 'hooks/useFormProperty';
 
 const House = ({ errors, touched, values }: any) => {
 	const {
-		bedroomFloors,
+		floors,
 		bedroomFloorsSelected,
 		setBedroomFloorsSelected,
-		getBedroomFloors,
+		getFloors,
 
-		bathroomFloor,
 		bathroomFloorSelected,
 		setBathroomFloorSelected,
-		getBathroomFloor,
 
-		kitchenFloor,
 		kitchenFloorSelected,
 		setKitchenFloorSelected,
-		getKitchenFloor,
 
-		livingRoomFloor,
 		livingRoomFloorSelected,
 		setLivingRoomFloorSelected,
-		getLivingRoomFloor,
 
-		entranceHallFloor,
 		entranceHallFloorSelected,
-		setEntranceHallFloorSelected,
-		getEntranceHallFloor
+		setEntranceHallFloorSelected
 	}: any = useFormProperty();
 
 	useEffect(() => {
-		getBedroomFloors();
-	}, []);
-
-	useEffect(() => {
-		getBathroomFloor();
-	}, []);
-
-	useEffect(() => {
-		getKitchenFloor();
-	}, []);
-
-	useEffect(() => {
-		getLivingRoomFloor();
-	}, []);
-
-	useEffect(() => {
-		getEntranceHallFloor();
+		getFloors();
 	}, []);
 
 	return (
@@ -254,7 +230,7 @@ const House = ({ errors, touched, values }: any) => {
 				<div className="col-md-3">
 					<Select
 						label="Pisos de Dormitorio"
-						options={bedroomFloors}
+						options={floors}
 						setSelected={setBedroomFloorsSelected}
 						selected={bedroomFloorsSelected}
 					/>
@@ -263,7 +239,7 @@ const House = ({ errors, touched, values }: any) => {
 				<div className="col-md-3">
 					<Select
 						label="Pisos de Baños"
-						options={bathroomFloor}
+						options={floors}
 						setSelected={setBathroomFloorSelected}
 						selected={bathroomFloorSelected}
 					/>
@@ -272,7 +248,7 @@ const House = ({ errors, touched, values }: any) => {
 				<div className="col-md-3">
 					<Select
 						label="Pisos de Baños"
-						options={kitchenFloor}
+						options={floors}
 						setSelected={setKitchenFloorSelected}
 						selected={kitchenFloorSelected}
 					/>
@@ -281,7 +257,7 @@ const House = ({ errors, touched, values }: any) => {
 				<div className="col-md-3">
 					<Select
 						label="Pisos del Living"
-						options={livingRoomFloor}
+						options={floors}
 						setSelected={setLivingRoomFloorSelected}
 						selected={livingRoomFloorSelected}
 					/>
@@ -292,7 +268,7 @@ const House = ({ errors, touched, values }: any) => {
 				<div className="col-md-3">
 					<Select
 						label="Pisos Hall de Entrada"
-						options={entranceHallFloor}
+						options={floors}
 						setSelected={setEntranceHallFloorSelected}
 						selected={entranceHallFloorSelected}
 					/>
