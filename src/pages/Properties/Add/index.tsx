@@ -8,7 +8,7 @@ import { toastError, toastSuccess } from 'utils/libs/toast';
 import { initialValues } from './initialValues';
 import useFormProperty from 'hooks/useFormProperty';
 import useShared from 'hooks/useShared';
-import Characteristics from './Characteristics';
+import House from './Characteristics/House';
 import Upload from './Upload';
 import PropertiesServices from 'services/propertiesService';
 
@@ -35,7 +35,17 @@ const AddProperty = () => {
 		propertyType,
 		propertyTypeSelected,
 		setPropertyTypeSelected,
-		getPropertyType
+		getPropertyType,
+
+		bedroomFloorsSelected,
+
+		bathroomFloorSelected,
+
+		kitchenFloorSelected,
+
+		livingRoomFloorSelected,
+
+		entranceHallFloorSelected
 	}: any = useFormProperty();
 
 	const {
@@ -61,7 +71,9 @@ const AddProperty = () => {
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(
 			({ coords }) => {
-				setCenterMap([stateSelected?.longitude, stateSelected?.latitude]);
+				if (stateSelected) {
+					setCenterMap([stateSelected?.longitude, stateSelected?.latitude]);
+				}
 			},
 			() => {
 				toastError('No se puede acceder a la ubicacion');
@@ -134,18 +146,23 @@ const AddProperty = () => {
 				...values.address
 			},
 			characteristics: {
-				numberOfSuites: values.characteristics.numberOfSuites,
-				bedrooms: values.characteristics.bedrooms,
-				serviceBedroom: values.characteristics.serviceBedroom,
-				totalBedrooms: values.characteristics.totalBedrooms,
-				bathrooms: values.characteristics.bathrooms,
-				totalBathrooms: values.characteristics.totalBathrooms,
-				landArea: values.characteristics.landArea,
-				constructedSurface: values.characteristics.constructedSurface,
-				numberOfCoveredParkingSpaces:
-					values.characteristics.numberOfCoveredParkingSpaces,
-				numberOfUncoveredParkingSpaces:
-					values.characteristics.numberOfUncoveredParkingSpaces
+				...values.characteristics,
+				bedroomFloors: bedroomFloorsSelected.value,
+				bathroomFloor: bathroomFloorSelected.value,
+				kitchenFloor: kitchenFloorSelected.value,
+				livingRoomFloor: livingRoomFloorSelected.value
+				// numberOfSuites: values.characteristics.numberOfSuites,
+				// bedrooms: values.characteristics.bedrooms,
+				// serviceBedroom: values.characteristics.serviceBedroom,
+				// totalBedrooms: values.characteristics.totalBedrooms,
+				// bathrooms: values.characteristics.bathrooms,
+				// totalBathrooms: values.characteristics.totalBathrooms,
+				// landArea: values.characteristics.landArea,
+				// constructedSurface: values.characteristics.constructedSurface,
+				// numberOfCoveredParkingSpaces:
+				// 	values.characteristics.numberOfCoveredParkingSpaces,
+				// numberOfUncoveredParkingSpaces:
+				// 	values.characteristics.numberOfUncoveredParkingSpaces
 			},
 			observations: {
 				...values.observations
@@ -153,15 +170,15 @@ const AddProperty = () => {
 		};
 		console.log(formData);
 
-		try {
-			const response = await PropertiesServices.addProperty(formData);
-			toastSuccess('Propiedad Guardada');
-			setPropertyId(response.data.id);
-			setUpload(true);
-			resetForm();
-		} catch (error) {
-			toastError('Error al Crear Propiedad');
-		}
+		// try {
+		// 	const response = await PropertiesServices.addProperty(formData);
+		// 	toastSuccess('Propiedad Guardada');
+		// 	setPropertyId(response.data.id);
+		// 	setUpload(true);
+		// 	resetForm();
+		// } catch (error) {
+		// 	toastError('Error al Crear Propiedad');
+		// }
 	};
 
 	return (
@@ -456,6 +473,7 @@ const AddProperty = () => {
 												type="text"
 												name="address.latitude"
 												label="Latitud"
+												disabled={true}
 												value={
 													(values.address.latitude = stateSelected?.latitude)
 												}
@@ -466,6 +484,7 @@ const AddProperty = () => {
 											<Field
 												type="text"
 												name="address.longitude"
+												disabled={true}
 												label="Longitud"
 												value={
 													(values.address.longitude = stateSelected?.longitude)
@@ -491,15 +510,11 @@ const AddProperty = () => {
 
 									<div className="row mb-4">
 										<div className="col-md-12">
-											<h4>Caracteristicas</h4>
+											<h4>Caracteristicas Basica</h4>
 										</div>
 									</div>
 
-									<Characteristics
-										errors={errors}
-										touched={touched}
-										values={values}
-									/>
+									<House errors={errors} touched={touched} values={values} />
 
 									<div className="row mb-4">
 										<div className="col-md-12">

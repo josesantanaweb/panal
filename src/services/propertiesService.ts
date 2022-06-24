@@ -30,6 +30,10 @@ const PropertiesServices = {
 		api.get('properties/new-property', {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		}),
+	getSelectHouse: async () =>
+		api.get('properties/new-property/selects?propertyTypeId=1', {
+			headers: { Authorization: `Bearer ${getValue('token')}` },
+		}),
 };
 
 export default PropertiesServices;

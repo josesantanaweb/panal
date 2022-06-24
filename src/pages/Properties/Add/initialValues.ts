@@ -34,6 +34,11 @@ export const initialValues = {
 		constructedSurface: '',
 		numberOfCoveredParkingSpaces: 0,
 		numberOfUncoveredParkingSpaces: 0,
+		dailyEater: false,
+		jacuzzi: false,
+		warehouse: false,
+		livingRoom: false,
+		sauna: false,
 	},
 	observations: {
 		publicTitle: '',
