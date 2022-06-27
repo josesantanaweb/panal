@@ -45,7 +45,31 @@ const AddProperty = () => {
 
 		livingRoomFloorSelected,
 
-		entranceHallFloorSelected
+		entranceHallFloorSelected,
+
+		styleOfHouseSelected,
+
+		typeOfHouseSelected,
+
+		finalReceptionSelected,
+
+		orientationSelected,
+
+		typesOfKitchenFurnitureSelected,
+
+		typeOfGasSelected,
+
+		thermoPanelSelected,
+
+		typeOfHotWaterSelected,
+
+		typeOfHeatingSelected,
+
+		typeOfKitchenSelected,
+
+		typeOfConstructionSelected,
+
+		typeOfWindowsSelected
 	}: any = useFormProperty();
 
 	const {
@@ -150,19 +174,20 @@ const AddProperty = () => {
 				bedroomFloors: bedroomFloorsSelected.value,
 				bathroomFloor: bathroomFloorSelected.value,
 				kitchenFloor: kitchenFloorSelected.value,
-				livingRoomFloor: livingRoomFloorSelected.value
-				// numberOfSuites: values.characteristics.numberOfSuites,
-				// bedrooms: values.characteristics.bedrooms,
-				// serviceBedroom: values.characteristics.serviceBedroom,
-				// totalBedrooms: values.characteristics.totalBedrooms,
-				// bathrooms: values.characteristics.bathrooms,
-				// totalBathrooms: values.characteristics.totalBathrooms,
-				// landArea: values.characteristics.landArea,
-				// constructedSurface: values.characteristics.constructedSurface,
-				// numberOfCoveredParkingSpaces:
-				// 	values.characteristics.numberOfCoveredParkingSpaces,
-				// numberOfUncoveredParkingSpaces:
-				// 	values.characteristics.numberOfUncoveredParkingSpaces
+				livingRoomFloor: livingRoomFloorSelected.value,
+				entranceHallFloor: entranceHallFloorSelected.value,
+				styleOfHouse: styleOfHouseSelected.value,
+				typeOfHouse: typeOfHouseSelected.value,
+				finalReception: finalReceptionSelected.value,
+				orientation: orientationSelected.value,
+				typesOfKitchenFurniture: typesOfKitchenFurnitureSelected.value,
+				typeOfGas: typeOfGasSelected.value,
+				thermoPanel: thermoPanelSelected.value,
+				typeOfHotWater: typeOfHotWaterSelected.value,
+				typeOfHeating: typeOfHeatingSelected.value,
+				typeOfKitchen: typeOfKitchenSelected.value,
+				typeOfConstruction: typeOfConstructionSelected.value,
+				typeOfWindows: typeOfWindowsSelected.value
 			},
 			observations: {
 				...values.observations
@@ -170,15 +195,15 @@ const AddProperty = () => {
 		};
 		console.log(formData);
 
-		// try {
-		// 	const response = await PropertiesServices.addProperty(formData);
-		// 	toastSuccess('Propiedad Guardada');
-		// 	setPropertyId(response.data.id);
-		// 	setUpload(true);
-		// 	resetForm();
-		// } catch (error) {
-		// 	toastError('Error al Crear Propiedad');
-		// }
+		try {
+			const response = await PropertiesServices.addProperty(formData);
+			toastSuccess('Propiedad Guardada');
+			setPropertyId(response.data.id);
+			setUpload(true);
+			resetForm();
+		} catch (error) {
+			toastError('Error al Crear Propiedad');
+		}
 	};
 
 	return (

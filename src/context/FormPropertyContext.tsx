@@ -33,6 +33,44 @@ export const FormPropertyProvider = ({ children }: props) => {
 	const [entranceHallFloorSelected, setEntranceHallFloorSelected] =
 		useState<any>();
 
+	const [styleOfHouse, setStyleOfHouse] = useState([]);
+	const [styleOfHouseSelected, setStyleOfHouseSelected] = useState<any>();
+
+	const [typeOfHouse, setTypeOfHouse] = useState([]);
+	const [typeOfHouseSelected, setTypeOfHouseSelected] = useState<any>();
+
+	const [finalReception, setFinalReception] = useState([]);
+	const [finalReceptionSelected, setFinalReceptionSelected] = useState<any>();
+
+	const [orientation, setOrientation] = useState([]);
+	const [orientationSelected, setOrientationSelected] = useState<any>();
+
+	const [typesOfKitchenFurniture, setTypesOfKitchenFurniture] = useState([]);
+	const [typesOfKitchenFurnitureSelected, setTypesOfKitchenFurnitureSelected] =
+		useState<any>();
+
+	const [typeOfGas, setTypeOfGas] = useState([]);
+	const [typeOfGasSelected, setTypeOfGasSelected] = useState<any>();
+
+	const [thermoPanel, setThermoPanel] = useState([]);
+	const [thermoPanelSelected, setThermoPanelSelected] = useState<any>();
+
+	const [typeOfHotWater, setTypeOfHotWater] = useState([]);
+	const [typeOfHotWaterSelected, setTypeOfHotWaterSelected] = useState<any>();
+
+	const [typeOfHeating, setTypeOfHeating] = useState([]);
+	const [typeOfHeatingSelected, setTypeOfHeatingSelected] = useState<any>();
+
+	const [typeOfKitchen, setTypeOfKitchen] = useState([]);
+	const [typeOfKitchenSelected, setTypeOfKitchenSelected] = useState<any>();
+
+	const [typeOfConstruction, setTypeOfConstruction] = useState([]);
+	const [typeOfConstructionSelected, setTypeOfConstructionSelected] =
+		useState<any>();
+
+	const [typeOfWindows, setTypeOfWindows] = useState([]);
+	const [typeOfWindowsSelected, setTypeOfWindowsSelected] = useState<any>();
+
 	const getProperties = async (query: string) => {
 		PropertiesServices.getProperties(query)
 			.then((response) => {
@@ -106,6 +144,188 @@ export const FormPropertyProvider = ({ children }: props) => {
 			.catch();
 	};
 
+	const getStyleOfHouse = async () => {
+		PropertiesServices.getSelectHouse()
+			.then((response) => {
+				const data = response.data?.styleOfHouse.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setStyleOfHouse(data);
+				if (response !== undefined) {
+					setStyleOfHouseSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getTypeOfHouse = async () => {
+		PropertiesServices.getSelectHouse()
+			.then((response) => {
+				const data = response.data?.typeOfHouse.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setTypeOfHouse(data);
+				if (response !== undefined) {
+					setTypeOfHouseSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getFinalReception = async () => {
+		PropertiesServices.getSelectHouse()
+			.then((response) => {
+				const data = response.data?.finalReception.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setFinalReception(data);
+				if (response !== undefined) {
+					setFinalReceptionSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getOrientation = async () => {
+		PropertiesServices.getSelectHouse()
+			.then((response) => {
+				const data = response.data?.orientation.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setOrientation(data);
+				if (response !== undefined) {
+					setOrientationSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getTypesOfKitchenFurniture = async () => {
+		PropertiesServices.getSelectHouse()
+			.then((response) => {
+				const data = response.data?.typesOfKitchenFurniture.map(
+					(item: any) => ({
+						label: item.value,
+						value: item.value
+					})
+				);
+				setTypesOfKitchenFurniture(data);
+				if (response !== undefined) {
+					setTypesOfKitchenFurnitureSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getTypeOfGas = async () => {
+		PropertiesServices.getSelectHouse()
+			.then((response) => {
+				const data = response.data?.typeOfGas.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setTypeOfGas(data);
+				if (response !== undefined) {
+					setTypeOfGasSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getThermoPanel = async () => {
+		PropertiesServices.getSelectHouse()
+			.then((response) => {
+				const data = response.data?.thermoPanel.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setThermoPanel(data);
+				if (response !== undefined) {
+					setThermoPanelSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getTypeOfHotWater = async () => {
+		PropertiesServices.getSelectHouse()
+			.then((response) => {
+				const data = response.data?.typeOfHotWater.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setTypeOfHotWater(data);
+				if (response !== undefined) {
+					setTypeOfHotWaterSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getTypeOfHeating = async () => {
+		PropertiesServices.getSelectHouse()
+			.then((response) => {
+				const data = response.data?.typeOfHeating.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setTypeOfHeating(data);
+				if (response !== undefined) {
+					setTypeOfHeatingSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getTypeOfKitchen = async () => {
+		PropertiesServices.getSelectDepartment()
+			.then((response) => {
+				const data = response.data?.typeOfKitchen.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setTypeOfKitchen(data);
+				if (response !== undefined) {
+					setTypeOfKitchenSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getTypeOfConstruction = async () => {
+		PropertiesServices.getSelectDepartment()
+			.then((response) => {
+				const data = response.data?.typeOfConstruction.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setTypeOfConstruction(data);
+				if (response !== undefined) {
+					setTypeOfConstructionSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
+	const getTypeOfWindows = async () => {
+		PropertiesServices.getSelectDepartment()
+			.then((response) => {
+				const data = response.data?.typeOfWindows.map((item: any) => ({
+					label: item.value,
+					value: item.value
+				}));
+				setTypeOfWindows(data);
+				if (response !== undefined) {
+					setTypeOfWindowsSelected(data[0]);
+				}
+			})
+			.catch();
+	};
+
 	return (
 		// eslint-disable-next-line react/react-in-jsx-scope
 		<FormPropertyContext.Provider
@@ -147,7 +367,67 @@ export const FormPropertyProvider = ({ children }: props) => {
 				setLivingRoomFloorSelected,
 
 				entranceHallFloorSelected,
-				setEntranceHallFloorSelected
+				setEntranceHallFloorSelected,
+
+				styleOfHouse,
+				styleOfHouseSelected,
+				setStyleOfHouseSelected,
+				getStyleOfHouse,
+
+				typeOfHouse,
+				typeOfHouseSelected,
+				setTypeOfHouseSelected,
+				getTypeOfHouse,
+
+				finalReception,
+				finalReceptionSelected,
+				setFinalReceptionSelected,
+				getFinalReception,
+
+				orientation,
+				orientationSelected,
+				setOrientationSelected,
+				getOrientation,
+
+				typesOfKitchenFurniture,
+				typesOfKitchenFurnitureSelected,
+				setTypesOfKitchenFurnitureSelected,
+				getTypesOfKitchenFurniture,
+
+				typeOfGas,
+				typeOfGasSelected,
+				setTypeOfGasSelected,
+				getTypeOfGas,
+
+				thermoPanel,
+				thermoPanelSelected,
+				setThermoPanelSelected,
+				getThermoPanel,
+
+				typeOfHotWater,
+				typeOfHotWaterSelected,
+				setTypeOfHotWaterSelected,
+				getTypeOfHotWater,
+
+				typeOfHeating,
+				typeOfHeatingSelected,
+				setTypeOfHeatingSelected,
+				getTypeOfHeating,
+
+				typeOfKitchen,
+				typeOfKitchenSelected,
+				setTypeOfKitchenSelected,
+				getTypeOfKitchen,
+
+				typeOfConstruction,
+				typeOfConstructionSelected,
+				setTypeOfConstructionSelected,
+				getTypeOfConstruction,
+
+				typeOfWindows,
+				typeOfWindowsSelected,
+				setTypeOfWindowsSelected,
+				getTypeOfWindows
 			}}>
 			{children}
 		</FormPropertyContext.Provider>
