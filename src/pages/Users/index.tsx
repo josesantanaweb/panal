@@ -17,8 +17,8 @@ const Users: React.FC = () => {
 	const [modalEdit, setModalEdit] = useState(false);
 	const [editData, setEditData] = useState({});
 
-	const { users, loading, getUsers }:any = useUsers();
-	const { getDocuments }:any = useShared();
+	const { users, loading, getUsers }: any = useUsers();
+	const { getDocuments }: any = useShared();
 
 	useEffect(() => {
 		getUsers();
@@ -51,6 +51,7 @@ const Users: React.FC = () => {
 				<ContentHead
 					title="Lista de Usuarios"
 					onClick={() => setModalAdd(true)}
+					btnText="Agregar"
 				/>
 				<div className="table-list mb-3">
 					<div className="table-item table-head">
@@ -68,9 +69,8 @@ const Users: React.FC = () => {
 						</div>
 						<div className="table-col"></div>
 					</div>
-					{
-						users.length
-							? users.map((item: any, index: number) => (
+					{users.length
+						? users.map((item: any, index: number) => (
 								<div className="table-item" key={index}>
 									<div className="table-col">
 										<a className="table-user">
@@ -78,7 +78,9 @@ const Users: React.FC = () => {
 												<span>{findFirstLetter(item.name)}</span>
 											</div>
 											<div className="table-user-info">
-												<span className="table-lead">{item.name} {item.lastName}</span>
+												<span className="table-lead">
+													{item.name} {item.lastName}
+												</span>
 												<span>{item.email}</span>
 											</div>
 										</a>
@@ -87,27 +89,36 @@ const Users: React.FC = () => {
 										<span className="table-text">Admin</span>
 									</div>
 									<div className="table-col">
-										<span className="table-text">{item.phone || '+584454548'}</span>
+										<span className="table-text">
+											{item.phone || '+584454548'}
+										</span>
 									</div>
 									<div className="table-col">
-										<Badge variant="success"  label="Activo"/>
+										<Badge variant="success" label="Activo" />
 									</div>
 									<div className="table-col table-col-mb">
-										<span className="table-icon table-edit-icon" onClick={() => onEdit(item)}>
+										<span
+											className="table-icon table-edit-icon"
+											onClick={() => onEdit(item)}>
 											<BiPencil size={24} />
 										</span>
-										<span className="table-icon table-delete-icon" onClick={() => onDelete(item.id)}>
+										<span
+											className="table-icon table-delete-icon"
+											onClick={() => onDelete(item.id)}>
 											<BiTrash size={24} />
 										</span>
 									</div>
 								</div>
-							))
-							: null
-					}
+						  ))
+						: null}
 				</div>
 			</Content>
-			<AddUsers modal={modalAdd} setModal={setModalAdd}/>
-			<EditUsers modal={modalEdit} setModal={setModalEdit} editData={editData}/>
+			<AddUsers modal={modalAdd} setModal={setModalAdd} />
+			<EditUsers
+				modal={modalEdit}
+				setModal={setModalEdit}
+				editData={editData}
+			/>
 			<ToastContainer />
 		</React.Fragment>
 	);

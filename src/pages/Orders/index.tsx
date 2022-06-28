@@ -16,7 +16,7 @@ import SendEmail from './SendEmail';
 import Canje from './Canje';
 
 const Orders = () => {
-	const { orders, loading, getOrders }:any = useOrders();
+	const { orders, loading, getOrders }: any = useOrders();
 	const [modal, setModal] = useState(false);
 	const [modalCanje, setModalCanje] = useState(false);
 	const [selection, setSelection] = useState(true);
@@ -47,8 +47,9 @@ const Orders = () => {
 				<ContentHead
 					title="Lista de Ordenes"
 					onClick={() => setModal(true)}
+					btnText="Agregar"
 				/>
-        	<div className="table-list mb-3">
+				<div className="table-list mb-3">
 					<div className="table-item table-head">
 						<div className="table-col">
 							<span className="table-text">Cliente</span>
@@ -67,9 +68,8 @@ const Orders = () => {
 						</div>
 						<div className="table-col"></div>
 					</div>
-					{
-						orders.length
-							? orders.map((item: any, index: number) => (
+					{orders.length
+						? orders.map((item: any, index: number) => (
 								<div className="table-item" key={index}>
 									<div className="table-col">
 										<a className="table-user">
@@ -77,7 +77,9 @@ const Orders = () => {
 												<span>{findFirstLetter(item.customer.name)}</span>
 											</div>
 											<div className="table-user-info">
-												<span className="table-lead">{item.customer.name} {item.customer.lastName}</span>
+												<span className="table-lead">
+													{item.customer.name} {item.customer.lastName}
+												</span>
 												<span>{item.email}</span>
 											</div>
 										</a>
@@ -93,10 +95,12 @@ const Orders = () => {
 										</span>
 									</div>
 									<div className="table-col">
-										<Badge variant="success"  label="Activo"/>
+										<Badge variant="success" label="Activo" />
 									</div>
 									<div className="table-col">
-										<span onClick={() => setModalCanje(true)} style={{cursor: 'pointer'}}>
+										<span
+											onClick={() => setModalCanje(true)}
+											style={{ cursor: 'pointer' }}>
 											<BiHomeSmile size={24} />
 										</span>
 									</div>
@@ -104,47 +108,46 @@ const Orders = () => {
 										<span className="table-icon">
 											<BiSpreadsheet size={24} />
 										</span>
-										<span className="table-icon table-delete-icon" onClick={() => onDelete(item.id)}>
+										<span
+											className="table-icon table-delete-icon"
+											onClick={() => onDelete(item.id)}>
 											<BiTrash size={24} />
 										</span>
 									</div>
 								</div>
-							))
-							: null
-					}
+						  ))
+						: null}
 				</div>
 			</Content>
 			<Modal
 				modal={modal}
 				setModal={setModal}
 				size={selection ? 'lg' : 'md'}
-				title={generate ? 'Generar Orden' : sendEmail ? 'Enviar Email' : 'Seleccionar Propiedad/es'}>
-				{
-					selection &&
+				title={
+					generate
+						? 'Generar Orden'
+						: sendEmail
+						? 'Enviar Email'
+						: 'Seleccionar Propiedad/es'
+				}>
+				{selection && (
 					<Selection
 						setProperty={setProperty}
 						setGenerate={setGenerate}
 						setSelection={setSelection}
 					/>
-				}
-				{
-					generate &&
-          <Generate
-          	property={property}
-          	setGenerate={setGenerate}
-          	setSendEmail={setSendEmail}
-          	setOrderId={setOrderId}
-          />
-				}
-				{
-					sendEmail &&
-          <SendEmail
-          	orderId={orderId}
-          	setModal={setModal}
-          />
-				}
+				)}
+				{generate && (
+					<Generate
+						property={property}
+						setGenerate={setGenerate}
+						setSendEmail={setSendEmail}
+						setOrderId={setOrderId}
+					/>
+				)}
+				{sendEmail && <SendEmail orderId={orderId} setModal={setModal} />}
 			</Modal>
-			<Canje modalCanje={modalCanje} setModalCanje={setModalCanje}/>
+			<Canje modalCanje={modalCanje} setModalCanje={setModalCanje} />
 			<ToastContainer />
 		</React.Fragment>
 	);

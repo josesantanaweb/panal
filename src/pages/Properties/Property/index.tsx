@@ -1,15 +1,27 @@
-import React, {useState, useRef} from 'react';
-import { BiMap, BiHotel, BiBath, BiCar, BiRuler, BiDotsVerticalRounded, BiEditAlt, BiHome, BiDuplicate, BiFile, BiTrash } from 'react-icons/bi';
+import React, { useState, useRef } from 'react';
+import {
+	BiMap,
+	BiHotel,
+	BiBath,
+	BiCar,
+	BiRuler,
+	BiDotsVerticalRounded,
+	BiEditAlt,
+	BiHome,
+	BiDuplicate,
+	BiFile,
+	BiTrash,
+} from 'react-icons/bi';
 import { Button } from 'components';
 import { useOnClickOutside } from 'usehooks-ts';
 import casa from 'assets/images/casa.jpg';
 
 export interface PropertyProps {
-	property?: any
-	setModalDetail?: any
+	property?: any;
+	setModalDetail?: any;
 }
 
-const Property:React.FC<PropertyProps> = ({ property, setModalDetail }) => {
+const Property: React.FC<PropertyProps> = ({ property, setModalDetail }) => {
 	const ref = useRef(null);
 	const [openAction, setOpenAction] = useState(false);
 
@@ -27,33 +39,32 @@ const Property:React.FC<PropertyProps> = ({ property, setModalDetail }) => {
 				</div>
 				<div className="property-toggle" ref={ref}>
 					<span onClick={() => setOpenAction(!openAction)}>
-						<BiDotsVerticalRounded size={24}/>
+						<BiDotsVerticalRounded size={24} />
 					</span>
-					{
-						openAction &&
+					{openAction && (
 						<div className="property-actions">
 							<li>
-								<BiEditAlt size={18}/>
+								<BiEditAlt size={18} />
 								<span>Editar</span>
 							</li>
 							<li>
-								<BiHome size={18}/>
+								<BiHome size={18} />
 								<span>Agregar a canje</span>
 							</li>
 							<li>
-								<BiDuplicate size={18}/>
+								<BiDuplicate size={18} />
 								<span>Duplicar</span>
 							</li>
 							<li>
-								<BiFile size={18}/>
+								<BiFile size={18} />
 								<span>Bitacora</span>
 							</li>
 							<li>
-								<BiTrash size={18}/>
+								<BiTrash size={18} />
 								<span>Dar de baja</span>
 							</li>
 						</div>
-					}
+					)}
 				</div>
 				<div className="property-status">
 					<p>{property.status}</p>
@@ -61,7 +72,7 @@ const Property:React.FC<PropertyProps> = ({ property, setModalDetail }) => {
 			</div>
 			<h4 className="property-title">{property.title}</h4>
 			<div className="property-city">
-				<BiMap size={18}/>
+				<BiMap size={18} />
 				<p>{property.city}</p>
 			</div>
 			<div className="property-row">
@@ -85,7 +96,9 @@ const Property:React.FC<PropertyProps> = ({ property, setModalDetail }) => {
 				</div>
 				<h4 className="property-price">$ {property.price}</h4>
 			</div>
-			<Button block onClick={() => setModalDetail(true)}>Ver Detalles</Button>
+			<Button block onClick={() => setModalDetail(true)}>
+				Ver Detalles
+			</Button>
 		</div>
 	);
 };

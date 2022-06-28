@@ -7,7 +7,7 @@ interface ModalProps {
 	setModal: any;
 	modal: boolean;
 	title: string;
-  size?: string
+	size?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -15,7 +15,7 @@ const Modal: React.FC<ModalProps> = ({
 	setModal,
 	children,
 	title,
-	size
+	size,
 }) => {
 	const ref = useRef(null);
 

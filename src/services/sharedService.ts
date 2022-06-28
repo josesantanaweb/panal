@@ -18,6 +18,24 @@ const SharedServices = {
 				Authorization: `Bearer ${getValue('token')}`,
 			},
 		}),
+	getOperations: async () =>
+		api.get('operations', {
+			headers: {
+				Authorization: `Bearer ${getValue('token')}`,
+			},
+		}),
+	getCommunes: async () =>
+		api.get('communes', {
+			headers: {
+				Authorization: `Bearer ${getValue('token')}`,
+			},
+		}),
+	getPropertyTypes: async () =>
+		api.get('properties/new-property', {
+			headers: {
+				Authorization: `Bearer ${getValue('token')}`,
+			},
+		}),
 };
 
 export default SharedServices;

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Input, Modal, Select, Checkbox, Textarea } from 'components';
 import { Field, Form, Formik } from 'formik';
 import { validationSchema } from './validations';
@@ -9,23 +9,19 @@ import useCustomers from 'hooks/useCustomers';
 import useShared from 'hooks/useShared';
 
 export interface AddCustomersProps {
-  modal: boolean;
+	modal: boolean;
 	setModal: any;
 }
 
-const AddCustomers:React.FC<AddCustomersProps> = ({modal, setModal}) => {
+const AddCustomers: React.FC<AddCustomersProps> = ({ modal, setModal }) => {
+	const { documentSelected, setDocumentSelected, documents }: any = useShared();
 
-	const {
-		documentSelected,
-		setDocumentSelected,
-		documents,
-	}:any = useShared();
-	const { getCustomers }:any = useCustomers();
+	const { getCustomers }: any = useCustomers();
 
 	const onSubmit = async (values: any, { resetForm }: any) => {
 		const formData = {
 			...values,
-			identityDocumentId: documentSelected.value
+			identityDocumentId: documentSelected.value,
 		};
 		try {
 			await CustomersServices.addCustomer(formData);
@@ -40,12 +36,8 @@ const AddCustomers:React.FC<AddCustomersProps> = ({modal, setModal}) => {
 		}
 	};
 
-
 	return (
-		<Modal
-			modal={modal}
-			setModal={setModal}
-			title="Crear Cliente">
+		<Modal modal={modal} setModal={setModal} title="Crear Cliente">
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema.addCustomer}
@@ -60,9 +52,7 @@ const AddCustomers:React.FC<AddCustomersProps> = ({modal, setModal}) => {
 									label="Nombre"
 									placeholder="Ingrese su Nombre"
 									component={Input}
-									error={
-										errors.name && touched.name ? errors.name : null
-									}
+									error={errors.name && touched.name ? errors.name : null}
 								/>
 							</div>
 							<div className="col-md-6">
@@ -105,9 +95,7 @@ const AddCustomers:React.FC<AddCustomersProps> = ({modal, setModal}) => {
 									label="Email"
 									placeholder="Ingrese su Email"
 									component={Input}
-									error={
-										errors.email && touched.email ? errors.email : null
-									}
+									error={errors.email && touched.email ? errors.email : null}
 								/>
 							</div>
 							<div className="col-md-6">
@@ -163,7 +151,7 @@ const AddCustomers:React.FC<AddCustomersProps> = ({modal, setModal}) => {
 						<div className="row">
 							<div className="col-md-6 offset-md-6">
 								<Button block disabled={!isValid || !dirty}>
-                  Guardar
+									Guardar
 								</Button>
 							</div>
 						</div>

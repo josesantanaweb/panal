@@ -13,10 +13,10 @@
 	},
 	"plugins": ["react"],
 	"rules": {
-		"eol-last": [2, "always"],
-		"semi": [2, "always"],
-		"indent": [2, "tab"],
-		"no-tabs": 0,
+		// "eol-last": [2, "always"],
+		// "semi": [2, "always"],
+		// "indent": [2, "tab"],
+		// "no-tabs": 0,
 		"quotes": [1, "single"],
 		"no-console": 1
 	},

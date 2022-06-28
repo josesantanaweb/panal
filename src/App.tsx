@@ -8,7 +8,8 @@ import Customers from 'pages/Customers';
 import Properties from 'pages/Properties';
 import Orders from 'pages/Orders';
 import Home from 'pages/Home';
-
+import CustomerFind from 'pages/CustomerFind';
+import CustomerFindList from 'pages/CustomerFindList';
 
 const App = () => {
 	return (
@@ -21,6 +22,8 @@ const App = () => {
 				<Route path="customers" element={<Customers />} />
 				<Route path="properties" element={<Properties />} />
 				<Route path="orders" element={<Orders />} />
+				<Route path="customer-find" element={<CustomerFind />} />
+				<Route path="customer-find-list" element={<CustomerFindList />} />
 			</Route>
 		</Routes>
 	);

@@ -17,8 +17,8 @@ const Realtors: React.FC = () => {
 	const [modalEdit, setModalEdit] = useState(false);
 	const [editData, setEditData] = useState({});
 
-	const { realtors, loading, getRealtors }:any = useRealtors();
-	const { getDocuments, getCountries, getStates }:any = useShared();
+	const { realtors, loading, getRealtors }: any = useRealtors();
+	const { getDocuments, getCountries, getStates }: any = useShared();
 
 	useEffect(() => {
 		getRealtors();
@@ -59,6 +59,7 @@ const Realtors: React.FC = () => {
 				<ContentHead
 					title="Lista de Asesores"
 					onClick={() => setModalAdd(true)}
+					btnText="Agregar"
 				/>
 				<div className="table-list mb-3">
 					<div className="table-item table-head">
@@ -79,9 +80,8 @@ const Realtors: React.FC = () => {
 						</div>
 						<div className="table-col"></div>
 					</div>
-					{
-						realtors.length
-							? realtors.map((item: any, index: number) => (
+					{realtors.length
+						? realtors.map((item: any, index: number) => (
 								<div className="table-item" key={index}>
 									<div className="table-col">
 										<a className="table-user">
@@ -89,39 +89,54 @@ const Realtors: React.FC = () => {
 												<span>{findFirstLetter(item.name)}</span>
 											</div>
 											<div className="table-user-info">
-												<span className="table-lead">{item.name} {item.lastName}</span>
+												<span className="table-lead">
+													{item.name} {item.lastName}
+												</span>
 												<span>{item.email}</span>
 											</div>
 										</a>
 									</div>
 									<div className="table-col table-col-mb">
-										<span className="table-text">{item.rol?.name === 'REALTOR ADMIN' ? 'Asesor' : ''}</span>
+										<span className="table-text">
+											{item.rol?.name === 'REALTOR ADMIN' ? 'Asesor' : ''}
+										</span>
 									</div>
 									<div className="table-col">
-										<span className="table-text">{item.contactPhone || '+584454548'}</span>
+										<span className="table-text">
+											{item.contactPhone || '+584454548'}
+										</span>
 									</div>
 									<div className="table-col">
-										<span className="table-text">{item.whatsappPhone || '+584454548'}</span>
+										<span className="table-text">
+											{item.whatsappPhone || '+584454548'}
+										</span>
 									</div>
 									<div className="table-col">
-										<Badge variant="success"  label="Activo"/>
+										<Badge variant="success" label="Activo" />
 									</div>
 									<div className="table-col table-col-mb">
-										<span className="table-icon table-edit-icon" onClick={() => onEdit(item)}>
+										<span
+											className="table-icon table-edit-icon"
+											onClick={() => onEdit(item)}>
 											<BiPencil size={24} />
 										</span>
-										<span className="table-icon table-delete-icon" onClick={() => onDelete(item.id)}>
+										<span
+											className="table-icon table-delete-icon"
+											onClick={() => onDelete(item.id)}>
 											<BiTrash size={24} />
 										</span>
 									</div>
 								</div>
-							))
-							: null
-					}
+						  ))
+						: null}
 				</div>
 			</Content>
-			<AddRealtors modal={modalAdd} setModal={setModalAdd}/>
-			<EditRealtors modal={modalEdit} setModal={setModalEdit} editData={editData}/>
+			<AddRealtors modal={modalAdd} setModal={setModalAdd} />
+			<EditRealtors
+				modal={modalEdit}
+				setModal={setModalEdit}
+				editData={editData}
+			/>
 			<ToastContainer />
 		</React.Fragment>
 	);

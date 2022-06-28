@@ -8,6 +8,7 @@ import { AuthProvider } from 'context/AuthContext';
 import { UsersProvider } from 'context/UsersContext';
 import { RealtorsProvider } from 'context/RealtorsContext';
 import { CustomersProvider } from 'context/CustomersContext';
+import { CustomersFindProvider } from 'context/CustomersFindContext';
 import { PropertiesProvider } from 'context/PropertiesContext';
 import { OrdersProvider } from 'context/OrdersContext';
 import { SharedProvider } from 'context/SharedContext';
@@ -21,9 +22,11 @@ ReactDOM.render(
 						<PropertiesProvider>
 							<OrdersProvider>
 								<CustomersProvider>
-									<RealtorsProvider>
-										<App />
-									</RealtorsProvider>
+									<CustomersFindProvider>
+										<RealtorsProvider>
+											<App />
+										</RealtorsProvider>
+									</CustomersFindProvider>
 								</CustomersProvider>
 							</OrdersProvider>
 						</PropertiesProvider>

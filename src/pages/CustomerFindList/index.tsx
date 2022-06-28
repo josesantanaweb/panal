@@ -1,34 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { BiPencil, BiTrash, BiSpreadsheet } from 'react-icons/bi';
 import { ToastContainer } from 'react-toastify';
-import { Preloader, Badge, Search } from 'components';
+import { Preloader, Badge, Search, Select } from 'components';
 import Content from 'layout/Content';
 import ContentHead from 'layout/ContentHead';
-import AddCustomers from './Add';
+import AddCustomersFind from './Add';
 // import EditCustomers from './Edit';
 import Bitacora from './Bitacora';
 import { toastError, toastSuccess } from 'utils/libs/toast';
 import { findFirstLetter } from 'utils';
-import CustomersServices from 'services/customersService';
-import useCustomers from 'hooks/useCustomers';
+import CustomersFindServices from 'services/CustomersFindService';
+import useCustomersFind from 'hooks/useCustomersFind';
 import useShared from 'hooks/useShared';
 
-const Customers: React.FC = () => {
+const CustomerFindList: React.FC = () => {
 	const [modalAdd, setModalAdd] = useState(false);
 	const [modalEdit, setModalEdit] = useState(false);
 	const [modalBitacora, setModalBitacora] = useState(false);
 	const [editData, setEditData] = useState({});
 	const [history, setHistory] = useState([]);
 
-	const { customers, loading, getCustomers }: any = useCustomers();
-	const { getDocuments }: any = useShared();
+	const { customersFind, loading, getCustomersFind }: any = useCustomersFind();
+	const { getDocuments, getOperations, getPropertyTypes }: any = useShared();
 
 	useEffect(() => {
-		getCustomers();
+		getCustomersFind();
 	}, []);
 
 	useEffect(() => {
 		getDocuments();
+	}, []);
+
+	useEffect(() => {
+		getOperations();
+	}, []);
+
+	useEffect(() => {
+		getPropertyTypes();
 	}, []);
 
 	const onEdit = async (item: any) => {
@@ -38,9 +46,9 @@ const Customers: React.FC = () => {
 
 	const onDelete = async (id: number) => {
 		try {
-			await CustomersServices.deleteCustomer(id);
+			await CustomersFindServices.deleteCustomer(id);
 			toastSuccess('Cliente Eliminado Exitosamente');
-			getCustomers();
+			getCustomersFind();
 		} catch (error) {
 			toastError('Error al Eliminar Cliente');
 		}
@@ -49,25 +57,53 @@ const Customers: React.FC = () => {
 	if (loading) return <Preloader />;
 
 	const searchCustomer = async (e: any) => {
-		getCustomers(e.target.value);
+		getCustomersFind(e.target.value);
 	};
 
 	const onBitacora = async (id: number) => {
-		const response = await CustomersServices.getCustomerHistory(id);
+		const response = await CustomersFindServices.getCustomerHistory(id);
 		setHistory(response.data.data);
 		setModalBitacora(true);
+	};
+
+	const { documentSelected, setDocumentSelected, documents }: any = useShared();
+
+	const onSubmit = async (values: any, { resetForm }: any) => {
+		const formData = {
+			...values,
+			identityDocumentId: documentSelected.value,
+		};
+		try {
+			await CustomersFindServices.addCustomerFind(formData);
+			toastSuccess('Cliente Guardado Exitosamente');
+			getCustomersFind();
+			resetForm();
+			// setTimeout(() => {
+			// 	setModal(false);
+			// }, 1500);
+		} catch (error) {
+			toastError('Error al Crear Cliente');
+		}
 	};
 
 	return (
 		<React.Fragment>
 			<Content>
 				<ContentHead
-					title="Lista de Clientes"
+					title="Lista Cliente Busca"
 					onClick={() => setModalAdd(true)}
-					btnText="Agregar"
+					btnText="Generar cliente"
 				/>
 				<div className="row mb-4">
 					<div className="col-md-2">
+						<Select
+							label="Filtrar búsqueda"
+							options={documents}
+							setSelected={setDocumentSelected}
+							selected={documentSelected}
+						/>
+					</div>
+					<div className="col-md-3 mt-3">
 						<div className="search-customer">
 							<Search placeholder="Buscar Cliente" onChange={searchCustomer} />
 						</div>
@@ -78,22 +114,24 @@ const Customers: React.FC = () => {
 						<div className="table-col">
 							<span className="table-text">Cliente</span>
 						</div>
-						<div className="table-col table-col-md">
+						<div className="table-col">
 							<span className="table-text">Ejecutivo</span>
-						</div>
-						<div className="table-col">
-							<span className="table-text">Telefono</span>
-						</div>
-						<div className="table-col">
-							<span className="table-text">Bitacora</span>
 						</div>
 						<div className="table-col">
 							<span className="table-text">Estado</span>
 						</div>
-						<div className="table-col"></div>
+						<div className="table-col">
+							<span className="table-text">Tipo</span>
+						</div>
+						<div className="table-col">
+							<span className="table-text">Canje</span>
+						</div>
+						<div className="table-col">
+							<span className="table-text">Acciones</span>
+						</div>
 					</div>
-					{customers.length
-						? customers.map((item: any, index: number) => (
+					{customersFind.length
+						? customersFind.map((item: any, index: number) => (
 								<div className="table-item" key={index}>
 									<div className="table-col">
 										<a className="table-user">
@@ -146,7 +184,7 @@ const Customers: React.FC = () => {
 						: null}
 				</div>
 			</Content>
-			<AddCustomers modal={modalAdd} setModal={setModalAdd} />
+			<AddCustomersFind modal={modalAdd} setModal={setModalAdd} />
 			{/* <EditCustomers
 				modal={modalEdit}
 				setModal={setModalEdit}
@@ -162,4 +200,4 @@ const Customers: React.FC = () => {
 	);
 };
 
-export default Customers;
+export default CustomerFindList;

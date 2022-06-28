@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 
 interface Select {
 	label: string;
 	value: string | number;
+	name?: string;
 }
 
 interface SelectProps {
@@ -11,9 +12,16 @@ interface SelectProps {
 	options: any;
 	setSelected: any;
 	selected: Select;
+	name?: string;
 }
 
-const RSelect: React.FC<SelectProps> = ({ label, options, setSelected, selected }) => {
+const RSelect: React.FC<SelectProps> = ({
+	label,
+	options,
+	setSelected,
+	selected,
+	name,
+}) => {
 	const [isActive, setIsActive] = useState(false);
 
 	const onSelected = (item: any) => {
@@ -27,22 +35,20 @@ const RSelect: React.FC<SelectProps> = ({ label, options, setSelected, selected 
 			<div className="select">
 				<div className="select-header" onClick={() => setIsActive(!isActive)}>
 					<p>{selected?.label}</p>
-					<span>
-						{isActive ? <BiChevronUp /> : <BiChevronDown />}
-					</span>
+					<span>{isActive ? <BiChevronUp /> : <BiChevronDown />}</span>
 				</div>
-				{
-					isActive &&
-          <div className="select-content">
-          	{
-          		options.map((item: any, index: number) => (
-          			<div className="select-item" key={index} onClick={() => onSelected(item)}>
-          				{item?.label}
-          			</div>
-          		))
-          	}
-          </div>
-				}
+				{isActive && (
+					<div className="select-content">
+						{options.map((item: any, index: number) => (
+							<div
+								className="select-item"
+								key={index}
+								onClick={() => onSelected(item)}>
+								{item?.label}
+							</div>
+						))}
+					</div>
+				)}
 			</div>
 		</div>
 	);
