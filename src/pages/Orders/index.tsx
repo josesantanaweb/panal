@@ -116,6 +116,11 @@ const Orders = () => {
 		setProperty(order.property);
 	};
 
+	const handleExchange = (order: any) => {
+		setModalCanje(true);
+		setProperty(order.property);
+	};
+
 	const searchTiitle = async (e: any) => setTitle(e.target.value);
 
 	const searchBathrooms = async (e: any) => setBathrooms(e.target.value);
@@ -256,7 +261,7 @@ const Orders = () => {
 								</div>
 								<div className="table-col">
 									<span
-										onClick={() => setModalCanje(true)}
+										onClick={() => handleExchange(item)}
 										style={{ cursor: 'pointer' }}>
 										<BiHomeSmile size={24} />
 									</span>
@@ -306,7 +311,11 @@ const Orders = () => {
 				)}
 				{sendEmail && <SendEmail orderId={orderId} setModal={setModal} />}
 			</Modal>
-			<Canje modalCanje={modalCanje} setModalCanje={setModalCanje} />
+			<Canje
+				modalCanje={modalCanje}
+				setModalCanje={setModalCanje}
+				property={property}
+			/>
 			<Detail
 				modal={modalDetail}
 				setModal={setModalDetail}

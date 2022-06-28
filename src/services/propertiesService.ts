@@ -3,7 +3,7 @@ import { getValue } from 'utils';
 
 const PropertiesServices = {
 	getProperties: (query?: string) =>
-		api.get(`properties?${query}`, {
+		api.get(`properties/all-properties-in-exchange?${query}`, {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		}),
 	getProperty: async (id: number) =>
