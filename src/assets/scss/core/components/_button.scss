@@ -25,6 +25,12 @@
 	color: $button-primary-color;
 }
 
+.button-outline {
+	background-color: transparent;
+	border-color: $primary-color;
+	color: $primary-color;
+}
+
 .button-disabled {
 	background-color: $button-disabled-bg-color;
 	border-color: $button-disabled-border-color;

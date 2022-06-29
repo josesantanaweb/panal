@@ -9,6 +9,7 @@ const PropertiesContext = createContext({});
 
 export const PropertiesProvider = ({ children }: props) => {
 	const [properties, setProperties] = useState<any>([]);
+	const [drafts, setDrafts] = useState<any>([]);
 	const [property, setProperty] = useState<any>({});
 	const [loading, setLoading] = useState<boolean>(true);
 
@@ -21,6 +22,14 @@ export const PropertiesProvider = ({ children }: props) => {
 			.catch((err) => setLoading(false));
 	};
 
+	const getDrafts = async (query: string) => {
+		PropertiesServices.getDraftProperties()
+			.then((response) => {
+				setDrafts(response.data.data);
+			})
+			.catch();
+	};
+
 	return (
 		// eslint-disable-next-line react/react-in-jsx-scope
 		<PropertiesContext.Provider
@@ -28,6 +37,9 @@ export const PropertiesProvider = ({ children }: props) => {
 				properties,
 				setProperties,
 				getProperties,
+				drafts,
+				setDrafts,
+				getDrafts,
 				loading,
 				property,
 				setProperty

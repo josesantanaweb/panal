@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Content from 'layout/Content';
 import { ToastContainer } from 'react-toastify';
@@ -6,6 +6,7 @@ import { Button, Preloader, Search, Select } from 'components';
 import ContentHead from 'layout/ContentHead';
 import Property from './Property';
 import Detail from './Detail';
+import Draft from './Draft';
 import { toastError, toastSuccess } from 'utils/libs/toast';
 import useProperties from 'hooks/useProperties';
 import useFilter from 'hooks/useFilter';
@@ -27,7 +28,9 @@ const Properties = () => {
 		getProperties,
 		loading,
 		setProperty,
-	}:any = useProperties();
+		drafts,
+		getDrafts
+	}: any = useProperties();
 
 	const {
 		operationType,
@@ -48,13 +51,20 @@ const Properties = () => {
 		setCurrencySelected,
 		currency,
 		getCurrency
-	}:any = useFilter();
-	const { getCountries, getStates }:any = useShared();
+	}: any = useFilter();
+	const { getCountries, getStates }: any = useShared();
 
 	const region = stateSelected?.value !== 0 ? stateSelected?.value : '';
-	const operationId = operationTypeSelected?.value !== 0 ? operationTypeSelected?.value : '';
-	const currencyId = currencySelected?.value !== 0 ? currencySelected?.value : '';
-	const typeId = propertyTypeSelected?.value !== 0 ? propertyTypeSelected?.value : '';
+	const operationId =
+		operationTypeSelected?.value !== 0 ? operationTypeSelected?.value : '';
+	const currencyId =
+		currencySelected?.value !== 0 ? currencySelected?.value : '';
+	const typeId =
+		propertyTypeSelected?.value !== 0 ? propertyTypeSelected?.value : '';
+
+	useEffect(() => {
+		getDrafts();
+	}, []);
 
 	useEffect(() => {
 		getOperationType();
@@ -81,8 +91,22 @@ const Properties = () => {
 	}, []);
 
 	useEffect(() => {
-		getProperties(`titleOrId=${title}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&operationId=${operationId}&typeId=${typeId}&region=${region}&currencyId=${currencyId}&minPrice=${minPrice || 0}&maxPrice=${maxPrice || 1000000}`);
-	}, [title, bathrooms, bedrooms, operationTypeSelected, propertyTypeSelected, stateSelected, currencyId, minPrice, maxPrice]);
+		getProperties(
+			`titleOrId=${title}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&operationId=${operationId}&typeId=${typeId}&region=${region}&currencyId=${currencyId}&minPrice=${
+				minPrice || 0
+			}&maxPrice=${maxPrice || 1000000}`
+		);
+	}, [
+		title,
+		bathrooms,
+		bedrooms,
+		operationTypeSelected,
+		propertyTypeSelected,
+		stateSelected,
+		currencyId,
+		minPrice,
+		maxPrice
+	]);
 
 	if (loading) return <Preloader />;
 
@@ -90,7 +114,6 @@ const Properties = () => {
 		setModalDetail(true);
 		setProperty(property);
 	};
-
 
 	const onDelete = async (id: number) => {
 		try {
@@ -102,15 +125,15 @@ const Properties = () => {
 		}
 	};
 
-	const searchTiitle =  async (e: any) => setTitle(e.target.value);
+	const searchTiitle = async (e: any) => setTitle(e.target.value);
 
-	const searchBathrooms =  async (e: any) => setBathrooms(e.target.value);
+	const searchBathrooms = async (e: any) => setBathrooms(e.target.value);
 
-	const searchBedrooms =  async (e: any) => setBedrooms(e.target.value);
+	const searchBedrooms = async (e: any) => setBedrooms(e.target.value);
 
-	const searchMinPrice =  async (e: any) => setMinPrice(e.target.value);
+	const searchMinPrice = async (e: any) => setMinPrice(e.target.value);
 
-	const searchMaxPrice =  async (e: any) => setMaxPrice(e.target.value);
+	const searchMaxPrice = async (e: any) => setMaxPrice(e.target.value);
 
 	return (
 		<React.Fragment>
@@ -118,8 +141,16 @@ const Properties = () => {
 				<div className="tabs">
 					<div className="tabs-head">
 						<div className="tabs-nav">
-							<li className={tab === 1 ? 'is-active' : ''} onClick={() => setTab(1)}>Propiedades</li>
-							<li className={tab === 2 ? 'is-active' : ''} onClick={() => setTab(2)}>Borradores</li>
+							<li
+								className={tab === 1 ? 'is-active' : ''}
+								onClick={() => setTab(1)}>
+								Propiedades
+							</li>
+							<li
+								className={tab === 2 ? 'is-active' : ''}
+								onClick={() => setTab(2)}>
+								Borradores
+							</li>
 							<li>Caracteristicas</li>
 						</div>
 					</div>
@@ -164,10 +195,7 @@ const Properties = () => {
 									/>
 								</div>
 								<div className="col-md-3">
-									<Search
-										label="Comuna"
-										placeholder="Comuna"
-									/>
+									<Search label="Comuna" placeholder="Comuna" />
 								</div>
 							</div>
 							<div className="row mb-4">
@@ -181,28 +209,28 @@ const Properties = () => {
 								</div>
 								<div className="col-md">
 									<Search
-                    	label="Precio Minimo"
+										label="Precio Minimo"
 										placeholder="Precio Minimo"
 										onChange={searchMinPrice}
 									/>
 								</div>
 								<div className="col-md">
 									<Search
-                    	label="Precio Maximo"
+										label="Precio Maximo"
 										placeholder="Precio Maximo"
 										onChange={searchMaxPrice}
 									/>
 								</div>
 								<div className="col-md-3">
 									<Search
-                    	label="Cantidad de Baños"
+										label="Cantidad de Baños"
 										placeholder="Baños"
 										onChange={searchBathrooms}
 									/>
 								</div>
 								<div className="col-md-3">
 									<Search
-                    	label="Cantidad de Habitaciones"
+										label="Cantidad de Habitaciones"
 										placeholder="Habitaciones"
 										onChange={searchBedrooms}
 									/>
@@ -210,27 +238,25 @@ const Properties = () => {
 							</div>
 							<div className="properties">
 								<div className="properties-items">
-									{
-										properties.length
-											? properties.map((property: any, index: number) => (
-												<Property
-													key={index}
-													property={property}
-													setModalDetail={() => handleDetail(property)}
-													onDelete={() => onDelete(property.code)}
-												/>
-											))
-											: null
-									}
+									{properties.length
+										? properties.map((property: any, index: number) => (
+											<Property
+												key={index}
+												property={property}
+												setModalDetail={() => handleDetail(property)}
+												onDelete={() => onDelete(property.code)}
+											/>
+										  ))
+										: null}
 								</div>
 							</div>
 						</div>
 						<div className="tabs-item" hidden={tab != 2}>
-              borradores
+							<Draft drafts={drafts} />
 						</div>
 					</div>
 				</div>
-				<Detail modal={modalDetail} setModal={setModalDetail}/>
+				<Detail modal={modalDetail} setModal={setModalDetail} />
 			</Content>
 			<ToastContainer />
 		</React.Fragment>

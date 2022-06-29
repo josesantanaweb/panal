@@ -14,6 +14,7 @@ import PropertiesServices from 'services/propertiesService';
 
 const AddProperty = () => {
 	const [upload, setUpload] = useState<boolean>(false);
+	const [draft, setDraft] = useState<boolean>(false);
 	const [propertyId, setPropertyId] = useState<number>();
 
 	// Mapa
@@ -206,6 +207,59 @@ const AddProperty = () => {
 		}
 	};
 
+	const onDraft = async (values: any, { resetForm }: any) => {
+		const formData = {
+			...values,
+			statusId: 2,
+			operationId: operationTypeSelected.value,
+			currencyTypeId: currencySelected.value,
+			realtorSellerId: Number(realtorSalerSelected.value),
+			realtorBuyerId: Number(realtorBuyerSelected.value),
+			realtorCatcherId: Number(realtorCatcherSelected.value),
+			ownerLessor: {
+				...values.ownerLessor,
+				propertyTypeId: propertyTypeSelected.value,
+				customerId: 1
+			},
+			address: {
+				countryId: countrySelected.value,
+				stateId: stateSelected.value,
+				...values.address
+			},
+			characteristics: {
+				...values.characteristics,
+				bedroomFloors: bedroomFloorsSelected.value,
+				bathroomFloor: bathroomFloorSelected.value,
+				kitchenFloor: kitchenFloorSelected.value,
+				livingRoomFloor: livingRoomFloorSelected.value,
+				entranceHallFloor: entranceHallFloorSelected.value,
+				styleOfHouse: styleOfHouseSelected.value,
+				typeOfHouse: typeOfHouseSelected.value,
+				finalReception: finalReceptionSelected.value,
+				orientation: orientationSelected.value,
+				typesOfKitchenFurniture: typesOfKitchenFurnitureSelected.value,
+				typeOfGas: typeOfGasSelected.value,
+				thermoPanel: thermoPanelSelected.value,
+				typeOfHotWater: typeOfHotWaterSelected.value,
+				typeOfHeating: typeOfHeatingSelected.value,
+				typeOfKitchen: typeOfKitchenSelected.value,
+				typeOfConstruction: typeOfConstructionSelected.value,
+				typeOfWindows: typeOfWindowsSelected.value
+			},
+			observations: {
+				...values.observations
+			}
+		};
+		console.log(formData);
+
+		try {
+			const response = await PropertiesServices.addProperty(formData);
+			toastSuccess('Borrador Guardada en Borrador');
+		} catch (error) {
+			toastError('Error al Guardar Borrador');
+		}
+	};
+
 	return (
 		<div className="content">
 			<div className="content-body">
@@ -217,7 +271,7 @@ const AddProperty = () => {
 						<Formik
 							initialValues={initialValues}
 							validationSchema={validationSchema.addProperty}
-							onSubmit={onSubmit}>
+							onSubmit={draft ? onDraft : onSubmit}>
 							{({ errors, touched, isValid, dirty, values }) => (
 								<Form className="add-property-form">
 									<div className="row mb-4">
@@ -584,9 +638,30 @@ const AddProperty = () => {
 
 									<div className="row">
 										<div className="col-md-3">
-											<Button block disabled={!isValid || !dirty}>
-												Guardar
-											</Button>
+											{!draft ? (
+												<span
+													className="button button-outline"
+													onClick={() => setDraft(true)}>
+													Preparar Borrador
+												</span>
+											) : (
+												<Button block variant="outline">
+													Guardar Borrador
+												</Button>
+											)}
+										</div>
+										<div className="col-md-3">
+											{!draft ? (
+												<Button block disabled={!isValid || !dirty}>
+													Guardar
+												</Button>
+											) : (
+												<span
+													className="button button-outline"
+													onClick={() => setDraft(false)}>
+													Completar Formulario
+												</span>
+											)}
 										</div>
 									</div>
 								</Form>
