@@ -7,7 +7,8 @@ interface ModalProps {
 	setModal: any;
 	modal: boolean;
 	title: string;
-  size?: string
+	size?: string;
+	outside?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -15,26 +16,31 @@ const Modal: React.FC<ModalProps> = ({
 	setModal,
 	children,
 	title,
-	size
+	size,
+	outside = true
 }) => {
 	const ref = useRef(null);
 
 	const modalMaskClasses = classNames({
 		'modal-mask': true,
-		'modal-open': modal,
+		'modal-open': modal
 	});
 
 	const modalClasses = classNames({
 		modal: true,
 		'modal-lg': size === 'lg',
-		'modal-open': modal,
+		'modal-open': modal
 	});
 
 	// Close modal
 	const handleClose = () => setModal(false);
 
 	// Close modal wheen click outside
-	const handleClickOutside = () => setModal(false);
+	const handleClickOutside = () => {
+		if (outside) {
+			setModal(false);
+		}
+	};
 
 	useOnClickOutside(ref, handleClickOutside);
 

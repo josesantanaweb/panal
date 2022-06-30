@@ -51,6 +51,7 @@
 	"devDependencies": {
 		"@reduxjs/toolkit": "^1.7.1",
 		"@types/react-datepicker": "^4.4.2",
+		"@types/react-modal": "^3.13.1",
 		"@types/react-redux": "^7.1.22",
 		"@types/react-router-dom": "^5.3.3",
 		"@types/react-slick": "^0.23.8",
@@ -69,6 +70,7 @@
 		"react-datepicker": "^4.8.0",
 		"react-i18next": "^11.16.7",
 		"react-icons": "^4.3.1",
+		"react-modal": "^3.15.1",
 		"react-redux": "^7.2.6",
 		"react-router-dom": "^6.2.1",
 		"react-slick": "^0.29.0",

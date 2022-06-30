@@ -10,7 +10,6 @@ const OrdersContext = createContext({});
 export const OrdersProvider = ({ children }: props) => {
 	const [orders, setOrders] = useState<any>([]);
 	const [loading, setLoading] = useState<boolean>(true);
-	const [canje, setCanje] = useState<any>([]);
 
 	const getOrders = (query: string) => {
 		OrdersServices.getOrders(query)
@@ -28,9 +27,7 @@ export const OrdersProvider = ({ children }: props) => {
 				orders,
 				setOrders,
 				getOrders,
-				loading,
-				canje,
-				setCanje
+				loading
 			}}>
 			{children}
 		</OrdersContext.Provider>

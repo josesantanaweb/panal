@@ -1,0 +1,71 @@
+.modal-center-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: $modal-mask-bg-color;
+	z-index: 1050;
+	transition: all 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal-center {
+	background-color: $modal-bg-color;
+	padding: 2rem;
+	transition: all 0.2s;
+	width: 30%;
+}
+
+.modal-center.modal-center-md {
+	width: 35%;
+}
+
+.modal.modal-center-lg {
+	width: 42%;
+}
+
+.modal-center-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: $title-color;
+	font-size: $medium-font-size;
+	margin-bottom: 2rem;
+}
+
+.modal-center-title {
+	font-weight: 500;
+	font-size: $medium-font-size;
+}
+
+.modal-center-close {
+	cursor: pointer;
+	color: $text-color;
+	font-size: $large-font-size;
+}
+
+.modal-center-scroll {
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: calc(100vh - 150px);
+	padding-right: 1rem;
+}
+
+.modal-center-scroll::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+	padding-left: 1rem;
+}
+
+.modal-center-scroll::-webkit-scrollbar {
+	background: #e0f4ff;
+	padding-left: 1rem;
+}
+
+.modal-center-scroll::-webkit-scrollbar-thumb {
+	border-radius: 20px;
+	background-color: #c2e1f2;
+}

@@ -1,6 +1,7 @@
 import Button from './Button';
 import Input from './Input';
 import Modal from './Modal';
+import ModalCenter from './ModalCenter';
 import Preloader from './Preloader';
 import Badge from './Badge';
 import Select from './Select';
@@ -12,6 +13,7 @@ export {
 	Button,
 	Input,
 	Modal,
+	ModalCenter,
 	Preloader,
 	Badge,
 	Select,

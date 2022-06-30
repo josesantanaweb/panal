@@ -27,3 +27,17 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 }
+
+.toggle-filter {
+	width: 40px;
+	height: 40px;
+	box-sizing: border-box;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	border-radius: 4px;
+	justify-content: center;
+	color: $primary-color;
+	background-color: lighten($text-color, 30%);
+	cursor: pointer;
+}

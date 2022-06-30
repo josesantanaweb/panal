@@ -16,7 +16,7 @@ import Selection from './Selection';
 import Generate from './Generate';
 import SendEmail from './SendEmail';
 import Detail from './Detail';
-import Canje from './Canje';
+import Exchange from './Exchange';
 
 const Orders = () => {
 	const { orders, loading, getOrders }: any = useOrders();
@@ -311,11 +311,7 @@ const Orders = () => {
 				)}
 				{sendEmail && <SendEmail orderId={orderId} setModal={setModal} />}
 			</Modal>
-			<Canje
-				modalCanje={modalCanje}
-				setModalCanje={setModalCanje}
-				property={property}
-			/>
+			<Exchange modalCanje={modalCanje} setModalCanje={setModalCanje} />
 			<Detail
 				modal={modalDetail}
 				setModal={setModalDetail}

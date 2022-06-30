@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Search, Modal } from 'components';
-import useProperties from 'hooks/useProperties';
-import { BiFilter } from 'react-icons/bi';
 import Properties from './Properties';
 import List from './List';
 
 export interface CanjeProps {
 	modalCanje: boolean;
 	setModalCanje: any;
-	property: any;
 }
 
-const Canje: React.FC<CanjeProps> = ({
-	modalCanje,
-	setModalCanje,
-	property
-}) => {
+const Exchange: React.FC<CanjeProps> = ({ modalCanje, setModalCanje }) => {
 	const [tab, setTab] = useState(1);
 
 	return (
@@ -23,6 +16,7 @@ const Canje: React.FC<CanjeProps> = ({
 			modal={modalCanje}
 			setModal={setModalCanje}
 			size="lg"
+			outside={false}
 			title="Propiedes en canje">
 			<div className="modal-scroll">
 				<div className="tabs">
@@ -42,7 +36,7 @@ const Canje: React.FC<CanjeProps> = ({
 					</div>
 					<div className="tabs-content">
 						<div className="tabs-item" hidden={tab != 1}>
-							<Properties orderProperty={property} />
+							<Properties />
 						</div>
 						<div className="tabs-item" hidden={tab != 2}>
 							<List />
@@ -54,4 +48,4 @@ const Canje: React.FC<CanjeProps> = ({
 	);
 };
 
-export default Canje;
+export default Exchange;

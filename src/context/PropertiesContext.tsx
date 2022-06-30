@@ -10,6 +10,7 @@ const PropertiesContext = createContext({});
 export const PropertiesProvider = ({ children }: props) => {
 	const [properties, setProperties] = useState<any>([]);
 	const [drafts, setDrafts] = useState<any>([]);
+	const [exchangeProperties, setExchangeProperties] = useState<any>([]);
 	const [property, setProperty] = useState<any>({});
 	const [loading, setLoading] = useState<boolean>(true);
 
@@ -30,6 +31,14 @@ export const PropertiesProvider = ({ children }: props) => {
 			.catch();
 	};
 
+	const getExchangeProperties = async (query: string) => {
+		PropertiesServices.getExchangeProperties()
+			.then((response) => {
+				setExchangeProperties(response.data.data);
+			})
+			.catch();
+	};
+
 	return (
 		// eslint-disable-next-line react/react-in-jsx-scope
 		<PropertiesContext.Provider
@@ -42,7 +51,10 @@ export const PropertiesProvider = ({ children }: props) => {
 				getDrafts,
 				loading,
 				property,
-				setProperty
+				setProperty,
+
+				getExchangeProperties,
+				exchangeProperties
 			}}>
 			{children}
 		</PropertiesContext.Provider>
