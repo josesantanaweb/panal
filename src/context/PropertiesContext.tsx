@@ -12,6 +12,7 @@ export const PropertiesProvider = ({ children }: props) => {
 	const [drafts, setDrafts] = useState<any>([]);
 	const [exchangeProperties, setExchangeProperties] = useState<any>([]);
 	const [property, setProperty] = useState<any>({});
+	const [propertyDetail, setPropertyDetail] = useState<any>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 
 	const getProperties = async (query: string) => {
@@ -21,6 +22,14 @@ export const PropertiesProvider = ({ children }: props) => {
 				setLoading(false);
 			})
 			.catch((err) => setLoading(false));
+	};
+
+	const getPropertyDetail = async (id: any) => {
+		PropertiesServices.getPropertyDetail(id)
+			.then((response) => {
+				setPropertyDetail(response.data);
+			})
+			.catch();
 	};
 
 	const getDrafts = async (query: string) => {
@@ -54,7 +63,10 @@ export const PropertiesProvider = ({ children }: props) => {
 				setProperty,
 
 				getExchangeProperties,
-				exchangeProperties
+				exchangeProperties,
+
+				getPropertyDetail,
+				propertyDetail
 			}}>
 			{children}
 		</PropertiesContext.Provider>

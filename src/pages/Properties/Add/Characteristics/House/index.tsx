@@ -145,12 +145,6 @@ const House = ({ errors, touched, values }: any) => {
 						label="Numero de suites"
 						placeholder="Ingrese Numero de suites"
 						component={Input}
-						error={
-							errors.characteristics?.numberOfSuites &&
-							touched.characteristics?.numberOfSuites
-								? errors.characteristics?.numberOfSuites
-								: null
-						}
 					/>
 				</div>
 				<div className="col-md-3">
@@ -160,12 +154,6 @@ const House = ({ errors, touched, values }: any) => {
 						label="Numero de habitaciones"
 						placeholder="Ingrese Numero de habitaciones"
 						component={Input}
-						error={
-							errors.characteristics?.bedrooms &&
-							touched.characteristics?.bedrooms
-								? errors.characteristics?.bedrooms
-								: null
-						}
 					/>
 				</div>
 				<div className="col-md-3">
@@ -175,12 +163,6 @@ const House = ({ errors, touched, values }: any) => {
 						label="Dormitorios de Serivicio"
 						placeholder="Ingrese Dormitorios de Serivicio"
 						component={Input}
-						error={
-							errors.characteristics?.serviceBedroom &&
-							touched.characteristics?.serviceBedroom
-								? errors.characteristics?.serviceBedroom
-								: null
-						}
 					/>
 				</div>
 				<div className="col-md-3">
@@ -207,12 +189,6 @@ const House = ({ errors, touched, values }: any) => {
 						label="Baños"
 						placeholder="Ingrese Baños"
 						component={Input}
-						error={
-							errors.characteristics?.bathrooms &&
-							touched.characteristics?.bathrooms
-								? errors.characteristics?.bathrooms
-								: null
-						}
 					/>
 				</div>
 				<div className="col-md-3">
@@ -246,12 +222,6 @@ const House = ({ errors, touched, values }: any) => {
 						placeholder="Superficie de Construida"
 						label="Superficie de Construida"
 						component={Input}
-						error={
-							errors.characteristics?.constructedSurface &&
-							touched.characteristics?.constructedSurface
-								? errors.characteristics?.constructedSurface
-								: null
-						}
 					/>
 				</div>
 				<div className="col-md-3">
@@ -261,12 +231,6 @@ const House = ({ errors, touched, values }: any) => {
 						placeholder="N de estacionamientos cubiertos"
 						label="N de estacionamientos cubiertos"
 						component={Input}
-						error={
-							errors.characteristics?.numberOfCoveredParkingSpaces &&
-							touched.characteristics?.numberOfCoveredParkingSpaces
-								? errors.characteristics?.numberOfCoveredParkingSpaces
-								: null
-						}
 					/>
 				</div>
 				<div className="col-md-3">
@@ -276,12 +240,6 @@ const House = ({ errors, touched, values }: any) => {
 						placeholder="N de estacionamientos descubiertos"
 						label="N de estacionamientos descubiertos"
 						component={Input}
-						error={
-							errors.characteristics?.numberOfUncoveredParkingSpaces &&
-							touched.characteristics?.numberOfUncoveredParkingSpaces
-								? errors.characteristics?.numberOfUncoveredParkingSpaces
-								: null
-						}
 					/>
 				</div>
 			</div>

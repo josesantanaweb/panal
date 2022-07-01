@@ -9,6 +9,7 @@ import { initialValues } from './initialValues';
 import useFormProperty from 'hooks/useFormProperty';
 import useShared from 'hooks/useShared';
 import House from './Characteristics/House';
+import Department from './Characteristics/Department';
 import Upload from './Upload';
 import PropertiesServices from 'services/propertiesService';
 
@@ -92,6 +93,15 @@ const AddProperty = () => {
 		getStates
 	}: any = useShared();
 
+	// console.log(operationTypeSelected);
+
+	useEffect(() => {
+		const operationTypeData = operationType.filter(
+			(item: any) => item.value === 2
+		);
+		setOperationTypeSelected(operationTypeData[0]);
+	}, [operationType]);
+
 	// Mapa
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(
@@ -153,7 +163,7 @@ const AddProperty = () => {
 	}, []);
 
 	const onSubmit = async (values: any, { resetForm }: any) => {
-		const formData = {
+		const house = {
 			...values,
 			operationId: operationTypeSelected.value,
 			currencyTypeId: currencySelected.value,
@@ -194,6 +204,34 @@ const AddProperty = () => {
 				...values.observations
 			}
 		};
+
+		const department = {
+			...values,
+			operationId: operationTypeSelected.value,
+			currencyTypeId: currencySelected.value,
+			realtorSellerId: Number(realtorSalerSelected.value),
+			realtorBuyerId: Number(realtorBuyerSelected.value),
+			realtorCatcherId: Number(realtorCatcherSelected.value),
+			ownerLessor: {
+				...values.ownerLessor,
+				propertyTypeId: propertyTypeSelected.value,
+				customerId: 1
+			},
+			address: {
+				countryId: countrySelected.value,
+				stateId: stateSelected.value,
+				...values.address
+			},
+			characteristics: {
+				...values.characteristics
+			},
+			observations: {
+				...values.observations
+			}
+		};
+
+		const formData = propertyTypeSelected.value === 1 ? house : department;
+
 		console.log(formData);
 
 		try {
@@ -593,7 +631,15 @@ const AddProperty = () => {
 										</div>
 									</div>
 
-									<House errors={errors} touched={touched} values={values} />
+									{propertyTypeSelected?.value === 1 ? (
+										<House errors={errors} touched={touched} values={values} />
+									) : (
+										<Department
+											errors={errors}
+											touched={touched}
+											values={values}
+										/>
+									)}
 
 									<div className="row mb-4">
 										<div className="col-md-12">

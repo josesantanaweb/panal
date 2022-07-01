@@ -14,8 +14,8 @@ const PropertiesServices = {
 		api.get('/properties/my-properties-in-exchange', {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		}),
-	getProperty: async (id: number) =>
-		api.get(`properties/${id}`, {
+	getPropertyDetail: async (id: number) =>
+		api.get(`properties/details/${id}`, {
 			headers: { Authorization: `Bearer ${getValue('token')}` },
 		}),
 	addProperty: async (data: any) =>
